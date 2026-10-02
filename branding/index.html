@@ -48,7 +48,6 @@
       display: block;
     }
 
-    /* 頂部左上角回首頁小房子 */
     .top-home-btn {
       position: absolute;
       top: 0.55%;
@@ -70,7 +69,6 @@
       transform: scale(0.9);
     }
 
-    /* 頂部雙膠囊標籤 */
     .pills-top-slot {
       position: absolute;
       top: 1.85%;
@@ -104,7 +102,6 @@
       display: block;
     }
 
-    /* 底部雙膠囊標籤 */
     .bottom-pills-slot {
       position: absolute;
       top: 97.4%;
@@ -137,7 +134,6 @@
       display: block;
     }
 
-    /* 全域懸浮火箭回頂鈕 */
     .back-to-top {
       position: fixed;
       right: calc(50% - 205px);
@@ -185,33 +181,26 @@
   <div class="app-container">
     <div class="canvas-stage">
       
-      <!-- 底層長圖本體 -->
       <img src="品牌商標與視覺應用背景.webp" alt="品牌商標與識別應用展示" class="main-bg-img" />
 
-      <!-- 1. 頂部回總首頁 (../../) -->
-      <a href="../../" class="top-home-btn" aria-label="回到首頁">
+      <!-- 回總首頁 -->
+      <a href="../" class="top-home-btn" aria-label="回到首頁">
         <img src="品牌左上角回首頁.webp" alt="回首頁" />
       </a>
 
-      <!-- 2. 頂部雙膠囊標籤 -->
       <nav class="pills-top-slot">
-        <!-- 回電商大廳 (../) -->
-        <a href="../" class="pill-item" aria-label="其他電商品牌專案">
+        <a href="../ecommerce/" class="pill-item" aria-label="其他電商品牌專案">
           <img src="品牌其他電商品牌專案.webp" alt="其他電商品牌專案" />
         </a>
-        <!-- 跳轉至商業插畫 (../illustration/) -->
         <a href="../illustration/" class="pill-item" aria-label="商業插畫精選">
           <img src="品牌商業插畫.webp" alt="商業插畫精選" />
         </a>
       </nav>
 
-      <!-- 3. 底部雙膠囊標籤列 -->
       <div class="bottom-pills-slot">
-        <!-- 回總首頁 (../../) -->
-        <a href="../../" class="bottom-pill-btn" aria-label="回首頁">
+        <a href="../" class="bottom-pill-btn" aria-label="回首頁">
           <img src="品牌回首頁.webp" alt="回首頁" />
         </a>
-        <!-- 跳轉至商業插畫 (../illustration/) -->
         <a href="../illustration/" class="bottom-pill-btn" aria-label="商業插畫精選">
           <img src="品牌商業插畫.webp" alt="商業插畫精選" />
         </a>
@@ -220,14 +209,12 @@
     </div>
   </div>
 
-  <!-- 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="品牌火箭.webp" alt="回到頂端" />
   </button>
 
   <script>
     const backToTopBtn = document.getElementById('backToTopBtn');
-
     window.addEventListener('scroll', () => {
       if (window.scrollY > 350) {
         backToTopBtn.classList.add('show');
@@ -235,14 +222,9 @@
         backToTopBtn.classList.remove('show');
       }
     });
-
     backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
-
 </body>
 </html>
