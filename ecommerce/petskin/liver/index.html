@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../../cat.ico" type="image/x-icon" />
+  <title>歸毛家族 | 護肝寶 一頁式銷售頁</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #0f1c18;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+      background-color: #27453d;
+    }
+
+    .canvas-stage {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+      overflow: hidden;
+    }
+
+    .main-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .top-home-btn {
+      position: absolute;
+      top: 0.5%;
+      left: 3.4%;
+      width: 6.5%;
+      z-index: 50;
+      display: block;
+      line-height: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .top-home-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .top-home-btn:active {
+      transform: scale(0.9);
+    }
+
+    .bottom-footer-btn {
+      display: block;
+      width: 100%;
+      line-height: 0;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .bottom-footer-btn:active {
+      opacity: 0.9;
+    }
+
+    .bottom-footer-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: calc(50% - 205px);
+      bottom: 26px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.28s ease;
+      z-index: 999;
+      border: none;
+      background: transparent;
+      padding: 0;
+      line-height: 0;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 16px;
+      }
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:active {
+      transform: scale(0.9);
+    }
+
+    .back-to-top img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="canvas-stage">
+      
+      <!-- 頂部回總首頁 -->
+      <a href="../../../" class="top-home-btn" aria-label="回到首頁">
+        <img src="左上角回首頁.webp" alt="回首頁" />
+      </a>
+
+      <!-- 長圖本體 -->
+      <img src="背景三.webp" alt="護肝寶銷售頁展示" class="main-bg-img" />
+
+      <!-- 底部頁尾：返回歸毛家族大廳 -->
+      <a href="../" class="bottom-footer-btn" aria-label="返回歸毛家族專案">
+        <img src="頁尾 返回寵物.webp" alt="返回 歸毛家族 專案" />
+      </a>
+
+    </div>
+  </div>
+
+  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+    <img src="火箭.webp" alt="回到頂端" />
+  </button>
+
+  <script>
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
