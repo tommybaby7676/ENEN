@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../cat.ico" type="image/x-icon" />
+  <title>糕枕無憂 | 西式糕點品牌行銷專案</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #1a1613;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* 手機視窗主容器 */
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+      background-color: #382c23;
+    }
+
+    /* 畫布舞台：依據 西式背景.webp 進行絕對定位 */
+    .canvas-stage {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+      overflow: hidden;
+    }
+
+    .main-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 1. 頂部回首頁小房子 */
+    .top-home-btn {
+      position: absolute;
+      top: 0.55%;
+      left: 3.4%;
+      width: 6.5%;
+      z-index: 50;
+      display: block;
+      line-height: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .top-home-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .top-home-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* 2. 主視覺 BANNER */
+    .banner-slot {
+      position: absolute;
+      top: 1.85%;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      line-height: 0;
+    }
+
+    .banner-slot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* BANNER 上的「進入官網」熱區按鈕 */
+    .official-site-btn {
+      position: absolute;
+      right: 12%;
+      top: 22%;
+      width: 25%;
+      height: 54%;
+      border-radius: 50%;
+      background: transparent;
+      z-index: 25;
+      text-decoration: none;
+    }
+
+    .official-site-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* 3. 頂部雙膠囊標籤（高度嚴格限制 24px，自然等比） */
+    .pills-top-slot {
+      position: absolute;
+      top: 9.35%;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 0 4%;
+    }
+
+    .pills-top-slot .pill-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .pills-top-slot .pill-item:active {
+      transform: scale(0.95);
+      opacity: 0.85;
+    }
+
+    .pills-top-slot .pill-item img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    /* 4. 底部雙膠囊標籤（高度 26px，置中對齊） */
+    .bottom-pills-slot {
+      position: absolute;
+      top: 95.35%;
+      left: 0;
+      width: 100%;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 0 4%;
+    }
+
+    .bottom-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .bottom-pill-btn:active {
+      transform: scale(0.95);
+    }
+
+    .bottom-pill-btn img {
+      height: 26px;
+      width: auto;
+      display: block;
+    }
+
+    /* 5. 底部滿版其他電商品牌專案按鈕 */
+    .bottom-footer-slot {
+      position: absolute;
+      top: 96.95%;
+      left: 0;
+      width: 100%;
+      z-index: 30;
+      line-height: 0;
+    }
+
+    .bottom-footer-slot a {
+      display: block;
+      width: 100%;
+      line-height: 0;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .bottom-footer-slot a:active {
+      opacity: 0.9;
+    }
+
+    .bottom-footer-slot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 6. 全域懸浮火箭回頂鈕 */
+    .back-to-top {
+      position: fixed;
+      right: calc(50% - 205px);
+      bottom: 26px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.28s ease;
+      z-index: 999;
+      border: none;
+      background: transparent;
+      padding: 0;
+      line-height: 0;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 16px;
+      }
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:active {
+      transform: scale(0.9);
+    }
+
+    .back-to-top img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 手機視窗主容器 -->
+  <div class="app-container">
+
+    <!-- 舞台核心：背景長圖與精確定位元件 -->
+    <div class="canvas-stage">
+      
+      <!-- 底層全案長圖 -->
+      <img src="西式背景.webp" alt="糕枕無憂 品牌行銷全案展示" class="main-bg-img" />
+
+      <!-- 1. 頂部回首頁小房子 -->
+      <a href="../../" class="top-home-btn" aria-label="回到首頁">
+        <img src="西式左上角回首頁.webp" alt="回首頁" />
+      </a>
+
+      <!-- 2. 主視覺 BANNER -->
+      <div class="banner-slot">
+        <img src="西式BANNER.webp" alt="糕枕無憂形象主視覺" />
+        <!-- 點擊進入官網熱區 -->
+        <a href="https://pluffle.waca.tw/" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="進入官網"></a>
+      </div>
+
+      <!-- 3. 頂部雙膠囊標籤 -->
+      <nav class="pills-top-slot">
+        <a href="../" class="pill-item" aria-label="其他電商品牌專案">
+          <img src="西式其他電商品牌專案.webp" alt="其他電商品牌專案" />
+        </a>
+        <a href="../../branding/" class="pill-item" aria-label="品牌商標與視覺應用">
+          <img src="西式品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+        </a>
+      </nav>
+
+      <!-- 4. 底部雙膠囊標籤列 -->
+      <div class="bottom-pills-slot">
+        <a href="../../" class="bottom-pill-btn" aria-label="回首頁">
+          <img src="西式回首頁.webp" alt="回首頁" />
+        </a>
+        <a href="../../branding/" class="bottom-pill-btn" aria-label="品牌商標與視覺應用">
+          <img src="西式品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+        </a>
+      </div>
+
+      <!-- 5. 底部滿版其他電商品牌專案按鈕 -->
+      <div class="bottom-footer-slot">
+        <a href="../" aria-label="其他電商品牌專案">
+          <img src="西式頁尾.webp" alt="其他電商品牌專案" />
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 6. 全域懸浮火箭回頂鈕 -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+    <img src="西式火箭.webp" alt="回到頂端" />
+  </button>
+
+  <script>
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
