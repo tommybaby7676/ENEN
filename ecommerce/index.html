@@ -26,8 +26,7 @@
       width: 100%;
       max-width: 440px;
       min-height: 100vh;
-      background: #0b1a13 url('電商背景.webp') no-repeat center top;
-      background-size: 100% 100%; /* 強制背景圖拉伸填滿整個容器高度，絕對不留白 */
+      background-color: #0b1a13; /* 底色 */
       position: relative;
       overflow-x: hidden;
       display: flex;
@@ -144,6 +143,9 @@
 
   <div class="app-container">
     
+    <!-- 【把電商背景圖當作真實圖片直接放第一行】 -->
+    <img src="電商背景.webp" alt="電商背景" style="width: 100%; height: auto; display: block;" />
+
     <!-- 頂部導航 -->
     <header class="top-header">
       <!-- 回首頁 -->
