@@ -27,11 +27,8 @@
       width: 100%;
       max-width: 440px;
       min-height: 100vh;
-      background-color: #fcece2; /* 設定與背景圖底部相近的顏色作為底色 */
-      background-image: url('首頁背景.webp');
-      background-repeat: no-repeat;
-      background-position: top center;
-      background-size: 100% auto; /* 讓背景圖寬度 100%，高度自動等比，避免被強制拉變形 */
+      background: #fcece2 url('首頁背景.webp') no-repeat center top;
+      background-size: 100% 100%; /* 強制背景圖拉伸填滿整個容器高度，絕對不留白 */
       position: relative;
       overflow-x: hidden;
       display: flex;
