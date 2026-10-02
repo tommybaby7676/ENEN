@@ -48,7 +48,6 @@
       display: block;
     }
 
-    /* 頂部左上角回首頁小房子 */
     .top-home-btn {
       position: absolute;
       top: 0.55%;
@@ -70,7 +69,6 @@
       transform: scale(0.9);
     }
 
-    /* 頂部主視覺 BANNER */
     .banner-slot {
       position: absolute;
       top: 1.85%;
@@ -86,7 +84,6 @@
       display: block;
     }
 
-    /* BANNER 上的 IG 外連熱區 */
     .banner-link-btn {
       position: absolute;
       right: 5%;
@@ -103,7 +100,6 @@
       transform: scale(0.96);
     }
 
-    /* 頂部雙膠囊標籤 */
     .pills-top-slot {
       position: absolute;
       top: 7.95%;
@@ -137,7 +133,6 @@
       display: block;
     }
 
-    /* 底部雙膠囊標籤 */
     .bottom-pills-slot {
       position: absolute;
       top: 96.8%;
@@ -170,7 +165,6 @@
       display: block;
     }
 
-    /* 全域懸浮火箭 */
     .back-to-top {
       position: fixed;
       right: calc(50% - 205px);
@@ -218,55 +212,45 @@
   <div class="app-container">
     <div class="canvas-stage">
       
-      <!-- 底層全案長圖 -->
       <img src="商業插畫背景.webp" alt="商業插畫精選展示" class="main-bg-img" />
 
-      <!-- 1. 頂部回總首頁 (../../) -->
-      <a href="../../" class="top-home-btn" aria-label="回到首頁">
+      <!-- 回總首頁 -->
+      <a href="../" class="top-home-btn" aria-label="回到首頁">
         <img src="商業插畫左上角回首頁.webp" alt="回首頁" />
       </a>
 
-      <!-- 2. 主視覺 BANNER (附 IG 外連) -->
       <div class="banner-slot">
         <img src="商業插畫BANNER.webp" alt="商業插畫形象" />
-        <a href="https://www.instagram.com/draw.davinci/" target="_blank" rel="noopener noreferrer" class="banner-link-btn" aria-label="觀看更多作品"></a>
+        <a href="https://www.instagram.com/DRAW_DAVINCI" target="_blank" rel="noopener noreferrer" class="banner-link-btn" aria-label="觀看更多作品"></a>
       </div>
 
-      <!-- 3. 頂部雙膠囊標籤 -->
       <nav class="pills-top-slot">
-        <!-- 回電商大廳 (../) -->
-        <a href="../" class="pill-item" aria-label="其他電商品牌專案">
+        <a href="../ecommerce/" class="pill-item" aria-label="其他電商品牌專案">
           <img src="商業插畫其他電商品牌專案.webp" alt="其他電商品牌專案" />
         </a>
-        <!-- 跳轉至品牌商標 (../branding/) -->
         <a href="../branding/" class="pill-item" aria-label="品牌商標與視覺應用">
-          <img src="商業插畫品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+          <img src="品牌商業插畫.webp" alt="品牌商標與視覺應用" />
         </a>
       </nav>
 
-      <!-- 4. 底部雙膠囊標籤列 -->
       <div class="bottom-pills-slot">
-        <!-- 回總首頁 (../../) -->
-        <a href="../../" class="bottom-pill-btn" aria-label="回首頁">
+        <a href="../" class="bottom-pill-btn" aria-label="回首頁">
           <img src="商業插畫回首頁.webp" alt="回首頁" />
         </a>
-        <!-- 跳轉至品牌商標 (../branding/) -->
         <a href="../branding/" class="bottom-pill-btn" aria-label="品牌商標與視覺應用">
-          <img src="商業插畫品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+          <img src="品牌商業插畫.webp" alt="品牌商標與視覺應用" />
         </a>
       </div>
 
     </div>
   </div>
 
-  <!-- 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="商業插畫火箭.webp" alt="回到頂端" />
   </button>
 
   <script>
     const backToTopBtn = document.getElementById('backToTopBtn');
-
     window.addEventListener('scroll', () => {
       if (window.scrollY > 350) {
         backToTopBtn.classList.add('show');
@@ -274,14 +258,9 @@
         backToTopBtn.classList.remove('show');
       }
     });
-
     backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
-
 </body>
 </html>
