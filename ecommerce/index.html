@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>電商品牌視覺 | E-COMMERCE</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #0b1a13;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 手機視窗主容器 */
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      background: #082117 url('1_工作區域 1 複本 2.webp') no-repeat center top / cover;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      padding-bottom: 30px;
+    }
+
+    /* 頂部 Header：回首頁 + 主標題 */
+    .top-header {
+      width: 100%;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 20px 14px;
+    }
+
+    .home-btn {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .home-btn:active {
+      transform: translateY(-50%) scale(0.92);
+      opacity: 0.8;
+    }
+
+    .home-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .category-title {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* 快捷切換標籤 (Pills) */
+    .filter-tags {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 16px 20px;
+    }
+
+    .tag-link {
+      display: inline-block;
+      text-decoration: none;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .tag-link:active {
+      transform: scale(0.95);
+      filter: brightness(0.9);
+    }
+
+    .tag-link img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    /* 專案卡片列表 */
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 16px;
+    }
+
+    .project-card {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      line-height: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+      transition: transform 0.18s ease, filter 0.18s ease;
+    }
+
+    .project-card:hover {
+      filter: brightness(1.02);
+    }
+
+    .project-card:active {
+      transform: scale(0.985);
+      filter: brightness(0.95);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- 頂部導航 -->
+    <header class="top-header">
+      <!-- 回首頁 -->
+      <a href="../" class="home-btn" aria-label="回到首頁">
+        <img src="回首頁.webp" alt="回首頁" />
+      </a>
+      <!-- 電商品牌大標題 -->
+      <img src="電商品牌.webp" alt="電商品牌 E-COMMERCE" class="category-title" />
+    </header>
+
+    <!-- 標籤快捷導航 -->
+    <nav class="filter-tags">
+      <!-- 商業插畫 -->
+      <a href="../illustration/" class="tag-link">
+        <img src="商業插畫.webp" alt="商業插畫" />
+      </a>
+      <!-- 品牌商標與視覺應用 -->
+      <a href="../branding/" class="tag-link">
+        <img src="品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+      </a>
+    </nav>
+
+    <!-- 專案卡片列表 (點擊進入各自的詳細作品頁) -->
+    <main class="project-list">
+      <!-- 1. 眼鏡行銷 -->
+      <a href="./glasses/" class="project-card">
+        <img src="眼鏡行銷.webp" alt="眼鏡行銷專案" />
+      </a>
+
+      <!-- 2. 寵物護膚 -->
+      <a href="./petskin/" class="project-card">
+        <img src="寵物護膚.webp" alt="寵物護膚專案" />
+      </a>
+
+      <!-- 3. 西式糕點店 -->
+      <a href="./bakery/" class="project-card">
+        <img src="西式糕點店.webp" alt="西式糕點店專案" />
+      </a>
+
+      <!-- 4. 醫美診所 -->
+      <a href="./clinic/" class="project-card">
+        <img src="醫美診所.webp" alt="醫美診所專案" />
+      </a>
+    </main>
+
+  </div>
+
+</body>
+</html>
