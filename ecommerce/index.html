@@ -26,11 +26,8 @@
       width: 100%;
       max-width: 440px;
       min-height: 100vh;
-      background-color: #0b1a13; /* 設定與電商背景圖底部完全相同的深綠色 */
-      background-image: url('電商背景.webp');
-      background-repeat: no-repeat;
-      background-position: top center;
-      background-size: 100% auto; /* 寬度 100%，高度依圖檔等比縮放 */
+      background: #0b1a13 url('電商背景.webp') no-repeat center top;
+      background-size: 100% 100%; /* 強制背景圖拉伸填滿整個容器高度，絕對不留白 */
       position: relative;
       overflow-x: hidden;
       display: flex;
