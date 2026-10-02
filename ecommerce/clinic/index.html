@@ -72,7 +72,7 @@
       transform: scale(0.9);
     }
 
-    /* 2. 頂部雙膠囊標籤（精準落在模特兒下方、A1海報上方留白區） */
+    /* 2. 頂部雙膠囊標籤（高度齊平、寬度自然等比，完美還原示意圖比例） */
     .pills-top-slot {
       position: absolute;
       top: 8.52%;
@@ -82,15 +82,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      padding: 0 5%;
+      gap: 8px;
+      padding: 0 3%;
     }
 
     .pills-top-slot .pill-item {
-      width: 45%;
-      display: block;
-      line-height: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
+      line-height: 0;
       transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
@@ -100,8 +101,8 @@
     }
 
     .pills-top-slot .pill-item img {
-      width: 100%;
-      height: auto;
+      height: 36px; /* 兩顆高度嚴格等高 */
+      width: auto;  /* 寬度隨字數自然等比展開，絕不變形暴肥 */
       display: block;
     }
 
