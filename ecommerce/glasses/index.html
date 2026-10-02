@@ -18,7 +18,7 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
     }
 
     /* 手機視窗主容器 */
@@ -34,160 +34,163 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
     }
 
-    /* 頂部導航列：背景已在長圖頂端，此處僅放左側回首頁小房子 */
-    .top-header-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 48px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      padding-left: 16px;
-    }
-
-    .home-top-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      width: 32px;
-      height: 32px;
-    }
-
-    .home-top-btn img {
-      width: 22px;
-      height: 22px;
-      display: block;
-    }
-
-    .home-top-btn:active {
-      transform: scale(0.9);
-      opacity: 0.8;
-    }
-
-    /* 主視覺 BANNER 區塊 */
-    .hero-banner-wrap {
+    /* 背景舞台容器 (以背景圖做基準，所有組件依百分比貼齊) */
+    .canvas-stage {
       position: relative;
       width: 100%;
       line-height: 0;
-      margin-top: 48px; /* 留出頂部 Logo 空間 */
     }
 
-    .hero-banner-img {
+    .main-bg-img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    /* 鉅恒官網熱區按鈕 (覆蓋在左下角發光圓圈處) */
+    /* 1. 頂部左上角回首頁小房子 */
+    .top-home-btn {
+      position: absolute;
+      top: 0.9%;
+      left: 3.5%;
+      width: 7%;
+      z-index: 50;
+      display: block;
+      line-height: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .top-home-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .top-home-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* 2. 頂部主視覺 BANNER (精準填入上方綠底留白區) */
+    .banner-slot {
+      position: absolute;
+      top: 2.3%;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      line-height: 0;
+    }
+
+    .banner-slot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* BANNER 左下角的「鉅恒官網」熱區按鈕 */
     .official-site-btn {
       position: absolute;
-      left: 5%;
-      top: 48%;
-      width: 30%;
-      height: 42%;
+      left: 6%;
+      top: 50%;
+      width: 28%;
+      height: 40%;
       border-radius: 50%;
-      cursor: pointer;
-      text-decoration: none;
       background: transparent;
-      z-index: 20;
+      z-index: 25;
+      text-decoration: none;
     }
 
     .official-site-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
-    /* 頂部次選單快捷標籤列 */
-    .sub-nav-tags {
+    /* 3. BANNER 下方的兩個膠囊按鈕 */
+    .pills-top-slot {
+      position: absolute;
+      top: 7.9%;
+      left: 0;
+      width: 100%;
+      z-index: 20;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
-      padding: 10px 14px 14px;
-      background-color: #062217;
+      gap: 3%;
+      padding: 0 4%;
     }
 
-    .tag-btn {
+    .pill-item {
       display: inline-block;
       text-decoration: none;
       line-height: 0;
       transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    .tag-btn:active {
-      transform: scale(0.95);
+    .pill-item:active {
+      transform: scale(0.94);
       opacity: 0.85;
     }
 
-    .tag-btn img {
-      height: 32px;
-      width: auto;
+    .pill-item img {
+      width: 100%;
+      max-height: 32px;
+      object-fit: contain;
       display: block;
     }
 
-    /* 長圖展示本體 */
-    .content-flow-wrap {
-      width: 100%;
-      position: relative;
-      line-height: 0;
+    .pill-item.pill-left {
+      width: 46%;
     }
 
-    .content-flow-img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .pill-item.pill-right {
+      width: 46%;
     }
 
-    /* 形象拍攝 3 大按鈕浮動在長圖預留的空白中段 */
-    .interactive-cards-wrap {
+    /* 4. 中段 3 大採訪按鈕 (精準貼合「形象拍攝及採訪撰文」下方留白框) */
+    .article-cards-slot {
+      position: absolute;
+      top: 61.8%;
+      left: 0;
       width: 100%;
-      padding: 0 14px;
-      margin-top: -68%; /* 精準貼合在背景留白區 */
-      margin-bottom: 24px;
+      z-index: 20;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      position: relative;
-      z-index: 30;
+      gap: 1.1%;
+      padding: 0 3.2%;
     }
 
-    .article-card {
+    .article-btn {
       display: block;
       width: 100%;
-      text-decoration: none;
       line-height: 0;
-      border-radius: 10px;
+      text-decoration: none;
+      border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
-      transition: transform 0.16s ease, filter 0.16s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s ease, filter 0.15s ease;
     }
 
-    .article-card:hover {
-      filter: brightness(1.03);
+    .article-btn:hover {
+      filter: brightness(1.02);
     }
 
-    .article-card:active {
+    .article-btn:active {
       transform: scale(0.985);
       filter: brightness(0.95);
     }
 
-    .article-card img {
+    .article-btn img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    /* 底部導航按鈕群 */
+    /* 5. 底部導航按鈕區 */
     .bottom-nav-group {
       width: 100%;
       background: #02120b;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 14px 24px;
-      gap: 14px;
+      padding: 16px 14px 28px;
+      gap: 12px;
     }
 
     .bottom-pills-row {
@@ -198,7 +201,6 @@
       width: 100%;
     }
 
-    /* 整張頁尾切圖按鈕 */
     .footer-wide-btn {
       display: block;
       width: 100%;
@@ -218,13 +220,13 @@
       display: block;
     }
 
-    /* 全域懸浮回到頂端按鈕 (火箭) */
+    /* 6. 全域懸浮火箭回頂鈕 */
     .back-to-top {
       position: fixed;
-      right: calc(50% - 200px);
-      bottom: 28px;
-      width: 46px;
-      height: 46px;
+      right: calc(50% - 205px);
+      bottom: 26px;
+      width: 44px;
+      height: 44px;
       cursor: pointer;
       opacity: 0;
       visibility: hidden;
@@ -266,60 +268,62 @@
   <!-- 手機視窗主容器 -->
   <div class="app-container">
 
-    <!-- 1. 頂部左側回首頁小房子 -->
-    <div class="top-header-bar">
-      <a href="../../" class="home-top-btn" aria-label="回到首頁">
+    <!-- 舞台核心：背景圖與精準定位按鈕群 -->
+    <div class="canvas-stage">
+      
+      <!-- 底層全案長圖 -->
+      <img src="背景.webp" alt="眼鏡行銷全案展示" class="main-bg-img" />
+
+      <!-- 1. 頂部回首頁小房子 -->
+      <a href="../../" class="top-home-btn" aria-label="回到首頁">
         <img src="1-34.webp" alt="回首頁" />
       </a>
-    </div>
 
-    <!-- 2. 主視覺 BANNER (內嵌官網外連按鈕) -->
-    <section class="hero-banner-wrap">
-      <img src="BANNER.webp" alt="鉅恒行銷形象主視覺" class="hero-banner-img" />
-      <a href="https://webspuzzle.com.tw/category/cool" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="鉅恒官網"></a>
-    </section>
+      <!-- 2. 主視覺 BANNER (含官網外連按鈕) -->
+      <div class="banner-slot">
+        <img src="BANNER.webp" alt="鉅恒行銷形象主視覺" />
+        <a href="https://webspuzzle.com.tw/category/cool" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="鉅恒官網"></a>
+      </div>
 
-    <!-- 3. 頂部次選單快捷標籤 -->
-    <nav class="sub-nav-tags">
-      <a href="../" class="tag-btn">
-        <img src="其他電商品牌專案.webp" alt="其他電商品牌專案" />
-      </a>
-      <a href="../../branding/" class="tag-btn">
-        <img src="1-31.webp" alt="品牌商標與視覺應用" />
-      </a>
-    </nav>
-
-    <!-- 4. 長圖展示區塊 (靜態排版全貌) -->
-    <section class="content-flow-wrap">
-      <img src="背景.webp" alt="眼鏡行銷成果全圖" class="content-flow-img" />
-    </section>
-
-    <!-- 5. 採訪撰文 3 大獨立跳轉卡片 -->
-    <section class="interactive-cards-wrap">
-      <a href="https://webspuzzle.com.tw/2396" target="_blank" rel="noopener noreferrer" class="article-card">
-        <img src="西服按鈕.webp" alt="品味風格 - 亞瑟時尚西服" />
-      </a>
-
-      <a href="https://webspuzzle.com.tw/2549" target="_blank" rel="noopener noreferrer" class="article-card">
-        <img src="刺青按鈕.webp" alt="紋樣青刻 - The Tattoo" />
-      </a>
-
-      <a href="https://webspuzzle.com.tw/2079" target="_blank" rel="noopener noreferrer" class="article-card">
-        <img src="眼鏡按鈕.webp" alt="獨一無二 - 瞳光眼鏡" />
-      </a>
-    </section>
-
-    <!-- 6. 底部導航按鈕群 -->
-    <footer class="bottom-nav-group">
-      <div class="bottom-pills-row">
-        <a href="../../" class="tag-btn">
-          <img src="回首頁.webp" alt="回首頁" />
+      <!-- 3. BANNER 下方的兩個導航標籤 -->
+      <nav class="pills-top-slot">
+        <a href="../" class="pill-item pill-left">
+          <img src="其他電商品牌專案.webp" alt="其他電商品牌專案" />
         </a>
-        <a href="../../branding/" class="tag-btn">
+        <a href="../../branding/" class="pill-item pill-right">
           <img src="1-31.webp" alt="品牌商標與視覺應用" />
         </a>
+      </nav>
+
+      <!-- 4. 中段 3 大採訪撰文按鈕 (精確填入綠色留白框) -->
+      <section class="article-cards-slot">
+        <!-- 亞瑟西服 -->
+        <a href="https://webspuzzle.com.tw/2396" target="_blank" rel="noopener noreferrer" class="article-btn">
+          <img src="西服按鈕.webp" alt="品味風格 - 亞瑟時尚西服" />
+        </a>
+        <!-- 刺青按鈕 -->
+        <a href="https://webspuzzle.com.tw/2549" target="_blank" rel="noopener noreferrer" class="article-btn">
+          <img src="刺青按鈕.webp" alt="紋樣青刻 - The Tattoo" />
+        </a>
+        <!-- 瞳光眼鏡按鈕 -->
+        <a href="https://webspuzzle.com.tw/2079" target="_blank" rel="noopener noreferrer" class="article-btn">
+          <img src="眼鏡按鈕.webp" alt="獨一無二 - 瞳光眼鏡" />
+        </a>
+      </section>
+
+    </div>
+
+    <!-- 5. 底部導航按鈕群 -->
+    <footer class="bottom-nav-group">
+      <div class="bottom-pills-row">
+        <a href="../../" class="pill-item" style="width: auto;">
+          <img src="回首頁.webp" alt="回首頁" style="height: 32px;" />
+        </a>
+        <a href="../../branding/" class="pill-item" style="width: auto;">
+          <img src="1-31.webp" alt="品牌商標與視覺應用" style="height: 32px;" />
+        </a>
       </div>
-      <!-- 整張切好的頁尾按鈕圖 -->
+      <!-- 頁尾按鈕 -->
       <a href="../" class="footer-wide-btn">
         <img src="頁尾.webp" alt="其他電商品牌專案" />
       </a>
@@ -327,7 +331,7 @@
 
   </div>
 
-  <!-- 7. 全域懸浮回到頂端按鈕 -->
+  <!-- 6. 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="1-24.webp" alt="回到頂端" />
   </button>
