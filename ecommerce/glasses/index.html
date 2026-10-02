@@ -6,9 +6,6 @@
   <link rel="icon" href="../../cat.ico" type="image/x-icon" />
   <title>鉅恒行銷 | 眼鏡行銷專案</title>
   <style>
-    /* 引入源柔ゴシック (Gen Jyuu Gothic) 與全域設定 */
-    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap');
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -17,7 +14,6 @@
     }
 
     body {
-      font-family: "Gen Jyuu Gothic", "源柔ゴシック", "M PLUS Rounded 1c", -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: #0b1a13;
       min-height: 100vh;
       display: flex;
@@ -30,77 +26,53 @@
       width: 100%;
       max-width: 440px;
       min-height: 100vh;
-      background-color: #082117;
+      background-color: #02120b;
       position: relative;
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
-      padding-bottom: 24px;
     }
 
-    /* 1. 頂部導航欄 (Sticky Header) */
-    .top-header {
-      position: sticky;
+    /* 頂部導航列：背景已在長圖頂端，此處僅放左側回首頁小房子 */
+    .top-header-bar {
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 54px;
-      background: rgba(3, 20, 14, 0.95);
-      backdrop-filter: blur(8px);
+      height: 48px;
+      z-index: 50;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 0 16px;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-left: 16px;
     }
 
-    .home-link-top {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
+    .home-top-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px;
       text-decoration: none;
+      width: 32px;
+      height: 32px;
     }
 
-    .home-link-top img {
-      width: 24px;
-      height: 24px;
+    .home-top-btn img {
+      width: 22px;
+      height: 22px;
       display: block;
     }
 
-    .header-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .home-top-btn:active {
+      transform: scale(0.9);
+      opacity: 0.8;
     }
 
-    .header-logo-icon {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid #57ecd5;
-      display: inline-block;
-      box-shadow: 0 0 8px rgba(87, 236, 213, 0.6);
-    }
-
-    .header-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 1px;
-    }
-
-    /* 2. 主視覺形象 BANNER 區塊 */
+    /* 主視覺 BANNER 區塊 */
     .hero-banner-wrap {
       position: relative;
       width: 100%;
       line-height: 0;
+      margin-top: 48px; /* 留出頂部 Logo 空間 */
     }
 
     .hero-banner-img {
@@ -112,73 +84,73 @@
     /* 鉅恒官網熱區按鈕 (覆蓋在左下角發光圓圈處) */
     .official-site-btn {
       position: absolute;
-      left: 6%;
-      top: 52%;
-      width: 28%;
-      height: 38%;
+      left: 5%;
+      top: 48%;
+      width: 30%;
+      height: 42%;
       border-radius: 50%;
       cursor: pointer;
       text-decoration: none;
       background: transparent;
-      z-index: 10;
+      z-index: 20;
     }
 
     .official-site-btn:active {
-      transform: scale(0.94);
+      transform: scale(0.95);
     }
 
-    /* 3. 次選單快捷標籤列 (Pills) */
+    /* 頂部次選單快捷標籤列 */
     .sub-nav-tags {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
-      padding: 12px 14px 14px;
-      background-color: #072318;
+      padding: 10px 14px 14px;
+      background-color: #062217;
     }
 
-    .pill-link {
+    .tag-btn {
       display: inline-block;
       text-decoration: none;
       line-height: 0;
       transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    .pill-link:active {
+    .tag-btn:active {
       transform: scale(0.95);
       opacity: 0.85;
     }
 
-    .pill-link img {
+    .tag-btn img {
       height: 32px;
       width: auto;
       display: block;
     }
 
-    /* 4. 長圖展示區塊 (靜態圖文排版) */
-    .content-flow-section {
+    /* 長圖展示本體 */
+    .content-flow-wrap {
       width: 100%;
       position: relative;
       line-height: 0;
     }
 
-    .content-bg-img {
+    .content-flow-img {
       width: 100%;
       height: auto;
       display: block;
     }
 
-    /* 5. 採訪撰文 3 大可點擊卡片區 (精準定位在長圖的中段空白區) */
+    /* 形象拍攝 3 大按鈕浮動在長圖預留的空白中段 */
     .interactive-cards-wrap {
       width: 100%;
       padding: 0 14px;
-      margin-top: -68%; /* 向上浮貼在背景預留的展示區域 */
-      margin-bottom: 20px;
+      margin-top: -68%; /* 精準貼合在背景留白區 */
+      margin-bottom: 24px;
       display: flex;
       flex-direction: column;
       gap: 14px;
       position: relative;
-      z-index: 20;
+      z-index: 30;
     }
 
     .article-card {
@@ -188,7 +160,7 @@
       line-height: 0;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
       transition: transform 0.16s ease, filter 0.16s ease;
     }
 
@@ -207,18 +179,18 @@
       display: block;
     }
 
-    /* 6. 底部導航按鈕群 */
+    /* 底部導航按鈕群 */
     .bottom-nav-group {
       width: 100%;
-      padding: 16px 16px 20px;
+      background: #02120b;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
-      background: #082117;
+      padding: 16px 14px 24px;
+      gap: 14px;
     }
 
-    .bottom-row-pills {
+    .bottom-pills-row {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -226,33 +198,31 @@
       width: 100%;
     }
 
-    .bottom-btn-main {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 90%;
-      background: linear-gradient(180deg, #1b4d3b 0%, #103326 100%);
-      color: #ffffff;
+    /* 整張頁尾切圖按鈕 */
+    .footer-wide-btn {
+      display: block;
+      width: 100%;
+      line-height: 0;
       text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 10px 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(87, 236, 213, 0.4);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, opacity 0.15s ease;
     }
 
-    .bottom-btn-main:active {
-      transform: scale(0.97);
+    .footer-wide-btn:active {
+      transform: scale(0.985);
+      opacity: 0.9;
     }
 
-    /* 7. 全域懸浮回到頂端按鈕 (火箭) */
+    .footer-wide-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 全域懸浮回到頂端按鈕 (火箭) */
     .back-to-top {
       position: fixed;
-      right: calc(50% - 200px); /* 貼齊模擬手機視窗右側 */
-      bottom: 30px;
+      right: calc(50% - 200px);
+      bottom: 28px;
       width: 46px;
       height: 46px;
       cursor: pointer;
@@ -296,74 +266,62 @@
   <!-- 手機視窗主容器 -->
   <div class="app-container">
 
-    <!-- 1. 頂部導航欄 (Sticky Header) -->
-    <header class="top-header">
-      <a href="../../" class="home-link-top" aria-label="回到首頁">
+    <!-- 1. 頂部左側回首頁小房子 -->
+    <div class="top-header-bar">
+      <a href="../../" class="home-top-btn" aria-label="回到首頁">
         <img src="1-34.webp" alt="回首頁" />
       </a>
-      <div class="header-title-wrap">
-        <span class="header-logo-icon"></span>
-        <h1 class="header-title">鉅恒行銷</h1>
-      </div>
-    </header>
+    </div>
 
-    <!-- 2. 主視覺形象 BANNER -->
+    <!-- 2. 主視覺 BANNER (內嵌官網外連按鈕) -->
     <section class="hero-banner-wrap">
       <img src="BANNER.webp" alt="鉅恒行銷形象主視覺" class="hero-banner-img" />
-      <!-- 點擊跳轉鉅恒官網 (替換為你的目標官網網址) -->
-      <a href="https://webspuzzle.com.tw/category/cool" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="鉅恒官網連結"></a>
+      <a href="https://webspuzzle.com.tw/category/cool" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="鉅恒官網"></a>
     </section>
 
     <!-- 3. 頂部次選單快捷標籤 -->
     <nav class="sub-nav-tags">
-      <!-- 回到電商品牌大廳 -->
-      <a href="../" class="pill-link">
+      <a href="../" class="tag-btn">
         <img src="其他電商品牌專案.webp" alt="其他電商品牌專案" />
       </a>
-      <!-- 跳轉至品牌商標 -->
-      <a href="../../branding/" class="pill-link">
+      <a href="../../branding/" class="tag-btn">
         <img src="1-31.webp" alt="品牌商標與視覺應用" />
       </a>
     </nav>
 
-    <!-- 4. 長圖展示區塊 (拍攝修圖、BANNER、電子書、個人照) -->
-    <section class="content-flow-section">
-      <img src="背景.webp" alt="眼鏡行銷全案成果展示" class="content-bg-img" />
+    <!-- 4. 長圖展示區塊 (靜態排版全貌) -->
+    <section class="content-flow-wrap">
+      <img src="背景.webp" alt="眼鏡行銷成果全圖" class="content-flow-img" />
     </section>
 
-    <!-- 5. 採訪撰文 3 大獨立可點擊按鈕卡片 -->
+    <!-- 5. 採訪撰文 3 大獨立跳轉卡片 -->
     <section class="interactive-cards-wrap">
-    <!-- 亞瑟西服 -->
-    <a href="https://webspuzzle.com.tw/2396" target="_blank" rel="noopener noreferrer" class="article-card">
-      <img src="西服按鈕.webp" alt="品味風格 - 亞瑟時尚西服" />
-    </a>
+      <a href="https://webspuzzle.com.tw/2396" target="_blank" rel="noopener noreferrer" class="article-card">
+        <img src="西服按鈕.webp" alt="品味風格 - 亞瑟時尚西服" />
+      </a>
 
-    <!-- 刺青按鈕 -->
-    <a href="https://webspuzzle.com.tw/2549" target="_blank" rel="noopener noreferrer" class="article-card">
-      <img src="刺青按鈕.webp" alt="紋樣青刻 - The Tattoo" />
-    </a>
+      <a href="https://webspuzzle.com.tw/2549" target="_blank" rel="noopener noreferrer" class="article-card">
+        <img src="刺青按鈕.webp" alt="紋樣青刻 - The Tattoo" />
+      </a>
 
-    <!-- 瞳光眼鏡按鈕 -->
-    <a href="https://webspuzzle.com.tw/2079" target="_blank" rel="noopener noreferrer" class="article-card">
-      <img src="眼鏡按鈕.webp" alt="獨一無二 - 瞳光眼鏡" />
-    </a>
-  </section>
+      <a href="https://webspuzzle.com.tw/2079" target="_blank" rel="noopener noreferrer" class="article-card">
+        <img src="眼鏡按鈕.webp" alt="獨一無二 - 瞳光眼鏡" />
+      </a>
+    </section>
 
     <!-- 6. 底部導航按鈕群 -->
     <footer class="bottom-nav-group">
-      <div class="bottom-row-pills">
-        <!-- 底部回首頁 -->
-        <a href="../../" class="pill-link">
+      <div class="bottom-pills-row">
+        <a href="../../" class="tag-btn">
           <img src="回首頁.webp" alt="回首頁" />
         </a>
-        <!-- 底部品牌商標 -->
-        <a href="../../branding/" class="pill-link">
+        <a href="../../branding/" class="tag-btn">
           <img src="1-31.webp" alt="品牌商標與視覺應用" />
         </a>
       </div>
-      <!-- 底部寬幅：其他電商品牌專案 -->
-      <a href="../" class="bottom-btn-main">
-        <span>◳</span> 其他電商品牌專案
+      <!-- 整張切好的頁尾按鈕圖 -->
+      <a href="../" class="footer-wide-btn">
+        <img src="頁尾.webp" alt="其他電商品牌專案" />
       </a>
     </footer>
 
@@ -375,7 +333,6 @@
   </button>
 
   <script>
-    // 平滑滾動與回頂端監聽
     const backToTopBtn = document.getElementById('backToTopBtn');
 
     window.addEventListener('scroll', () => {
