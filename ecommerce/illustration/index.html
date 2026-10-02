@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../cat.ico" type="image/x-icon" />
+  <title>商業插畫精選 | 作品集</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #2b1f14;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+      background-color: #f7ebd9;
+    }
+
+    .canvas-stage {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+      overflow: hidden;
+    }
+
+    .main-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 頂部左上角回首頁小房子 */
+    .top-home-btn {
+      position: absolute;
+      top: 0.55%;
+      left: 3.4%;
+      width: 6.5%;
+      z-index: 50;
+      display: block;
+      line-height: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .top-home-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .top-home-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* 頂部主視覺 BANNER */
+    .banner-slot {
+      position: absolute;
+      top: 1.85%;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      line-height: 0;
+    }
+
+    .banner-slot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* BANNER 上的 IG 外連熱區 */
+    .banner-link-btn {
+      position: absolute;
+      right: 5%;
+      top: 16%;
+      width: 54%;
+      height: 68%;
+      border-radius: 20px;
+      background: transparent;
+      z-index: 25;
+      text-decoration: none;
+    }
+
+    .banner-link-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* 頂部雙膠囊標籤 */
+    .pills-top-slot {
+      position: absolute;
+      top: 7.95%;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 0 4%;
+    }
+
+    .pills-top-slot .pill-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    .pills-top-slot .pill-item:active {
+      transform: scale(0.95);
+      opacity: 0.85;
+    }
+
+    .pills-top-slot .pill-item img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    /* 底部雙膠囊標籤 */
+    .bottom-pills-slot {
+      position: absolute;
+      top: 96.8%;
+      left: 0;
+      width: 100%;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      padding: 0 4%;
+    }
+
+    .bottom-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.15s ease;
+    }
+
+    .bottom-pill-btn:active {
+      transform: scale(0.95);
+    }
+
+    .bottom-pill-btn img {
+      height: 26px;
+      width: auto;
+      display: block;
+    }
+
+    /* 全域懸浮火箭 */
+    .back-to-top {
+      position: fixed;
+      right: calc(50% - 205px);
+      bottom: 26px;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.28s ease;
+      z-index: 999;
+      border: none;
+      background: transparent;
+      padding: 0;
+      line-height: 0;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 16px;
+      }
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:active {
+      transform: scale(0.9);
+    }
+
+    .back-to-top img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="canvas-stage">
+      
+      <!-- 底層全案長圖 -->
+      <img src="商業插畫背景.webp" alt="商業插畫精選展示" class="main-bg-img" />
+
+      <!-- 1. 頂部回總首頁 (../../) -->
+      <a href="../../" class="top-home-btn" aria-label="回到首頁">
+        <img src="商業插畫左上角回首頁.webp" alt="回首頁" />
+      </a>
+
+      <!-- 2. 主視覺 BANNER (附 IG 外連) -->
+      <div class="banner-slot">
+        <img src="商業插畫BANNER.webp" alt="商業插畫形象" />
+        <a href="https://www.instagram.com/draw.davinci/" target="_blank" rel="noopener noreferrer" class="banner-link-btn" aria-label="觀看更多作品"></a>
+      </div>
+
+      <!-- 3. 頂部雙膠囊標籤 -->
+      <nav class="pills-top-slot">
+        <!-- 回電商大廳 (../) -->
+        <a href="../" class="pill-item" aria-label="其他電商品牌專案">
+          <img src="商業插畫其他電商品牌專案.webp" alt="其他電商品牌專案" />
+        </a>
+        <!-- 跳轉至品牌商標 (../branding/) -->
+        <a href="../branding/" class="pill-item" aria-label="品牌商標與視覺應用">
+          <img src="商業插畫品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+        </a>
+      </nav>
+
+      <!-- 4. 底部雙膠囊標籤列 -->
+      <div class="bottom-pills-slot">
+        <!-- 回總首頁 (../../) -->
+        <a href="../../" class="bottom-pill-btn" aria-label="回首頁">
+          <img src="商業插畫回首頁.webp" alt="回首頁" />
+        </a>
+        <!-- 跳轉至品牌商標 (../branding/) -->
+        <a href="../branding/" class="bottom-pill-btn" aria-label="品牌商標與視覺應用">
+          <img src="商業插畫品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 全域懸浮火箭回頂鈕 -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+    <img src="商業插畫火箭.webp" alt="回到頂端" />
+  </button>
+
+  <script>
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+
+</body>
+</html>
