@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>商業設計與品牌推廣 | 作品集</title>
+  <style>
+    /* 全域重置與字型 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #2b2623; /* 電腦端兩側的高雅深灰底色，襯托手機畫面 */
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 手機視窗主容器 (App Simulator) */
+    .app-container {
+      width: 100%;
+      max-width: 440px; /* 電腦端模擬真實旗艦機寬度 */
+      min-height: 100vh;
+      background: #f7ceb7 url('1_工作區域 1 複本 4.webp') no-repeat center top / cover;
+      position: relative;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    /* 頂部導航欄 (Header) */
+    .top-header {
+      width: 100%;
+      padding: 16px 20px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .menu-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s ease;
+    }
+
+    .menu-btn:active {
+      opacity: 0.6;
+    }
+
+    .menu-btn img {
+      width: 28px;
+      height: auto;
+      display: block;
+    }
+
+    /* 主視覺照片區塊 (Hero Section) */
+    .hero-section {
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 作品導向按鈕區塊 (CTA Button List) */
+    .nav-menu-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 20px 36px;
+      gap: 14px;
+    }
+
+    .cta-card {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      line-height: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .cta-card:hover {
+      filter: brightness(1.03);
+    }
+
+    .cta-card:active {
+      transform: scale(0.98);
+      filter: brightness(0.95);
+    }
+
+    .cta-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 抽屜選單 (Side Drawer) */
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-panel {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100%;
+      background: #fff8f3;
+      z-index: 101;
+      padding: 30px 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+      transition: right 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .drawer-panel.active {
+      right: 0;
+    }
+
+    .drawer-close {
+      align-self: flex-end;
+      font-size: 26px;
+      background: none;
+      border: none;
+      color: #6a3411;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .drawer-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #6a3411;
+      margin-bottom: 12px;
+    }
+
+    .drawer-desc {
+      font-size: 0.92rem;
+      color: #7d5b4a;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .drawer-links a {
+      display: block;
+      color: #6a3411;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(106, 52, 17, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 手機主容器 -->
+  <div class="app-container">
+    
+    <!-- 頂部導航 -->
+    <header class="top-header">
+      <img src="1-18.webp" alt="商業設計與品牌推廣" class="brand-logo" />
+      <button class="menu-btn" id="openMenuBtn" aria-label="選單">
+        <img src="1-19.webp" alt="選單" />
+      </button>
+    </header>
+
+    <!-- 主照片區塊 -->
+    <section class="hero-section">
+      <img src="1-17.webp" alt="設計師個人形象照" class="hero-image" />
+    </section>
+
+    <!-- 4 大作品按鈕列表 -->
+    <main class="nav-menu-list">
+      <!-- 1. 電商品牌視覺 -->
+      <a href="./ecommerce/" class="cta-card">
+        <img src="1-05_2.webp" alt="電商品牌視覺 E-Commerce & Branding" />
+      </a>
+
+      <!-- 2. 娛樂城視覺整合 -->
+      <a href="./igaming/" class="cta-card">
+        <img src="1-06_2.webp" alt="娛樂城視覺整合 iGaming Visuals" />
+      </a>
+
+      <!-- 3. 商業插畫精選 -->
+      <a href="./illustration/" class="cta-card">
+        <img src="1-07_2.webp" alt="商業插畫精選 Commercial Illustration" />
+      </a>
+
+      <!-- 4. 品牌商標與識別應用 -->
+      <a href="./branding/" class="cta-card">
+        <img src="1-08_2.webp" alt="品牌商標與識別應用 Logo & Identity" />
+      </a>
+    </main>
+
+  </div>
+
+  <!-- 漢堡側邊抽屜 -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer-panel" id="drawerPanel">
+    <button class="drawer-close" id="closeMenuBtn">&times;</button>
+    <h3 class="drawer-title">ABOUT DESIGNER</h3>
+    <p class="drawer-desc">
+      專注於商業品牌推廣、電商視覺與線上娛樂城切版換皮體驗設計。<br><br>
+      打造具備商業轉化力與極致視覺美感的使用者介面。
+    </p>
+    <nav class="drawer-links">
+      <a href="#about" onclick="closeDrawer()">個人經歷 & 技能</a>
+      <a href="#contact" onclick="closeDrawer()">聯絡信箱 (Contact)</a>
+    </nav>
+  </aside>
+
+  <script>
+    const openBtn = document.getElementById('openMenuBtn');
+    const closeBtn = document.getElementById('closeMenuBtn');
+    const overlay = document.getElementById('drawerOverlay');
+    const panel = document.getElementById('drawerPanel');
+
+    function openDrawer() {
+      overlay.classList.add('active');
+      panel.classList.add('active');
+    }
+
+    function closeDrawer() {
+      overlay.classList.remove('active');
+      panel.classList.remove('active');
+    }
+
+    openBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+  </script>
+
+</body>
+</html>
