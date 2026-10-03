@@ -36,7 +36,7 @@
       background-color: #27453d;
     }
 
-    /* 畫布舞台：依據 背景一.webp (4899px) 絕對定位 */
+    /* 畫布舞台 */
     .canvas-stage {
       position: relative;
       width: 100%;
@@ -50,16 +50,23 @@
       display: block;
     }
 
+    /* 解法 1：進場輕微微動提示動畫 */
+    @keyframes hintPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95) translateY(2px); filter: brightness(1.1); }
+      100% { transform: scale(1) translateY(0); filter: brightness(1); }
+    }
+
     /* 1. 頂部回首頁小房子 */
     .top-home-btn {
       position: absolute;
-      top: 0.59%;
+      top: 0.58%;
       left: 3.4%;
       width: 6.5%;
       z-index: 50;
       display: block;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease;
     }
 
     .top-home-btn img {
@@ -69,10 +76,10 @@
     }
 
     .top-home-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.9) translateY(2px);
     }
 
-    /* 2. 主視覺 BANNER */
+    /* 2. 主視覺 BANNER 進入官網熱區 */
     .banner-slot {
       position: absolute;
       top: 1.92%;
@@ -88,7 +95,6 @@
       display: block;
     }
 
-    /* BANNER 上的「進入官網」熱區按鈕 */
     .official-site-btn {
       position: absolute;
       right: 6%;
@@ -102,20 +108,20 @@
     }
 
     .official-site-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
-    /* 3. 頂部雙膠囊標籤 */
+    /* 3. 頂部雙膠囊標籤：半壓 BANNER，比例放大恰到好處 (高度 28px) */
     .pills-top-slot {
       position: absolute;
-      top: 10.0%;
+      top: 9.75%;
       left: 0;
       width: 100%;
       z-index: 20;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 0 4%;
     }
 
@@ -125,21 +131,23 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      animation: hintPulse 0.5s ease-out 0.25s 1 normal both;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
+    /* 解法 3：實體物理壓感 */
     .pills-top-slot .pill-item:active {
-      transform: scale(0.95);
-      opacity: 0.85;
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .pills-top-slot .pill-item img {
-      height: 24px;
+      height: 28px;
       width: auto;
       display: block;
     }
 
-    /* 4. 上方 3 顆圓角方卡 (進入 3 個子分頁) */
+    /* 4. 上方 3 顆核心專案入口方卡 */
     .top-cards-row {
       position: absolute;
       top: 11.27%;
@@ -160,7 +168,8 @@
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      transition: transform 0.15s ease, filter 0.15s ease;
+      animation: hintPulse 0.5s ease-out 0.4s 1 normal both;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .top-card-item:hover {
@@ -168,8 +177,8 @@
     }
 
     .top-card-item:active {
-      transform: scale(0.96);
-      filter: brightness(0.95);
+      transform: scale(0.94) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .top-card-item img {
@@ -178,33 +187,30 @@
       display: block;
     }
 
-    /* 5. 下方 3 顆圓形卡片 */
+    /* 5. 下方 3 顆圓形卡片：放大圓卡直徑 (24%)，飽滿不失真 */
     .bottom-cards-row {
       position: absolute;
-      top: 91.35%;
+      top: 90.85%;
       left: 0;
       width: 100%;
       z-index: 20;
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 0 9%;
+      padding: 0 6%;
     }
 
     .bottom-circle-item {
-      width: 21%;
+      width: 24%;
       display: block;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease;
-    }
-
-    .bottom-circle-item:hover {
-      filter: brightness(1.02);
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .bottom-circle-item:active {
-      transform: scale(0.95);
+      transform: scale(0.92) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .bottom-circle-item img {
@@ -213,17 +219,17 @@
       display: block;
     }
 
-    /* 6. 底部雙膠囊標籤 */
+    /* 6. 底部雙膠囊標籤列：高度調至 29px，微向上提避開頁尾條 */
     .bottom-pills-slot {
       position: absolute;
-      top: 95.55%;
+      top: 95.3%;
       left: 0;
       width: 100%;
       z-index: 30;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       padding: 0 4%;
     }
 
@@ -233,15 +239,16 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .bottom-pill-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .bottom-pill-btn img {
-      height: 26px;
+      height: 29px;
       width: auto;
       display: block;
     }
@@ -261,7 +268,6 @@
       width: 100%;
       line-height: 0;
       text-decoration: none;
-      transition: opacity 0.15s ease;
     }
 
     .bottom-footer-slot a:active {
@@ -319,13 +325,9 @@
 </head>
 <body>
 
-  <!-- 手機視窗主容器 -->
   <div class="app-container">
-
-    <!-- 舞台核心：背景長圖與精確定位元件 -->
     <div class="canvas-stage">
       
-      <!-- 底層全案長圖 -->
       <img src="背景一.webp" alt="歸毛家族 寵物護膚全案展示" class="main-bg-img" />
 
       <!-- 1. 頂部回首頁小房子 -->
@@ -336,7 +338,6 @@
       <!-- 2. 主視覺 BANNER -->
       <div class="banner-slot">
         <img src="BANNER.webp" alt="歸毛家族形象主視覺" />
-        <!-- 點擊進入官網 (可替換為真實商城網址) -->
         <a href="https://www.goodmofamily.com/" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="進入官網"></a>
       </div>
 
@@ -350,33 +351,27 @@
         </a>
       </nav>
 
-      <!-- 4. 上方 3 顆核心專案入口卡片 (方卡) -->
+      <!-- 4. 上方 3 顆核心入口方卡 -->
       <section class="top-cards-row">
-        <!-- 子專案 1：包裝/產品設計 -->
         <a href="./packaging/" class="top-card-item">
           <img src="背景二按鈕.webp" alt="包裝/產品設計" />
         </a>
-        <!-- 子專案 2：一頁式銷售頁 (護肝寶) -->
         <a href="./liver/" class="top-card-item">
           <img src="背景三按鈕.webp" alt="產品一頁式銷售頁 - 護肝寶" />
         </a>
-        <!-- 子專案 3：一頁式銷售頁 (氣管寶) -->
         <a href="./respiratory/" class="top-card-item">
           <img src="背景四按鈕.webp" alt="產品一頁式銷售頁 - 氣管寶" />
         </a>
       </section>
 
-      <!-- 5. 下方 3 顆圓形卡片 (圓卡) -->
+      <!-- 5. 下方 3 顆圓形卡片 -->
       <section class="bottom-cards-row">
-        <!-- 圓卡 1：包裝設計 -->
         <a href="./packaging/" class="bottom-circle-item">
           <img src="背景二頁尾按鈕.webp" alt="包裝設計" />
         </a>
-        <!-- 圓卡 2：護肝寶 -->
         <a href="./liver/" class="bottom-circle-item">
           <img src="背景三頁尾按鈕.webp" alt="一頁式銷售頁 - 護肝寶" />
         </a>
-        <!-- 圓卡 3：氣管寶 -->
         <a href="./respiratory/" class="bottom-circle-item">
           <img src="背景四頁尾按鈕.webp" alt="一頁式銷售頁 - 氣管寶" />
         </a>
@@ -400,10 +395,8 @@
       </div>
 
     </div>
-
   </div>
 
-  <!-- 8. 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="火箭.webp" alt="回到頂端" />
   </button>
@@ -423,6 +416,13 @@
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
+      });
+    });
+
+    // 解法 3：觸控微震動
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
       });
     });
   </script>
