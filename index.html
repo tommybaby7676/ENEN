@@ -2,12 +2,10 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <!-- 1. 核心 Viewport：鎖死手機解析度，禁止異常拉伸 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link rel="icon" href="LOGO.ico" type="image/x-icon" />
   <title>商業設計與品牌推廣 | 作品集</title>
   <style>
-    /* 全域重置 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -18,18 +16,17 @@
     html, body {
       width: 100%;
       height: 100vh;
-      overflow: hidden; /* 首頁鎖死一屏，嚴禁滾動 */
+      overflow: hidden;
       background-color: #2b2623;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    /* 手機視窗主容器：剛好滿屏 */
     .app-container {
       width: 100%;
       max-width: 440px;
@@ -42,7 +39,6 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
     }
 
-    /* 頂部導航欄 (Header) */
     .top-header {
       width: 100%;
       padding: 16px 20px 8px;
@@ -75,7 +71,6 @@
       display: block;
     }
 
-    /* 主視覺照片區塊 */
     .hero-section {
       width: 100%;
       line-height: 0;
@@ -88,7 +83,6 @@
       display: block;
     }
 
-    /* 4 大作品按鈕列表：自適應均分空間 */
     .nav-menu-list {
       flex: 1;
       display: flex;
@@ -98,11 +92,24 @@
       gap: 10px;
     }
 
-    /* 解法 1：進場微動提示動畫 (進場只執行一次) */
-    @keyframes cardEntranceHint {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.96) translateY(2px); filter: brightness(1.08); }
-      100% { transform: scale(1) translateY(0); filter: brightness(1); }
+    /* 每 3 秒循環一次，一開始 0%~20% 立即起跳 */
+    @keyframes cardPulseLoop {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      8% {
+        transform: scale(0.95) translateY(2px);
+        filter: brightness(1.1);
+      }
+      16% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.04);
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
     }
 
     .cta-card {
@@ -113,20 +120,20 @@
       border-radius: 14px;
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      /* 錯開進場提示時間 (Stagger Effect) */
-      animation: cardEntranceHint 0.5s ease-out 1 normal both;
+      animation: cardPulseLoop 3s ease-in-out infinite;
       transition: transform 0.08s ease, filter 0.08s ease;
     }
 
-    .cta-card:nth-child(1) { animation-delay: 0.2s; }
-    .cta-card:nth-child(2) { animation-delay: 0.3s; }
-    .cta-card:nth-child(3) { animation-delay: 0.4s; }
-    .cta-card:nth-child(4) { animation-delay: 0.5s; }
+    /* 4 張卡片時間差 (Stagger) */
+    .cta-card:nth-child(1) { animation-delay: 0.05s; }
+    .cta-card:nth-child(2) { animation-delay: 0.20s; }
+    .cta-card:nth-child(3) { animation-delay: 0.35s; }
+    .cta-card:nth-child(4) { animation-delay: 0.50s; }
 
-    /* 解法 3：極致觸控實體反饋 */
+    /* 觸控實體反饋 */
     .cta-card:active {
-      transform: scale(0.94) translateY(2px) !important;
-      filter: brightness(0.88) !important;
+      transform: scale(0.92) translateY(3px) !important;
+      filter: brightness(0.85) !important;
     }
 
     .cta-card img {
@@ -135,7 +142,7 @@
       display: block;
     }
 
-    /* 抽屜選單 (Side Drawer) */
+    /* 漢堡抽屜選單 */
     .drawer-overlay {
       position: fixed;
       top: 0;
@@ -168,6 +175,7 @@
       flex-direction: column;
       box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
       transition: right 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
     }
 
     .drawer-panel.active {
@@ -190,13 +198,15 @@
       font-size: 1.25rem;
       font-weight: 700;
       color: #6a3411;
+      letter-spacing: 0.06em;
       margin-bottom: 12px;
     }
 
     .drawer-desc {
       font-size: 0.92rem;
       color: #7d5b4a;
-      line-height: 1.6;
+      line-height: 1.65;
+      letter-spacing: 0.02em;
       margin-bottom: 24px;
     }
 
@@ -207,6 +217,7 @@
       font-size: 1rem;
       font-weight: 600;
       padding: 12px 0;
+      letter-spacing: 0.03em;
       border-bottom: 1px solid rgba(106, 52, 17, 0.1);
     }
   </style>
@@ -215,7 +226,6 @@
 
   <div class="app-container">
     
-    <!-- 頂部導航 -->
     <header class="top-header">
       <img src="01.webp" alt="商業設計與品牌推廣" class="brand-logo" />
       <button class="menu-btn" id="openMenuBtn" aria-label="選單">
@@ -223,12 +233,10 @@
       </button>
     </header>
 
-    <!-- 主照片區塊 -->
     <section class="hero-section">
       <img src="照片.webp" alt="設計師個人形象照" class="hero-image" />
     </section>
 
-    <!-- 4 大作品按鈕列表 -->
     <main class="nav-menu-list">
       <a href="./ecommerce/" class="cta-card">
         <img src="11.webp" alt="電商品牌視覺 E-Commerce & Branding" />
@@ -246,7 +254,6 @@
 
   </div>
 
-  <!-- 漢堡側邊抽屜 -->
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="drawer-panel" id="drawerPanel">
     <button class="drawer-close" id="closeMenuBtn">&times;</button>
@@ -281,7 +288,6 @@
     closeBtn.addEventListener('click', closeDrawer);
     overlay.addEventListener('click', closeDrawer);
 
-    // 解法 3：手機真實震動物理反饋
     document.querySelectorAll('.cta-card').forEach(card => {
       card.addEventListener('touchstart', () => {
         if (navigator.vibrate) navigator.vibrate(12);
