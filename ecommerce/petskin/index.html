@@ -51,10 +51,44 @@
     }
 
     /* 解法 1：進場輕微微動提示動畫 */
-    @keyframes hintPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(0.95) translateY(2px); filter: brightness(1.1); }
-      100% { transform: scale(1) translateY(0); filter: brightness(1); }
+    /* 每 3 秒輕輕呼吸一次（前 0.6 秒彈動，後 2.4 秒靜止待機） */
+    @keyframes hintPulseLoop {
+      0%, 80%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      88% {
+        transform: scale(0.95) translateY(2px);
+        filter: brightness(1.1);
+      }
+      94% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.05);
+      }
+    }
+
+    /* 將動畫套用到：頂部膠囊、主要卡片、底部膠囊 */
+    .pill-item,
+    .top-card-item,
+    .bottom-circle-item,
+    .bottom-pill-btn {
+      animation: hintPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
+    }
+
+    /* 錯開進場節奏，避免所有按鈕同頻震動 */
+    .pill-item:nth-child(2),
+    .bottom-pill-btn:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    /* 觸控/點擊瞬間：強烈擬物壓感反饋 */
+    .pill-item:active,
+    .top-card-item:active,
+    .bottom-circle-item:active,
+    .bottom-pill-btn:active {
+      transform: scale(0.92) translateY(3px) !important;
+      filter: brightness(0.85) !important;
     }
 
     /* 1. 頂部回首頁小房子 */
