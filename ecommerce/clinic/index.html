@@ -26,7 +26,6 @@
       align-items: flex-start;
     }
 
-    /* 手機視窗主容器 */
     .app-container {
       width: 100%;
       max-width: 440px;
@@ -36,7 +35,6 @@
       background-color: #2b1c19;
     }
 
-    /* 舞台畫布：以背景_3.webp 為基準 */
     .canvas-stage {
       position: relative;
       width: 100%;
@@ -50,7 +48,13 @@
       display: block;
     }
 
-    /* 1. 頂部左上角回首頁小房子 */
+    @keyframes hintPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95) translateY(2px); filter: brightness(1.1); }
+      100% { transform: scale(1) translateY(0); filter: brightness(1); }
+    }
+
+    /* 1. 頂部回首頁小房子 */
     .top-home-btn {
       position: absolute;
       top: 0.38%;
@@ -59,7 +63,7 @@
       z-index: 50;
       display: block;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease;
     }
 
     .top-home-btn img {
@@ -69,20 +73,20 @@
     }
 
     .top-home-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.9) translateY(2px);
     }
 
-    /* 2. 頂部雙膠囊標籤（高度齊平、寬度自然等比，完美還原示意圖比例） */
+    /* 2. 頂部雙膠囊標籤：恢復精緻等比，高度固定 28px，半壓 BANNER，絕不壓到「A1海報印刷」 */
     .pills-top-slot {
       position: absolute;
-      top: 8.52%;
+      top: 8.58%;
       left: 0;
       width: 100%;
       z-index: 20;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 0 3%;
     }
 
@@ -92,24 +96,25 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      animation: hintPulse 0.5s ease-out 0.25s 1 normal both;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .pills-top-slot .pill-item:active {
-      transform: scale(0.95);
-      opacity: 0.85;
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .pills-top-slot .pill-item img {
-      height: 36px; /* 兩顆高度嚴格等高 */
-      width: auto;  /* 寬度隨字數自然等比展開，絕不變形暴肥 */
+      height: 28px; /* 四顆尺寸全面統一等比，告別拉爆暴肥 */
+      width: auto;
       display: block;
     }
 
-    /* 3. 底部按鈕列（保持自然比例，不拉伸） */
+    /* 3. 底部雙膠囊標籤：高度 29px，微向上提避開底頁條 */
     .bottom-pills-slot {
       position: absolute;
-      top: 95.58%;
+      top: 95.3%;
       left: 0;
       width: 100%;
       z-index: 30;
@@ -121,18 +126,21 @@
     }
 
     .bottom-pill-btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .bottom-pill-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .bottom-pill-btn img {
-      height: 38px;
+      height: 29px;
       width: auto;
       display: block;
     }
@@ -152,7 +160,6 @@
       width: 100%;
       line-height: 0;
       text-decoration: none;
-      transition: opacity 0.15s ease;
     }
 
     .bottom-footer-slot a:active {
@@ -165,7 +172,7 @@
       display: block;
     }
 
-    /* 5. 全域懸浮常駐火箭回頂鈕 */
+    /* 5. 全域懸浮火箭回頂鈕 */
     .back-to-top {
       position: fixed;
       right: calc(50% - 205px);
@@ -210,13 +217,9 @@
 </head>
 <body>
 
-  <!-- 手機視窗主容器 -->
   <div class="app-container">
-
-    <!-- 舞台核心：背景長圖與精確定位按鈕 -->
     <div class="canvas-stage">
       
-      <!-- 底層全案長圖 -->
       <img src="背景.webp" alt="彤伊診所 醫美專案成果展示" class="main-bg-img" />
 
       <!-- 1. 頂部回首頁小房子 -->
@@ -224,7 +227,7 @@
         <img src="左上回首頁.webp" alt="回首頁" />
       </a>
 
-      <!-- 2. 頂部雙膠囊標籤（位於模特兒下方、A1海報上方） -->
+      <!-- 2. 頂部雙膠囊標籤 -->
       <nav class="pills-top-slot">
         <a href="../" class="pill-item" aria-label="其他電商品牌專案">
           <img src="其他電商品牌專案.webp" alt="其他電商品牌專案" />
@@ -252,10 +255,8 @@
       </div>
 
     </div>
-
   </div>
 
-  <!-- 5. 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="火箭.webp" alt="回到頂端" />
   </button>
@@ -275,6 +276,12 @@
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
+      });
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
       });
     });
   </script>
