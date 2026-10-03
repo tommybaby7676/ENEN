@@ -2,7 +2,6 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <!-- 【必須補上這行】 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link rel="icon" href="../LOGO.ico" type="image/x-icon" />
   <title>電商品牌視覺 | E-COMMERCE</title>
@@ -15,7 +14,7 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
       background-color: #0b1a13;
       height: 100vh;
       display: flex;
@@ -24,11 +23,10 @@
       overflow: hidden;
     }
 
-    /* 手機視窗主容器 */
     .app-container {
       width: 100%;
       max-width: 440px;
-      height: 100vh; /* 鎖定剛好滿屏，禁止撐長 */
+      height: 100vh;
       background: #0b1a13 url('電商背景.webp') no-repeat center center / cover;
       position: relative;
       overflow: hidden;
@@ -38,7 +36,6 @@
       padding-bottom: 12px;
     }
 
-    /* 頂部 Header：回首頁 + 主標題 */
     .top-header {
       width: 100%;
       position: relative;
@@ -59,12 +56,11 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      transition: transform 0.08s ease;
     }
 
     .home-btn:active {
       transform: translateY(-50%) scale(0.92);
-      opacity: 0.8;
     }
 
     .home-btn img {
@@ -80,7 +76,6 @@
       display: block;
     }
 
-    /* 快捷切換標籤 */
     .filter-tags {
       width: 100%;
       display: flex;
@@ -93,12 +88,13 @@
     .tag-link {
       display: inline-block;
       text-decoration: none;
-      transition: transform 0.15s ease, filter 0.15s ease;
+      line-height: 0;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .tag-link:active {
-      transform: scale(0.95);
-      filter: brightness(0.9);
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .tag-link img {
@@ -107,7 +103,6 @@
       display: block;
     }
 
-    /* 專案卡片列表：自動均分高度，4 張卡片一屏全收 */
     .project-list {
       flex: 1;
       display: flex;
@@ -115,6 +110,26 @@
       justify-content: space-evenly;
       gap: 8px;
       padding: 0 16px;
+    }
+
+    /* 每 3 秒波浪式循環跳動 */
+    @keyframes projectPulseLoop {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      8% {
+        transform: scale(0.96) translateY(2px);
+        filter: brightness(1.1);
+      }
+      16% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.04);
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
     }
 
     .project-card {
@@ -125,16 +140,20 @@
       border-radius: 18px;
       overflow: hidden;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-      transition: transform 0.18s ease, filter 0.18s ease;
+      animation: projectPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
-    .project-card:hover {
-      filter: brightness(1.02);
-    }
+    /* 4 張卡片時間差 (Stagger) */
+    .project-card:nth-child(1) { animation-delay: 0.05s; }
+    .project-card:nth-child(2) { animation-delay: 0.20s; }
+    .project-card:nth-child(3) { animation-delay: 0.35s; }
+    .project-card:nth-child(4) { animation-delay: 0.50s; }
 
+    /* 觸控實體反饋 */
     .project-card:active {
-      transform: scale(0.985);
-      filter: brightness(0.95);
+      transform: scale(0.93) translateY(3px) !important;
+      filter: brightness(0.85) !important;
     }
 
     .project-card img {
@@ -148,52 +167,46 @@
 
   <div class="app-container">
     
-    <!-- 頂部導航 -->
     <header class="top-header">
-      <!-- 回首頁 -->
       <a href="../" class="home-btn" aria-label="回到首頁">
         <img src="回首頁.webp" alt="回首頁" />
       </a>
-      <!-- 電商品牌大標題 -->
       <img src="電商品牌.webp" alt="電商品牌 E-COMMERCE" class="category-title" />
     </header>
 
-    <!-- 標籤快捷導航 -->
     <nav class="filter-tags">
-      <!-- 商業插畫 -->
       <a href="./illustration/" class="tag-link">
         <img src="商業插畫.webp" alt="商業插畫" />
       </a>
-      <!-- 品牌商標與視覺應用 -->
       <a href="./branding/" class="tag-link">
         <img src="品牌商標與視覺應用.webp" alt="品牌商標與視覺應用" />
       </a>
     </nav>
 
-    <!-- 專案卡片列表 (點擊進入各自的詳細作品頁) -->
     <main class="project-list">
-      <!-- 1. 眼鏡行銷 -->
       <a href="./glasses/" class="project-card">
         <img src="眼鏡行銷.webp" alt="眼鏡行銷專案" />
       </a>
-
-      <!-- 2. 寵物護膚 -->
       <a href="./petskin/" class="project-card">
         <img src="寵物護膚.webp" alt="寵物護膚專案" />
       </a>
-
-      <!-- 3. 西式糕點店 -->
       <a href="./bakery/" class="project-card">
         <img src="西式糕點店.webp" alt="西式糕點店專案" />
       </a>
-
-      <!-- 4. 醫美診所 -->
       <a href="./clinic/" class="project-card">
         <img src="醫美診所.webp" alt="醫美診所專案" />
       </a>
     </main>
 
   </div>
+
+  <script>
+    document.querySelectorAll('.project-card, .tag-link, .home-btn').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
+      });
+    });
+  </script>
 
 </body>
 </html>
