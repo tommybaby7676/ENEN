@@ -31,7 +31,7 @@
       background-color: #02120b;
     }
 
-    /* 背景舞台容器：所有元件依長圖比例 100% 絕對定位 */
+    /* 背景舞台容器 */
     .canvas-stage {
       position: relative;
       width: 100%;
@@ -44,6 +44,44 @@
       display: block;
     }
 
+    /* 每 3 秒循環微彈呼吸動畫（前 0.6s 彈動，後 2.4s 靜止待機） */
+    @keyframes hintPulseLoop {
+      0%, 80%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      88% {
+        transform: scale(0.95) translateY(2px);
+        filter: brightness(1.1);
+      }
+      94% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.05);
+      }
+    }
+
+    /* 將 3 秒呼吸動畫完整套用給所有按鈕 */
+    .pill-item,
+    .article-card-link,
+    .bottom-pill-btn {
+      animation: hintPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
+    }
+
+    /* 錯開跳動節奏，避免所有按鈕同頻 */
+    .pill-item.pill-right,
+    .bottom-pill-btn:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    /* 觸控/點擊瞬間：強烈擬物壓感反饋 */
+    .pill-item:active,
+    .article-card-link:active,
+    .bottom-pill-btn:active {
+      transform: scale(0.92) translateY(3px) !important;
+      filter: brightness(0.85) !important;
+    }
+
     /* 1. 頂部回首頁小房子 */
     .top-home-btn {
       position: absolute;
@@ -53,7 +91,7 @@
       z-index: 50;
       display: block;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease;
     }
 
     .top-home-btn img {
@@ -63,7 +101,7 @@
     }
 
     .top-home-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.9) translateY(2px);
     }
 
     /* 2. 主視覺 BANNER */
@@ -82,7 +120,6 @@
       display: block;
     }
 
-    /* 鉅恒官網圓形熱區按鈕 */
     .official-site-btn {
       position: absolute;
       left: 6%;
@@ -116,12 +153,6 @@
       display: inline-block;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    .pill-item:active {
-      transform: scale(0.95);
-      opacity: 0.85;
     }
 
     .pill-item img {
@@ -138,7 +169,7 @@
       width: 48%;
     }
 
-    /* 4. 形象採訪 3 大可點擊卡片（精確像素咬合） */
+    /* 4. 形象採訪 3 大卡片 */
     .article-card-1 {
       position: absolute;
       top: 51.46%;
@@ -171,16 +202,6 @@
       border-radius: 6px;
       overflow: hidden;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-      transition: transform 0.15s ease, filter 0.15s ease;
-    }
-
-    .article-card-link:hover {
-      filter: brightness(1.02);
-    }
-
-    .article-card-link:active {
-      transform: scale(0.985);
-      filter: brightness(0.95);
     }
 
     .article-card-link img {
@@ -189,7 +210,7 @@
       display: block;
     }
 
-    /* 5. 底部膠囊群與回頂圖示（填入背景底部的留白區） */
+    /* 5. 底部膠囊群（圖一標準比例：32px） */
     .bottom-pills-slot {
       position: absolute;
       top: 96.16%;
@@ -215,11 +236,7 @@
       display: block;
     }
 
-    .bottom-pill-btn:active {
-      transform: scale(0.94);
-    }
-
-    /* 6. 底部黑底「其他電商品牌專案」大按鈕 */
+    /* 6. 底部黑底專案大按鈕 */
     .bottom-footer-slot {
       position: absolute;
       top: 97.40%;
@@ -234,7 +251,6 @@
       width: 100%;
       line-height: 0;
       text-decoration: none;
-      transition: opacity 0.15s ease;
     }
 
     .bottom-footer-slot a:active {
@@ -292,13 +308,9 @@
 </head>
 <body>
 
-  <!-- 手機視窗主容器 -->
   <div class="app-container">
-
-    <!-- 舞台核心：背景圖與精確定位按鈕 -->
     <div class="canvas-stage">
       
-      <!-- 底層全案長圖 -->
       <img src="背景.webp" alt="眼鏡行銷成果展示" class="main-bg-img" />
 
       <!-- 1. 頂部回首頁小房子 -->
@@ -322,7 +334,7 @@
         </a>
       </nav>
 
-      <!-- 4. 形象拍攝 3 大卡片 (精準咬合留白框) -->
+      <!-- 4. 形象拍攝 3 大卡片 -->
       <div class="article-card-1">
         <a href="https://webspuzzle.com.tw/2396" target="_blank" rel="noopener noreferrer" class="article-card-link">
           <img src="西服按鈕.webp" alt="品味風格 - 亞瑟時尚西服" />
@@ -341,7 +353,7 @@
         </a>
       </div>
 
-      <!-- 5. 底部膠囊列與靜態回頂小鈕 (鏡像示意圖排版) -->
+      <!-- 5. 底部膠囊列 -->
       <div class="bottom-pills-slot">
         <a href="../../" class="bottom-pill-btn">
           <img src="回首頁.webp" alt="回首頁" />
@@ -351,7 +363,7 @@
         </a>
       </div>
 
-      <!-- 6. 底部黑底「其他電商品牌專案」按鈕 -->
+      <!-- 6. 底部黑底大按鈕 -->
       <div class="bottom-footer-slot">
         <a href="../">
           <img src="頁尾.webp" alt="其他電商品牌專案" />
@@ -359,10 +371,9 @@
       </div>
 
     </div>
-
   </div>
 
-  <!-- 7. 全域懸浮火箭回頂鈕 (滾動超過 350px 浮現) -->
+  <!-- 7. 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="1-24.webp" alt="回到頂端" />
   </button>
@@ -382,6 +393,13 @@
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
+      });
+    });
+
+    // 觸控微震動
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
       });
     });
   </script>
