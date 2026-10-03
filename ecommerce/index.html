@@ -2,6 +2,8 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
+  <!-- 【必須補上這行】 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link rel="icon" href="../LOGO.ico" type="image/x-icon" />
   <title>電商品牌視覺 | E-COMMERCE</title>
   <style>
@@ -15,24 +17,25 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: #0b1a13;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     /* 手機視窗主容器 */
     .app-container {
       width: 100%;
       max-width: 440px;
-      min-height: 100vh;
-      background-color: #0b1a13; /* 底色 */
+      height: 100vh; /* 鎖定剛好滿屏，禁止撐長 */
+      background: #0b1a13 url('電商背景.webp') no-repeat center center / cover;
       position: relative;
-      overflow-x: hidden;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-      padding-bottom: 30px;
+      padding-bottom: 12px;
     }
 
     /* 頂部 Header：回首頁 + 主標題 */
@@ -42,7 +45,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 24px 20px 14px;
+      padding: 16px 20px 8px;
     }
 
     .home-btn {
@@ -77,14 +80,14 @@
       display: block;
     }
 
-    /* 快捷切換標籤 (Pills) */
+    /* 快捷切換標籤 */
     .filter-tags {
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 12px;
-      padding: 6px 16px 20px;
+      padding: 4px 16px 10px;
     }
 
     .tag-link {
@@ -104,11 +107,13 @@
       display: block;
     }
 
-    /* 專案卡片列表 */
+    /* 專案卡片列表：自動均分高度，4 張卡片一屏全收 */
     .project-list {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      justify-content: space-evenly;
+      gap: 8px;
       padding: 0 16px;
     }
 
@@ -143,9 +148,6 @@
 
   <div class="app-container">
     
-    <!-- 【把電商背景圖當作真實圖片直接放第一行】 -->
-    <img src="電商背景.webp" alt="電商背景" style="width: 100%; height: auto; display: block;" />
-
     <!-- 頂部導航 -->
     <header class="top-header">
       <!-- 回首頁 -->
