@@ -24,6 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
     }
 
     .app-container {
@@ -48,6 +49,39 @@
       display: block;
     }
 
+    /* 每 3 秒同步微彈呼吸循環 */
+    @keyframes hintPulseLoop {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      8% {
+        transform: scale(0.94) translateY(2px);
+        filter: brightness(1.1);
+      }
+      16% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.04);
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+    }
+
+    .pill-item,
+    .bottom-pill-btn {
+      animation: hintPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
+    }
+
+    /* 觸控/點擊瞬間：強烈擬物壓感反饋 */
+    .pill-item:active,
+    .bottom-pill-btn:active {
+      transform: scale(0.92) translateY(3px) !important;
+      filter: brightness(0.85) !important;
+    }
+
     .top-home-btn {
       position: absolute;
       top: 0.55%;
@@ -56,7 +90,7 @@
       z-index: 50;
       display: block;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease;
     }
 
     .top-home-btn img {
@@ -66,19 +100,20 @@
     }
 
     .top-home-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.9) translateY(2px);
     }
 
+    /* 頂部雙膠囊：無 BANNER，位置調至 2.15% 剛好置中於空白填補處，高度 28px */
     .pills-top-slot {
       position: absolute;
-      top: 1.85%;
+      top: 2.15%;
       left: 0;
       width: 100%;
       z-index: 20;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 0 4%;
     }
 
@@ -88,30 +123,25 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-
-    .pills-top-slot .pill-item:active {
-      transform: scale(0.95);
-      opacity: 0.85;
     }
 
     .pills-top-slot .pill-item img {
-      height: 24px;
+      height: 28px;
       width: auto;
       display: block;
     }
 
+    /* 底部雙膠囊：統一高度 32px，微調位置至 96.8% */
     .bottom-pills-slot {
       position: absolute;
-      top: 97.4%;
+      top: 96.8%;
       left: 0;
       width: 100%;
       z-index: 30;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       padding: 0 4%;
     }
 
@@ -121,15 +151,10 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease;
-    }
-
-    .bottom-pill-btn:active {
-      transform: scale(0.95);
     }
 
     .bottom-pill-btn img {
-      height: 26px;
+      height: 32px;
       width: auto;
       display: block;
     }
@@ -188,6 +213,7 @@
         <img src="品牌左上角回首頁.webp" alt="回首頁" />
       </a>
 
+      <!-- 頂部雙膠囊標籤 -->
       <nav class="pills-top-slot">
         <a href="../ecommerce/" class="pill-item" aria-label="其他電商品牌專案">
           <img src="品牌其他電商品牌專案.webp" alt="其他電商品牌專案" />
@@ -197,6 +223,7 @@
         </a>
       </nav>
 
+      <!-- 底部雙膠囊標籤 -->
       <div class="bottom-pills-slot">
         <a href="../" class="bottom-pill-btn" aria-label="回首頁">
           <img src="品牌回首頁.webp" alt="回首頁" />
@@ -224,6 +251,13 @@
     });
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 觸控微震動回饋
+    document.querySelectorAll('.pill-item, .bottom-pill-btn, .top-home-btn').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
+      });
     });
   </script>
 </body>
