@@ -26,7 +26,6 @@
       align-items: flex-start;
     }
 
-    /* 手機視窗主容器 */
     .app-container {
       width: 100%;
       max-width: 440px;
@@ -36,7 +35,6 @@
       background-color: #382c23;
     }
 
-    /* 畫布舞台：依據 西式背景.webp 進行絕對定位 */
     .canvas-stage {
       position: relative;
       width: 100%;
@@ -50,6 +48,13 @@
       display: block;
     }
 
+    /* 解法 1：進場微動提示 */
+    @keyframes hintPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95) translateY(2px); filter: brightness(1.1); }
+      100% { transform: scale(1) translateY(0); filter: brightness(1); }
+    }
+
     /* 1. 頂部回首頁小房子 */
     .top-home-btn {
       position: absolute;
@@ -59,7 +64,7 @@
       z-index: 50;
       display: block;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease;
     }
 
     .top-home-btn img {
@@ -69,7 +74,7 @@
     }
 
     .top-home-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.9) translateY(2px);
     }
 
     /* 2. 主視覺 BANNER */
@@ -88,7 +93,6 @@
       display: block;
     }
 
-    /* BANNER 上的「進入官網」熱區按鈕 */
     .official-site-btn {
       position: absolute;
       right: 12%;
@@ -102,20 +106,20 @@
     }
 
     .official-site-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
-    /* 3. 頂部雙膠囊標籤（高度嚴格限制 24px，自然等比） */
+    /* 3. 頂部雙膠囊標籤：半壓 BANNER，放大至 28px，不壓下方「特殊造型名片」標題 */
     .pills-top-slot {
       position: absolute;
-      top: 9.35%;
+      top: 8.95%;
       left: 0;
       width: 100%;
       z-index: 20;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       padding: 0 4%;
     }
 
@@ -125,31 +129,32 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease, opacity 0.15s ease;
+      animation: hintPulse 0.5s ease-out 0.25s 1 normal both;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .pills-top-slot .pill-item:active {
-      transform: scale(0.95);
-      opacity: 0.85;
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .pills-top-slot .pill-item img {
-      height: 24px;
+      height: 28px;
       width: auto;
       display: block;
     }
 
-    /* 4. 底部雙膠囊標籤（高度 26px，置中對齊） */
+    /* 4. 底部雙膠囊標籤：放大至 29px，微向上提避開頁尾條 */
     .bottom-pills-slot {
       position: absolute;
-      top: 95.35%;
+      top: 95.1%;
       left: 0;
       width: 100%;
       z-index: 30;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       padding: 0 4%;
     }
 
@@ -159,15 +164,16 @@
       justify-content: center;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.15s ease;
+      transition: transform 0.08s ease, filter 0.08s ease;
     }
 
     .bottom-pill-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.93) translateY(2px) !important;
+      filter: brightness(0.88) !important;
     }
 
     .bottom-pill-btn img {
-      height: 26px;
+      height: 29px;
       width: auto;
       display: block;
     }
@@ -187,7 +193,6 @@
       width: 100%;
       line-height: 0;
       text-decoration: none;
-      transition: opacity 0.15s ease;
     }
 
     .bottom-footer-slot a:active {
@@ -245,13 +250,9 @@
 </head>
 <body>
 
-  <!-- 手機視窗主容器 -->
   <div class="app-container">
-
-    <!-- 舞台核心：背景長圖與精確定位元件 -->
     <div class="canvas-stage">
       
-      <!-- 底層全案長圖 -->
       <img src="西式背景.webp" alt="糕枕無憂 品牌行銷全案展示" class="main-bg-img" />
 
       <!-- 1. 頂部回首頁小房子 -->
@@ -262,7 +263,6 @@
       <!-- 2. 主視覺 BANNER -->
       <div class="banner-slot">
         <img src="西式BANNER.webp" alt="糕枕無憂形象主視覺" />
-        <!-- 點擊進入官網熱區 -->
         <a href="https://pluffle.waca.tw/" target="_blank" rel="noopener noreferrer" class="official-site-btn" aria-label="進入官網"></a>
       </div>
 
@@ -294,10 +294,8 @@
       </div>
 
     </div>
-
   </div>
 
-  <!-- 6. 全域懸浮火箭回頂鈕 -->
   <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
     <img src="西式火箭.webp" alt="回到頂端" />
   </button>
@@ -317,6 +315,12 @@
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
+      });
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
       });
     });
   </script>
