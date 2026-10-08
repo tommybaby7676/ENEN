@@ -19,6 +19,11 @@
       overflow: hidden;
       background-color: #2b0b04;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      scrollbar-width: none; /* 隱藏滾動條 */
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
     }
 
     body {
@@ -39,26 +44,29 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     }
 
-    /* 頂部 Header 標題區 */
-    .top-header {
-      width: 100%;
-      padding: 16px 20px 10px;
+    /* 頂部標題：絕對定位完美置頂、置中、比例大氣 */
+    .top-header-title {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78%;
+      z-index: 10;
+      line-height: 0;
       display: flex;
       justify-content: center;
-      align-items: center;
-      z-index: 10;
     }
 
-    .header-title-img {
-      height: 24px;
-      width: auto;
+    .top-header-title img {
+      width: 100%;
+      height: auto;
       display: block;
     }
 
-    /* 3 大專案 CTA 清單區塊：精準下沉置於巴風特下方 */
+    /* 3 大專案 CTA 清單區塊 */
     .project-cta-list {
       position: absolute;
-      bottom: 80px;
+      bottom: 84px;
       left: 0;
       width: 100%;
       display: flex;
@@ -142,10 +150,10 @@
 
   <div class="app-container">
 
-    <!-- 頂部標題（白色箭頭已依指示移除） -->
-    <header class="top-header">
-      <img src="頁首字.webp" alt="娛樂城視覺整合 iGaming Visuals" class="header-title-img" />
-    </header>
+    <!-- 頂部標題：絕對定位置中飽滿 -->
+    <div class="top-header-title">
+      <img src="頁首字.webp" alt="娛樂城視覺整合 iGaming Visuals" />
+    </div>
 
     <!-- 3 大專案 CTA -->
     <main class="project-cta-list">
