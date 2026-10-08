@@ -87,7 +87,7 @@
       filter: brightness(0.85) !important;
     }
 
-    /* 1. 頂部右上角雙膠囊標籤：嚴格置於深綠底橫帶右側 */
+    /* 1. 頂部右上角雙膠囊標籤 */
     .pills-top-slot {
       position: absolute;
       top: 8.6%;
@@ -132,49 +132,32 @@
       display: block;
     }
 
-    /* 3. 右下角常駐火箭回頂鈕 */
+    /* 3. 火箭回頂鈕：絕對定位在綠色條正上方，等比放大，絕不遮擋文字 */
     .back-to-top {
-      position: fixed;
-      right: calc(50% - 205px);
-      bottom: 22px; /* 稍微避開底層滿版返回列 */
-      width: 72px;
+      position: absolute;
+      right: 3.5%;
+      bottom: 5.6%; /* 緊靠綠色長條頂部上方 */
+      width: 14.5%;  /* 約 64px 比例，飽滿端正 */
       height: auto;
       cursor: pointer;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(20px);
-      transition: all 0.28s ease;
-      z-index: 999;
+      z-index: 40;
       border: none;
       background: transparent;
       padding: 0;
       line-height: 0;
-    }
-
-    @media (max-width: 480px) {
-      .back-to-top {
-        right: 12px;
-        width: 18px;
-        width: 68px;
-      }
-    }
-
-    .back-to-top.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+      display: block;
+      transition: transform 0.1s ease;
     }
 
     .back-to-top:active {
-      transform: scale(0.9);
+      transform: scale(0.92) !important;
     }
 
     .back-to-top img {
       width: 100%;
-      height: 100%;
-      object-fit: contain;
+      height: auto;
       display: block;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
     }
   </style>
 </head>
@@ -196,6 +179,11 @@
         </a>
       </nav>
 
+      <!-- 火箭回頂鈕：常駐於長圖底端右側 -->
+      <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+        <img src="一頁式火箭.webp" alt="回到頂端" />
+      </button>
+
       <!-- 最底層滿版返回鈕 (回 MATE369 作品集) -->
       <div class="bottom-back-slot">
         <a href="../" class="bottom-back-link" aria-label="回 MATE369 作品集">
@@ -206,21 +194,8 @@
     </div>
   </div>
 
-  <!-- 常駐火箭回頂鈕 -->
-  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
-    <img src="一頁式火箭.webp" alt="回到頂端" />
-  </button>
-
   <script>
     const backToTopBtn = document.getElementById('backToTopBtn');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 350) {
-        backToTopBtn.classList.add('show');
-      } else {
-        backToTopBtn.classList.remove('show');
-      }
-    });
-
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
