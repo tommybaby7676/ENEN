@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../LOGO.ico" type="image/x-icon" />
+  <title>娛樂城視覺整合 | iGaming Visuals</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #2b0b04;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      height: 100vh;
+      background: #2b0b04 url('娛樂城首頁背景.webp') no-repeat center center / cover;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 頂部 Header 標題區 */
+    .top-header {
+      width: 100%;
+      padding: 16px 20px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .header-title-img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    /* 3 大專案 CTA 清單區塊：精準下沉置於巴風特下方 */
+    .project-cta-list {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 0 34px;
+      z-index: 20;
+    }
+
+    /* 3 秒波浪呼吸循環動態 */
+    @keyframes ctaPulseLoop {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      8% {
+        transform: scale(0.95) translateY(2px);
+        filter: brightness(1.1);
+      }
+      16% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.04);
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+    }
+
+    .cta-btn-item {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      line-height: 0;
+      animation: ctaPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
+    }
+
+    .cta-btn-item:nth-child(1) { animation-delay: 0.05s; }
+    .cta-btn-item:nth-child(2) { animation-delay: 0.20s; }
+    .cta-btn-item:nth-child(3) { animation-delay: 0.35s; }
+
+    .cta-btn-item:active {
+      transform: scale(0.93) translateY(3px) !important;
+      filter: brightness(0.85) !important;
+    }
+
+    .cta-btn-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 左下角金幣小房子（回總首頁） */
+    .home-coin-btn {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      width: 58px;
+      height: 58px;
+      z-index: 30;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.08s ease, filter 0.08s ease;
+    }
+
+    .home-coin-btn:active {
+      transform: scale(0.9) translateY(2px) !important;
+      filter: brightness(0.85);
+    }
+
+    .home-coin-btn img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- 頂部標題（白色箭頭已依指示移除） -->
+    <header class="top-header">
+      <img src="頁首字.webp" alt="娛樂城視覺整合 iGaming Visuals" class="header-title-img" />
+    </header>
+
+    <!-- 3 大專案 CTA -->
+    <main class="project-cta-list">
+      <a href="./jintanji/" class="cta-btn-item">
+        <img src="金探吉娛樂城.webp" alt="金探吉娛樂城" />
+      </a>
+      <a href="./swm/" class="cta-btn-item">
+        <img src="swm娛樂城.webp" alt="SWM娛樂城" />
+      </a>
+      <a href="./mate369/" class="cta-btn-item">
+        <img src="Mate369.webp" alt="MATE369" />
+      </a>
+    </main>
+
+    <!-- 左下角金幣回首頁按鈕 -->
+    <a href="../" class="home-coin-btn" aria-label="回到總首頁">
+      <img src="回首頁.webp" alt="回首頁" />
+    </a>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
+      });
+    });
+  </script>
+
+</body>
+</html>
