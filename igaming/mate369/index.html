@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../LOGO.ico" type="image/x-icon" />
+  <title>MATE369 | 娛樂城專案成果展示</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #03140d;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      background-color: #052317;
+    }
+
+    .canvas-stage {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .main-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 3 秒同步呼吸循環動態 */
+    @keyframes hintPulseLoop {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+      8% {
+        transform: scale(0.95) translateY(2px);
+        filter: brightness(1.1);
+      }
+      16% {
+        transform: scale(1.02) translateY(-1px);
+        filter: brightness(1.04);
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+      }
+    }
+
+    /* 頂部與底部膠囊 */
+    .pill-item,
+    .bottom-pill-btn {
+      animation: hintPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
+    }
+
+    .pill-item:active,
+    .bottom-pill-btn:active {
+      transform: scale(0.92) translateY(3px) !important;
+      filter: brightness(0.85) !important;
+    }
+
+    /* 1. 頂部右上角雙膠囊標籤 */
+    .pills-top-slot {
+      position: absolute;
+      top: 6.8%;
+      right: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pills-top-slot .pill-item img {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
+
+    /* 2. 上方核心 CTA：進入站內模擬器 */
+    .simulator-entry-slot {
+      position: absolute;
+      top: 13.5%;
+      left: 6%;
+      width: 88%;
+      z-index: 25;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.1s ease;
+    }
+
+    .simulator-entry-slot:active {
+      transform: scale(0.96);
+    }
+
+    .simulator-entry-slot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 3. 下方分支 CTA：一頁式活動 */
+    .event-entry-slot {
+      position: absolute;
+      top: 92.8%;
+      left: 52%;
+      width: 32%;
+      z-index: 25;
+      text-decoration: none;
+      line-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.1s ease;
+    }
+
+    .event-entry-slot:active {
+      transform: scale(0.94);
+    }
+
+    .event-circle-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .event-finger-img {
+      position: absolute;
+      right: -8px;
+      bottom: -6px;
+      width: 42%;
+      height: auto;
+      display: block;
+    }
+
+    /* 4. 底部左下角雙膠囊標籤 */
+    .bottom-pills-slot {
+      position: absolute;
+      top: 97.4%;
+      left: 14px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bottom-pill-btn img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    /* 5. 右下角懸浮常駐火箭回頂鈕 */
+    .back-to-top {
+      position: fixed;
+      right: calc(50% - 205px);
+      bottom: 26px;
+      width: 46px;
+      height: 46px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.28s ease;
+      z-index: 999;
+      border: none;
+      background: transparent;
+      padding: 0;
+      line-height: 0;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 16px;
+      }
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:active {
+      transform: scale(0.9);
+    }
+
+    .back-to-top img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="canvas-stage">
+
+      <!-- 長圖背景 -->
+      <img src="mate369頁背景.webp" alt="MATE369 成果展示" class="main-bg-img" />
+
+      <!-- 頂部右上角標籤 -->
+      <nav class="pills-top-slot">
+        <a href="../" class="pill-item" aria-label="其他娛樂城">
+          <img src="mate369其他娛樂城.webp" alt="其他娛樂城" />
+        </a>
+        <a href="../../../" class="pill-item" aria-label="回總首頁">
+          <img src="mate369回首頁.webp" alt="回首頁" />
+        </a>
+      </nav>
+
+      <!-- 核心引導 1：進入站內模擬體驗 -->
+      <a href="./simulator/" class="simulator-entry-slot" aria-label="點擊進入遊戲示意圖互動體驗">
+        <img src="進入模擬cta.webp" alt="進入模擬器" />
+      </a>
+
+      <!-- 核心引導 2：一頁式活動分支 -->
+      <a href="./event/" class="event-entry-slot" aria-label="進入一頁式活動">
+        <img src="一頁式活動.webp" alt="一頁式活動" class="event-circle-img" />
+        <img src="一頁式活動手指.webp" alt="手指引導" class="event-finger-img" />
+      </a>
+
+      <!-- 底部左下角標籤 -->
+      <div class="bottom-pills-slot">
+        <a href="../../../" class="bottom-pill-btn" aria-label="回總首頁">
+          <img src="mate369回首頁.webp" alt="回首頁" />
+        </a>
+        <a href="../" class="bottom-pill-btn" aria-label="其他娛樂城">
+          <img src="mate369其他娛樂城.webp" alt="其他娛樂城" />
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 常駐火箭回頂鈕 -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+    <img src="mate369火箭.webp" alt="回到頂端" />
+  </button>
+
+  <script>
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
+      });
+    });
+  </script>
+
+</body>
+</html>
