@@ -19,6 +19,15 @@
       overflow: hidden;
       background-color: #03140d;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
     }
 
     body {
@@ -40,11 +49,13 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     }
 
-    /* 頂部 Header & 迎賓主視覺 (來自 模擬背景.webp 上半部) */
+    /* 頂部 Header：精確只截取上方 Banner 與跑馬燈 (高寬比 575 / 821 約 70%) */
     .header-stage {
       width: 100%;
+      height: calc(100vw * 0.69);
+      max-height: 304px; /* 440px * 0.69 */
       position: relative;
-      line-height: 0;
+      overflow: hidden;
       flex-shrink: 0;
       z-index: 10;
     }
@@ -55,72 +66,58 @@
       display: block;
     }
 
-    /* 頂部 6 大遊戲 Tab 橫向列 */
+    /* 頂部 6 大遊戲 Tab 橫向列：排在跑馬燈正下方 */
     .game-tabs-row {
-      position: absolute;
-      bottom: 2px;
-      left: 0;
       width: 100%;
+      height: 48px;
+      background-color: #052116;
       display: flex;
       justify-content: space-around;
-      align-items: flex-end;
+      align-items: center;
       padding: 0 4px;
+      flex-shrink: 0;
       z-index: 15;
+      border-bottom: 1px solid rgba(0, 232, 75, 0.15);
     }
 
     .tab-btn {
       background: transparent;
       border: none;
       cursor: pointer;
-      position: relative;
-      padding: 4px 6px;
+      padding: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: transform 0.1s ease;
+      height: 100%;
+      position: relative;
+      transition: transform 0.08s ease;
     }
 
     .tab-btn:active {
       transform: scale(0.92);
     }
 
-    /* 隱藏原生選中指示線，用替換帶有綠條的 icon 呈現 */
-    .tab-indicator {
-      width: 100%;
-      height: 3px;
-      background-color: #00e84b;
-      border-radius: 2px;
-      margin-top: 2px;
-      opacity: 0;
-      transition: opacity 0.15s ease;
-    }
-
-    .tab-btn.active .tab-indicator {
-      opacity: 1;
-    }
-
-    .tab-icon-img {
-      height: 48px;
+    .tab-btn img {
+      height: 42px;
       width: auto;
       display: block;
     }
 
-    /* 中央核心內容展示滾動區 */
+    /* 中央核心滾動展示區 */
     .content-viewport {
       flex: 1;
       width: 100%;
       position: relative;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 70px; /* 預留底部導航空間 */
+      padding-bottom: 95px; /* 預留底部導航與退回條的重疊空間 */
     }
 
     .content-viewport::-webkit-scrollbar {
       display: none;
     }
 
-    /* 面板視圖切換 */
+    /* 面板視圖 */
     .panel-view {
       display: none;
       width: 100%;
@@ -140,15 +137,15 @@
     /* 底部導航固定底座 (icon底.webp) */
     .bottom-nav-bar {
       position: absolute;
-      bottom: 38px; /* 停在全局退出條上方 */
+      bottom: 38px; /* 貼在全局退出條上方 */
       left: 0;
       width: 100%;
-      height: 56px;
+      height: 54px;
       z-index: 50;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
-      padding: 0 12px;
+      padding: 0 8px;
     }
 
     .bottom-nav-bg {
@@ -169,7 +166,7 @@
       border: none;
       cursor: pointer;
       line-height: 0;
-      padding: 4px;
+      padding: 2px;
       transition: transform 0.08s ease, filter 0.08s ease;
     }
 
@@ -184,21 +181,21 @@
       display: block;
     }
 
-    /* 中央獨立凸起的 M 皇冠首頁按鈕 */
+    /* 中央突出的 M 皇冠首頁按鈕 */
     .nav-item-center {
       position: relative;
       z-index: 3;
-      margin-top: -24px; /* 向上浮起，扣合凹槽 */
+      margin-top: -20px;
       padding: 0;
     }
 
     .nav-item-center img {
-      height: 56px;
+      height: 52px;
       width: auto;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
     }
 
-    /* 最底層全局退出條 (回上頁.webp) */
+    /* 最底層全局退回條 (回上頁.webp) */
     .global-exit-bar {
       position: absolute;
       bottom: 0;
@@ -234,43 +231,37 @@
 
   <div class="simulator-container">
 
-    <!-- 頂部 Header & 迎賓主視覺 -->
+    <!-- 頂部 Header：Banner + 跑馬燈 -->
     <header class="header-stage" id="mainHeader">
-      <img src="模擬背景.webp" alt="MATE369 大廳" class="header-bg-img" />
-
-      <!-- 6 大遊戲 Tab 列 -->
-      <nav class="game-tabs-row" id="gameTabsRow">
-        <button class="tab-btn active" data-game="hot" aria-label="熱門遊戲">
-          <img src="熱門icon.webp" alt="HOT" class="tab-icon-img" />
-          <div class="tab-indicator"></div>
-        </button>
-        <button class="tab-btn" data-game="slot" aria-label="電子遊戲">
-          <img src="電子icon.webp" alt="SLOT" class="tab-icon-img" />
-          <div class="tab-indicator"></div>
-        </button>
-        <button class="tab-btn" data-game="sport" aria-label="體育">
-          <img src="體育icon.webp" alt="SPORT" class="tab-icon-img" />
-          <div class="tab-indicator"></div>
-        </button>
-        <button class="tab-btn" data-game="live" aria-label="真人視訊">
-          <img src="真人icon.webp" alt="LIVE" class="tab-icon-img" />
-          <div class="tab-indicator"></div>
-        </button>
-        <button class="tab-btn" data-game="board" aria-label="棋牌">
-          <img src="旗牌icon.webp" alt="BOARD" class="tab-icon-img" />
-          <div class="tab-indicator"></div>
-        </button>
-        <button class="tab-btn" data-game="fish" aria-label="捕魚機">
-          <img src="捕魚icon.webp" alt="FISH" class="tab-icon-img" />
-          <div class="tab-indicator"></div>
-        </button>
-      </nav>
+      <img src="模擬背景.webp" alt="MATE369 迎賓" class="header-bg-img" />
     </header>
 
-    <!-- 核心內容滾動展示區 -->
+    <!-- 6 大遊戲 Tab 列 -->
+    <nav class="game-tabs-row" id="gameTabsRow">
+      <button class="tab-btn active" data-game="hot" aria-label="熱門">
+        <img src="熱門icon.webp" alt="HOT" />
+      </button>
+      <button class="tab-btn" data-game="slot" aria-label="電子">
+        <img src="電子icon.webp" alt="SLOT" />
+      </button>
+      <button class="tab-btn" data-game="sport" aria-label="體育">
+        <img src="體育icon.webp" alt="SPORT" />
+      </button>
+      <button class="tab-btn" data-game="live" aria-label="真人">
+        <img src="真人icon.webp" alt="LIVE" />
+      </button>
+      <button class="tab-btn" data-game="board" aria-label="棋牌">
+        <img src="旗牌icon.webp" alt="BOARD" />
+      </button>
+      <button class="tab-btn" data-game="fish" aria-label="捕魚">
+        <img src="捕魚icon.webp" alt="FISH" />
+      </button>
+    </nav>
+
+    <!-- 中央核心內容滾動區 -->
     <main class="content-viewport" id="contentViewport">
 
-      <!-- 1. 遊戲分類內容面板 (大廳視圖) -->
+      <!-- 1. 遊戲內容面板 -->
       <div class="panel-view active" id="panel-game-hot">
         <img src="熱門.webp" alt="熱門遊戲" class="panel-img" />
       </div>
@@ -284,13 +275,13 @@
         <img src="真人.webp" alt="真人百家樂" class="panel-img" />
       </div>
       <div class="panel-view" id="panel-game-board">
-        <img src="旗牌.webp" alt="熱門棋牌" class="panel-img" />
+        <img src="旗牌.webp" alt="棋牌遊戲" class="panel-img" />
       </div>
       <div class="panel-view" id="panel-game-fish">
-        <img src="捕魚.webp" alt="捕魚機遊戲" class="panel-img" />
+        <img src="捕魚.webp" alt="捕魚遊戲" class="panel-img" />
       </div>
 
-      <!-- 2. 二級功能面板 (點擊底部選單切換) -->
+      <!-- 2. 二級功能面板 -->
       <div class="panel-view" id="panel-deposit">
         <img src="存款.webp" alt="存款中心" class="panel-img" />
       </div>
@@ -298,42 +289,33 @@
         <img src="優惠.webp" alt="優惠活動" class="panel-img" />
       </div>
       <div class="panel-view" id="panel-my">
-        <img src="我的.webp" alt="會員個人中心" class="panel-img" />
+        <img src="我的.webp" alt="會員中心" class="panel-img" />
       </div>
 
     </main>
 
-    <!-- 底部導航底座 -->
+    <!-- 底部導航列 -->
     <footer class="bottom-nav-bar">
-      <img src="icon底.webp" alt="導航底座" class="bottom-nav-bg" />
+      <img src="icon底.webp" alt="底座" class="bottom-nav-bg" />
 
-      <!-- 左 1：社群 OUR MATE -->
       <button class="nav-item" id="btnOurMate" aria-label="社群">
         <img src="社群icon.webp" alt="OUR MATE" />
       </button>
-
-      <!-- 左 2：存款 Deposit -->
       <button class="nav-item" id="btnDeposit" aria-label="存款">
         <img src="存款icon.webp" alt="Deposit" />
       </button>
-
-      <!-- 正中央：M 皇冠主頁按鈕 (點擊切回大廳) -->
-      <button class="nav-item nav-item-center" id="btnHomeLobby" aria-label="大廳首頁">
+      <button class="nav-item nav-item-center" id="btnHomeLobby" aria-label="大廳">
         <img src="首頁icon.webp" alt="M 首頁" />
       </button>
-
-      <!-- 右 2：優惠 Promo -->
       <button class="nav-item" id="btnPromo" aria-label="優惠">
         <img src="優惠icon.webp" alt="Promo" />
       </button>
-
-      <!-- 右 1：我的 My -->
       <button class="nav-item" id="btnMy" aria-label="會員中心">
         <img src="我的icon.webp" alt="My" />
       </button>
     </footer>
 
-    <!-- 最底層全局退出條 (點擊回 MATE369 作品集) -->
+    <!-- 最底層全局退回條 -->
     <div class="global-exit-bar">
       <a href="../" class="global-exit-link" aria-label="回 MATE369 作品集">
         <img src="回上頁.webp" alt="回 MATE369 作品集" />
@@ -343,36 +325,29 @@
   </div>
 
   <script>
-    // 觸控微震動回饋
     function triggerVibrate() {
       if (navigator.vibrate) navigator.vibrate(12);
     }
 
-    // 取得所有視圖與滾動容器
     const viewport = document.getElementById('contentViewport');
     const mainHeader = document.getElementById('mainHeader');
+    const gameTabsRow = document.getElementById('gameTabsRow');
     const tabButtons = document.querySelectorAll('.tab-btn');
     const allPanels = document.querySelectorAll('.panel-view');
 
-    // 切換面板通用函數
     function showPanel(panelId, isLobby = false) {
       triggerVibrate();
-
-      // 隱藏所有面板
       allPanels.forEach(p => p.classList.remove('active'));
 
-      // 顯示目標面板
-      const targetPanel = document.getElementById(panelId);
-      if (targetPanel) {
-        targetPanel.classList.add('active');
-      }
+      const target = document.getElementById(panelId);
+      if (target) target.classList.add('active');
 
-      // 控制頂部 Header：如果是大廳模式則顯示，如果是二級面板（存款/優惠/我的）可選擇收合或保持
       if (isLobby) {
         mainHeader.style.display = 'block';
+        gameTabsRow.style.display = 'flex';
       } else {
-        // 二級面板切換時，自動將內容滾動到頂部
-        viewport.scrollTo({ top: 0, behavior: 'smooth' });
+        mainHeader.style.display = 'none';
+        gameTabsRow.style.display = 'none';
       }
 
       viewport.scrollTo({ top: 0 });
@@ -391,7 +366,6 @@
 
     // 2. 底部功能導航切換
     document.getElementById('btnHomeLobby').addEventListener('click', () => {
-      // 回到大廳預設的熱門遊戲
       tabButtons.forEach(b => b.classList.remove('active'));
       document.querySelector('[data-game="hot"]').classList.add('active');
       showPanel('panel-game-hot', true);
@@ -411,10 +385,10 @@
 
     document.getElementById('btnOurMate').addEventListener('click', () => {
       triggerVibrate();
-      alert('【OUR MATE】社群與 24/7 在線客服通道');
+      alert('【OUR MATE】社群交流與在線支援');
     });
 
-    // 全局點擊震動綁定
+    // 全局點擊微震動
     document.querySelectorAll('button, a').forEach(el => {
       el.addEventListener('touchstart', triggerVibrate);
     });
