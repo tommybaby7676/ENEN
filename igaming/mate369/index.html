@@ -58,7 +58,7 @@
       display: block;
     }
 
-    /* 3 秒同步呼吸循環動態 */
+    /* 統一的 3 秒呼吸跳動動態 */
     @keyframes hintPulseLoop {
       0% {
         transform: scale(1) translateY(0);
@@ -78,6 +78,22 @@
       }
     }
 
+    /* 點擊手指專屬的同步彈跳動態 (微幅左上按壓反饋) */
+    @keyframes fingerTapLoop {
+      0% {
+        transform: scale(1) translate(0, 0);
+      }
+      8% {
+        transform: scale(1.12) translate(-3px, -3px);
+      }
+      16% {
+        transform: scale(0.96) translate(1px, 1px);
+      }
+      22%, 100% {
+        transform: scale(1) translate(0, 0);
+      }
+    }
+
     .pill-item,
     .bottom-pill-btn {
       animation: hintPulseLoop 3s ease-in-out infinite;
@@ -90,37 +106,38 @@
       filter: brightness(0.85) !important;
     }
 
-    /* 1. 頂部右上角雙膠囊標籤：嚴格置於綠色橫帶右側 */
+    /* 1. 頂部右上角雙膠囊標籤：尺寸微放大至 28px，維持右側橫帶精準貼合 */
     .pills-top-slot {
       position: absolute;
-      top: 7.7%;
+      top: 7.5%;
       right: 4.2%;
       z-index: 20;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
     .pills-top-slot .pill-item img {
-      height: 25px;
+      height: 28px; /* 從 25px 放大 */
       width: auto;
       display: block;
     }
 
-    /* 2. 上方核心 CTA：進入模擬器 (寬度修正為 74%，補償無尾熊凸出量，手機視覺水平居中，下緣不壓平面廣告) */
+    /* 2. 上方核心 CTA：進入模擬器 (寬度微調至 77%，加入統一呼吸跳動，維持視覺水平居中) */
     .simulator-entry-slot {
       position: absolute;
       top: 14.5%;
-      left: 11%;
-      width: 74%;
+      left: 9.5%; /* 微調補償居中 */
+      width: 77%; /* 從 74% 微幅放大 */
       z-index: 25;
       text-decoration: none;
       line-height: 0;
+      animation: hintPulseLoop 3s ease-in-out infinite;
       transition: transform 0.1s ease;
     }
 
     .simulator-entry-slot:active {
-      transform: scale(0.96);
+      transform: scale(0.96) !important;
     }
 
     .simulator-entry-slot img {
@@ -129,7 +146,7 @@
       display: block;
     }
 
-    /* 3. 下方分支 CTA：一頁式活動 (比照示意圖縮小為 25%，端正置於右側) */
+    /* 3. 下方分支 CTA：一頁式活動 (加入統一呼吸跳動，手指掛載同步彈跳) */
     .event-entry-slot {
       position: absolute;
       top: 92.5%;
@@ -141,11 +158,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      animation: hintPulseLoop 3s ease-in-out infinite;
       transition: transform 0.1s ease;
     }
 
     .event-entry-slot:active {
-      transform: scale(0.94);
+      transform: scale(0.94) !important;
     }
 
     .event-circle-img {
@@ -161,26 +179,27 @@
       width: 44%;
       height: auto;
       display: block;
+      animation: fingerTapLoop 3s ease-in-out infinite;
     }
 
-    /* 4. 底部左下角雙膠囊標籤：精準咬合底帶 */
+    /* 4. 底部左下角雙膠囊標籤：尺寸微放大至 28px，精準咬合底帶 */
     .bottom-pills-slot {
       position: absolute;
-      top: 98.05%;
+      top: 97.95%;
       left: 4.2%;
       z-index: 30;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
 
     .bottom-pill-btn img {
-      height: 25px;
+      height: 28px; /* 從 25px 放大 */
       width: auto;
       display: block;
     }
 
-    /* 5. 常駐右下角火箭回頂鈕 (比照圖一標準，嚴禁拉伸壓縮) */
+    /* 5. 常駐右下角火箭回頂鈕 */
     .back-to-top {
       position: fixed;
       right: calc(50% - 205px);
@@ -242,12 +261,12 @@
         </a>
       </nav>
 
-      <!-- 核心引導 1：進入站內模擬體驗 (視覺居中、不壓平面廣告) -->
+      <!-- 核心引導 1：進入站內模擬體驗 (微放大、水平居中、帶跳動) -->
       <a href="./simulator/" class="simulator-entry-slot" aria-label="點擊進入遊戲示意圖互動體驗">
         <img src="進入模擬cta.webp" alt="進入模擬器" />
       </a>
 
-      <!-- 核心引導 2：一頁式活動分支 (縮小比例精緻呈現) -->
+      <!-- 核心引導 2：一頁式活動分支 (按鈕與手指同步跳動) -->
       <a href="./event/" class="event-entry-slot" aria-label="進入一頁式活動">
         <img src="一頁式活動.webp" alt="一頁式活動" class="event-circle-img" />
         <img src="一頁式活動手指.webp" alt="手指引導" class="event-finger-img" />
