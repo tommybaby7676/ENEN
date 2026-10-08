@@ -132,21 +132,41 @@
       display: block;
     }
 
-    /* 3. 火箭回頂鈕：絕對定位在綠色條正上方，等比放大，絕不遮擋文字 */
+    /* 3. 火箭回頂鈕：橫長比 3.1:1，寬度設為 128px 圓圈才會飽滿醒目 */
     .back-to-top {
-      position: absolute;
-      right: 3.5%;
-      bottom: 5.6%; /* 緊靠綠色長條頂部上方 */
-      width: 14.5%;  /* 約 64px 比例，飽滿端正 */
+      position: fixed;
+      right: calc(50% - 212px);
+      bottom: 24px;
+      width: 128px; /* 精準補償 3.1:1 橫圖比例，圓圈直徑達 42px */
       height: auto;
       cursor: pointer;
-      z-index: 40;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: transform 0.25s ease, opacity 0.25s ease, bottom 0.2s ease;
+      z-index: 999;
       border: none;
       background: transparent;
       padding: 0;
       line-height: 0;
-      display: block;
-      transition: transform 0.1s ease;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 12px;
+        width: 122px;
+      }
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    /* 滑到底部時自動抬升，懸浮在綠色返回條正上方，絕不遮擋文字 */
+    .back-to-top.lifted {
+      bottom: 74px;
     }
 
     .back-to-top:active {
@@ -157,13 +177,13 @@
       width: 100%;
       height: auto;
       display: block;
-      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
     }
   </style>
 </head>
 <body>
 
-  <div class="app-container">
+  <div class="app-container" id="appContainer">
     <div class="canvas-stage">
 
       <!-- 一頁式長圖背景 -->
@@ -179,11 +199,6 @@
         </a>
       </nav>
 
-      <!-- 火箭回頂鈕：常駐於長圖底端右側 -->
-      <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
-        <img src="一頁式火箭.webp" alt="回到頂端" />
-      </button>
-
       <!-- 最底層滿版返回鈕 (回 MATE369 作品集) -->
       <div class="bottom-back-slot">
         <a href="../" class="bottom-back-link" aria-label="回 MATE369 作品集">
@@ -194,8 +209,31 @@
     </div>
   </div>
 
+  <!-- 常駐火箭回頂鈕 -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+    <img src="一頁式火箭.webp" alt="回到頂端" />
+  </button>
+
   <script>
     const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      // 1. 滑動超過 350px 時平滑浮現
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+
+      // 2. 檢測是否接近最底端：若是，則自動上移避開「回作品集」長條
+      const scrollBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+      if (scrollBottom < 60) {
+        backToTopBtn.classList.add('lifted');
+      } else {
+        backToTopBtn.classList.remove('lifted');
+      }
+    });
+
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
