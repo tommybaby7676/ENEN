@@ -18,6 +18,16 @@
       overflow-x: hidden;
       background-color: #03140d;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      /* 全面隱藏瀏覽器滾動條 */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
     }
 
     body {
@@ -68,7 +78,6 @@
       }
     }
 
-    /* 頂部與底部膠囊 */
     .pill-item,
     .bottom-pill-btn {
       animation: hintPulseLoop 3s ease-in-out infinite;
@@ -81,29 +90,29 @@
       filter: brightness(0.85) !important;
     }
 
-    /* 1. 頂部右上角雙膠囊標籤 */
+    /* 1. 頂部右上角雙膠囊標籤：嚴格置於綠色橫帶右側 */
     .pills-top-slot {
       position: absolute;
-      top: 6.8%;
-      right: 14px;
+      top: 7.7%;
+      right: 4.2%;
       z-index: 20;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .pills-top-slot .pill-item img {
-      height: 30px;
+      height: 25px;
       width: auto;
       display: block;
     }
 
-    /* 2. 上方核心 CTA：進入站內模擬器 */
+    /* 2. 上方核心 CTA：進入模擬器 (寬度修正為 74%，補償無尾熊凸出量，手機視覺水平居中，下緣不壓平面廣告) */
     .simulator-entry-slot {
       position: absolute;
-      top: 13.5%;
-      left: 6%;
-      width: 88%;
+      top: 14.5%;
+      left: 11%;
+      width: 74%;
       z-index: 25;
       text-decoration: none;
       line-height: 0;
@@ -120,12 +129,12 @@
       display: block;
     }
 
-    /* 3. 下方分支 CTA：一頁式活動 */
+    /* 3. 下方分支 CTA：一頁式活動 (比照示意圖縮小為 25%，端正置於右側) */
     .event-entry-slot {
       position: absolute;
-      top: 92.8%;
+      top: 92.5%;
       left: 52%;
-      width: 32%;
+      width: 25%;
       z-index: 25;
       text-decoration: none;
       line-height: 0;
@@ -147,37 +156,37 @@
 
     .event-finger-img {
       position: absolute;
-      right: -8px;
+      right: -10px;
       bottom: -6px;
-      width: 42%;
+      width: 44%;
       height: auto;
       display: block;
     }
 
-    /* 4. 底部左下角雙膠囊標籤 */
+    /* 4. 底部左下角雙膠囊標籤：精準咬合底帶 */
     .bottom-pills-slot {
       position: absolute;
-      top: 97.4%;
-      left: 14px;
+      top: 98.05%;
+      left: 4.2%;
       z-index: 30;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .bottom-pill-btn img {
-      height: 32px;
+      height: 25px;
       width: auto;
       display: block;
     }
 
-    /* 5. 右下角懸浮常駐火箭回頂鈕 */
+    /* 5. 常駐右下角火箭回頂鈕 (比照圖一標準，嚴禁拉伸壓縮) */
     .back-to-top {
       position: fixed;
       right: calc(50% - 205px);
       bottom: 26px;
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       cursor: pointer;
       opacity: 0;
       visibility: hidden;
@@ -209,6 +218,7 @@
     .back-to-top img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
       display: block;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
     }
@@ -232,12 +242,12 @@
         </a>
       </nav>
 
-      <!-- 核心引導 1：進入站內模擬體驗 -->
+      <!-- 核心引導 1：進入站內模擬體驗 (視覺居中、不壓平面廣告) -->
       <a href="./simulator/" class="simulator-entry-slot" aria-label="點擊進入遊戲示意圖互動體驗">
         <img src="進入模擬cta.webp" alt="進入模擬器" />
       </a>
 
-      <!-- 核心引導 2：一頁式活動分支 -->
+      <!-- 核心引導 2：一頁式活動分支 (縮小比例精緻呈現) -->
       <a href="./event/" class="event-entry-slot" aria-label="進入一頁式活動">
         <img src="一頁式活動.webp" alt="一頁式活動" class="event-circle-img" />
         <img src="一頁式活動手指.webp" alt="手指引導" class="event-finger-img" />
