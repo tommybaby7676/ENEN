@@ -215,7 +215,7 @@
     /* 解決問題 2：底部 5 大導航列零間隙緊貼「回 金探吉 作品集」頂部 */
     .bottom-nav-bar {
       position: absolute;
-      bottom: 0 !important;  /* 徹底貼死在 exit-bar 上方，消除任何黑隙 */
+      bottom: 56px !important;  /* 從 0 提上來 56px，剛好踩在退出條頭頂上，不再被遮擋！ */
       left: 0;
       width: 100%;
       z-index: 50;
@@ -224,7 +224,7 @@
       display: flex;
       justify-content: space-around;
       align-items: flex-end;
-      padding: 0 4px 6px 4px; /* 保留微幅底部懸浮呼吸感，完全重現示意圖 */
+      padding: 0 4px;
     }
 
     .bottom-nav-bar.hidden {
