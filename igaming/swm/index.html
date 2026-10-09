@@ -108,7 +108,7 @@
     /* 1. 頂部右上角雙膠囊標籤 */
     .pills-top-slot {
       position: absolute;
-      top: 6.6%;
+      top: 5.9%;
       right: 4.2%;
       z-index: 20;
       display: flex;
@@ -180,13 +180,15 @@
     /* 手指微彈提示掛在活動二的右下角 */
     .event-finger-img {
       position: absolute;
-      right: -6px;
-      bottom: -4px;
-      width: 22px;
-      height: auto;
+      right: -8px;
+      bottom: -6px;
+      width: 26px !important;
+      max-width: 26px !important;
+      height: auto !important;
       display: block;
       animation: fingerTapLoop 3s ease-in-out infinite;
       pointer-events: none;
+      z-index: 10;
     }
 
     /* 4. 底部左下角雙膠囊標籤 */
@@ -210,7 +212,7 @@
     .back-to-top {
       position: fixed;
       right: calc(50% - 205px);
-      bottom: 24px;
+      bottom: 20px;
       width: 58px;
       height: auto;
       cursor: pointer;
@@ -240,7 +242,7 @@
 
     /* 滑到底部時自動抬升，避免壓到底部元件 */
     .back-to-top.lifted {
-      bottom: 70px;
+      bottom: 48px;
     }
 
     .back-to-top:active {
