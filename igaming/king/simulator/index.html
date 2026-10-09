@@ -19,15 +19,6 @@
       overflow: hidden;
       background-color: #030814;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar {
-      display: none;
-      width: 0 !important;
-      height: 0 !important;
     }
 
     body {
@@ -36,7 +27,7 @@
       align-items: center;
     }
 
-    /* 手機視窗主容器 */
+    /* 手機視窗主外框：滿版無縫 */
     .simulator-container {
       width: 100%;
       max-width: 440px;
@@ -49,13 +40,15 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
     }
 
-    /* 中央核心視圖區 */
+    /* 中央滾動視窗：底部緊貼，絕不留出多餘黑條 */
     .content-viewport {
       flex: 1;
       width: 100%;
       position: relative;
       overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
 
     .content-viewport::-webkit-scrollbar {
@@ -80,17 +73,7 @@
       display: block;
     }
 
-    /* 關鍵修復：二級面板（排行榜、商城、我的、贈禮、活動）自帶多餘底色的裁切補償
-       直接把底部多餘的黑底切齊，讓拉霸飾條無縫緊貼最底層的「回金探吉作品集」 */
-    #panel-rank,
-    #panel-shop,
-    #panel-gift,
-    #panel-my,
-    #panel-event {
-      margin-bottom: -15%; /* 剛好消除原切片底部多出來的深色空塊 */
-    }
-
-    /* 大廳頂部新年活動 Banner 熱區 */
+    /* 大廳新年禮包活動 Banner */
     .home-banner-slot {
       position: absolute;
       top: 6.2%;
@@ -107,10 +90,10 @@
       display: block;
     }
 
-    /* 二級面板的中央圓形白叉叉：精確嵌入拉霸飾條正中央 */
+    /* 二級面板的中央圓形白叉叉：嚴格對齊拉霸飾條正中心（85.8%） */
     .panel-close-btn {
       position: absolute;
-      top: 86.2%;
+      top: 85.8%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 52px;
@@ -134,12 +117,12 @@
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
     }
 
-    /* 關鍵修復 1：聊天室返回鍵 (< 大廳) 絕對零間隙貼齊最左側邊緣！ */
+    /* 解決問題 1：聊天室返回鍵 (< 大廳) 零縫隙緊貼左側邊緣！ */
     .chat-back-btn {
       position: absolute;
-      top: 5.0%;
-      left: 0 !important;   /* 零縫隙緊貼左側邊界 */
-      width: 90px;
+      top: 4.8%;
+      left: 0 !important;   /* 強制靠齊最左側邊界，絕不浮空 */
+      width: 88px;
       height: auto;
       background: transparent;
       border: none;
@@ -147,6 +130,7 @@
       line-height: 0;
       z-index: 30;
       padding: 0;
+      margin: 0;
       transition: transform 0.08s ease;
     }
 
@@ -158,6 +142,14 @@
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    /* 解決問題 3：二級面板底部多餘空白遮除
+       將底部多餘長度截斷，讓跑馬燈飾條完美緊貼作品集退回列 */
+    .panel-crop-wrapper {
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: -15.5%; /* 精確切除底圖自帶的深色空白，完全對齊示意圖 */
     }
 
     /* 彈窗遮罩 */
@@ -220,19 +212,19 @@
       z-index: 90;
     }
 
-    /* 關鍵修復 2：移除深藍色底板，5 顆 Icon 完全透明懸浮於首頁背景之上 */
+    /* 解決問題 2：底部 5 大導航列零間隙緊貼「回 金探吉 作品集」頂部 */
     .bottom-nav-bar {
       position: absolute;
-      bottom: 61px; /* 緊貼最底層退回條上方，不留任何黑隙 */
+      bottom: 0 !important;  /* 徹底貼死在 exit-bar 上方，消除任何黑隙 */
       left: 0;
       width: 100%;
       z-index: 50;
-      background: transparent !important;   /* 徹底拿掉多餘的背景底色 */
-      border: none !important;              /* 移除任何邊框 */
+      background: transparent !important;
+      border: none !important;
       display: flex;
       justify-content: space-around;
       align-items: flex-end;
-      padding: 0 4px;
+      padding: 0 4px 6px 4px; /* 保留微幅底部懸浮呼吸感，完全重現示意圖 */
     }
 
     .bottom-nav-bar.hidden {
@@ -273,13 +265,13 @@
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.7));
     }
 
-    /* 最底層常駐退回列 (回 金探吉 作品集)：原生比例呈現，絕不擠壓 */
+    /* 最底層常駐退回列 (回 金探吉 作品集)：永遠固定在最下方，絕對不拉伸變形 */
     .global-exit-bar {
       width: 100%;
       z-index: 100;
       line-height: 0;
       background-color: #070e28;
-      flex-shrink: 0; /* 鎖死不被視窗壓縮 */
+      flex-shrink: 0;
     }
 
     .global-exit-link {
@@ -315,34 +307,40 @@
         <img src="首頁背景.webp" alt="金探吉娛樂城大廳" class="panel-img" />
       </div>
 
-      <!-- 2. 二級功能面板 -->
+      <!-- 2. 二級功能面板（包裹 panel-crop-wrapper 徹底消除多餘空底色） -->
       <!-- 排行榜 -->
       <div class="panel-view" id="panel-rank">
-        <img src="排行榜背景.webp" alt="排行榜" class="panel-img" />
-        <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
-          <img src="返回icon.webp" alt="關閉" />
-        </button>
+        <div class="panel-crop-wrapper">
+          <img src="排行榜背景.webp" alt="排行榜" class="panel-img" />
+          <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
+            <img src="返回icon.webp" alt="關閉" />
+          </button>
+        </div>
       </div>
 
       <!-- 商城 -->
       <div class="panel-view" id="panel-shop">
-        <img src="商城背景.webp" alt="商城中心" class="panel-img" />
-        <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
-          <img src="返回icon.webp" alt="關閉" />
-        </button>
+        <div class="panel-crop-wrapper">
+          <img src="商城背景.webp" alt="商城中心" class="panel-img" />
+          <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
+            <img src="返回icon.webp" alt="關閉" />
+          </button>
+        </div>
       </div>
 
       <!-- 贈禮 -->
       <div class="panel-view" id="panel-gift">
-        <img src="贈禮背景.webp" alt="贈禮中心" class="panel-img" />
-        <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
-          <img src="返回icon.webp" alt="關閉" />
-        </button>
+        <div class="panel-crop-wrapper">
+          <img src="贈禮背景.webp" alt="贈禮中心" class="panel-img" />
+          <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
+            <img src="返回icon.webp" alt="關閉" />
+          </button>
+        </div>
       </div>
 
       <!-- 聊天室 -->
       <div class="panel-view" id="panel-chat">
-        <!-- 緊貼最左側邊緣的返回按鈕 -->
+        <!-- 零間隙貼齊最左側邊緣 -->
         <button class="chat-back-btn" id="btnChatBack" aria-label="返回大廳">
           <img src="聊天返回cta.webp" alt="返回大廳" />
         </button>
@@ -351,18 +349,22 @@
 
       <!-- 我的 (個人資訊) -->
       <div class="panel-view" id="panel-my">
-        <img src="我的背景.webp" alt="個人資訊" class="panel-img" />
-        <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
-          <img src="返回icon.webp" alt="關閉" />
-        </button>
+        <div class="panel-crop-wrapper">
+          <img src="我的背景.webp" alt="個人資訊" class="panel-img" />
+          <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
+            <img src="返回icon.webp" alt="關閉" />
+          </button>
+        </div>
       </div>
 
       <!-- 活動公告 -->
       <div class="panel-view" id="panel-event">
-        <img src="活動背景.webp" alt="活動公告" class="panel-img" />
-        <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
-          <img src="返回icon.webp" alt="關閉" />
-        </button>
+        <div class="panel-crop-wrapper">
+          <img src="活動背景.webp" alt="活動公告" class="panel-img" />
+          <button class="panel-close-btn" data-close="true" aria-label="返回大廳">
+            <img src="返回icon.webp" alt="關閉" />
+          </button>
+        </div>
       </div>
 
     </main>
@@ -376,7 +378,7 @@
       </div>
     </div>
 
-    <!-- 底部 5 大導航列：完全透明無底板，純懸浮在首頁大廳底圖上 -->
+    <!-- 底部 5 大導航列：直接踩在最底層退出條頂部，絕不浮空 -->
     <footer class="bottom-nav-bar" id="bottomNavBar">
       <button class="nav-item" id="btnRank" aria-label="排行榜">
         <img src="排行榜icon.webp" alt="排行榜" />
