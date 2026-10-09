@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../../LOGO.ico" type="image/x-icon" />
+  <title>SWM | 迎戰世足活動</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background-color: #061e27;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      background-color: #082936;
+    }
+
+    .canvas-stage {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .main-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @keyframes hintPulseLoop {
+      0% { transform: scale(1) translateY(0); filter: brightness(1); }
+      8% { transform: scale(0.95) translateY(2px); filter: brightness(1.1); }
+      16% { transform: scale(1.02) translateY(-1px); filter: brightness(1.04); }
+      22%, 100% { transform: scale(1) translateY(0); filter: brightness(1); }
+    }
+
+    .pill-item {
+      animation: hintPulseLoop 3s ease-in-out infinite;
+      transition: transform 0.08s ease;
+    }
+
+    .pill-item:active {
+      transform: scale(0.92) translateY(3px) !important;
+    }
+
+    /* 頂部右上角標籤：置中於橫條 */
+    .pills-top-slot {
+      position: absolute;
+      top: 6.8%;
+      right: 4.2%;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pills-top-slot .pill-item img {
+      height: 27px;
+      width: auto;
+      display: block;
+    }
+
+    /* 最底層滿版返回條 (回 SWM 作品集) */
+    .bottom-back-slot {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 30;
+      line-height: 0;
+    }
+
+    .bottom-back-link {
+      display: block;
+      width: 100%;
+      line-height: 0;
+      text-decoration: none;
+    }
+
+    .bottom-back-link:active {
+      opacity: 0.88;
+    }
+
+    .bottom-back-link img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 懸浮火箭：橫向比例補償，觸底上移 */
+    .back-to-top {
+      position: fixed;
+      right: calc(50% - 212px);
+      bottom: 24px;
+      width: 126px;
+      height: auto;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: transform 0.25s ease, opacity 0.25s ease, bottom 0.2s ease;
+      z-index: 999;
+      border: none;
+      background: transparent;
+      padding: 0;
+      line-height: 0;
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top {
+        right: 12px;
+        width: 120px;
+      }
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top.lifted {
+      bottom: 74px;
+    }
+
+    .back-to-top:active {
+      transform: scale(0.92) !important;
+    }
+
+    .back-to-top img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="canvas-stage">
+
+      <img src="迎戰世足活動頁背景.webp" alt="迎戰世足活動" class="main-bg-img" />
+
+      <nav class="pills-top-slot">
+        <a href="../../" class="pill-item" aria-label="其他娛樂城">
+          <img src="swm其他娛樂城.webp" alt="其他娛樂城" />
+        </a>
+        <a href="../../../../" class="pill-item" aria-label="回總首頁">
+          <img src="swm回首頁.webp" alt="回首頁" />
+        </a>
+      </nav>
+
+      <div class="bottom-back-slot">
+        <a href="../" class="bottom-back-link" aria-label="回 SWM 作品集">
+          <img src="頁尾回上一頁.webp" alt="回 SWM 作品集" />
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="back-to-top" id="backToTopBtn" aria-label="回到頂端">
+    <img src="一頁式火箭.webp" alt="回到頂端" />
+  </button>
+
+  <script>
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 350) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+
+      const scrollBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+      if (scrollBottom < 60) {
+        backToTopBtn.classList.add('lifted');
+      } else {
+        backToTopBtn.classList.remove('lifted');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('touchstart', () => {
+        if (navigator.vibrate) navigator.vibrate(12);
+      });
+    });
+  </script>
+
+</body>
+</html>
