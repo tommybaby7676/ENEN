@@ -58,15 +58,38 @@
       gap: 6px;
     }
 
+    /* 核心：完全同步 MATE369 / SWM 膠囊按鈕心跳呼吸設定 */
     .pill-link {
       display: block;
       text-decoration: none;
       line-height: 0;
-      transition: transform 0.1s ease, opacity 0.15s ease;
+      animation: ctaBreathPulse 1.8s ease-in-out infinite; /* SWM/MATE 標準 1.8s 心跳呼吸 */
+      transition: transform 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+      will-change: transform, filter;
+      transform-origin: center center;
     }
 
+    /* 錯開同排第二顆膠囊的呼吸節奏，避免畫面過於死板 */
+    .pill-link:nth-child(2) {
+      animation-delay: 0.25s;
+    }
+
+    /* MATE369 / SWM 標準呼吸動畫：等比放大 + 金黃光暈 */
+    @keyframes ctaBreathPulse {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+      }
+      50% {
+        transform: scale(1.05); /* 微放大 1.05 倍 */
+        filter: drop-shadow(0 4px 12px rgba(255, 200, 0, 0.55)); /* 泛出微金黃品牌光暈 */
+      }
+    }
+
+    /* 點擊瞬間微縮觸覺反饋 */
     .pill-link:active {
-      transform: scale(0.92);
+      transform: scale(0.92) !important;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6)) !important;
       opacity: 0.85;
     }
 
@@ -74,7 +97,6 @@
       height: 28px;
       width: auto;
       display: block;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
     }
 
     /* 2. 埃及法老鱷魚樣機：進入模擬器 CTA */
@@ -84,32 +106,33 @@
       left: 11.1%;       /* 依示意圖 91px / 820px 水平置中 */
       width: 77.3%;      /* 依示意圖 634px / 820px 滿版比例 */
       z-index: 25;
+      display: block;    /* 核心修復：強制 block 讓 transform 動畫完全生效 */
       text-decoration: none;
       line-height: 0;
-      animation: ctaPulseGlow 3s ease-in-out infinite;
+      animation: ctaPulseGlow 2.4s ease-in-out infinite; /* SWM/MATE 標準樣機律動節奏 */
       transition: transform 0.12s ease;
+      will-change: transform, filter;
     }
 
     .simulator-entry-cta:active {
-      transform: scale(0.96) !important;
+      transform: scale(0.95) !important;
     }
 
     .simulator-entry-cta img {
       width: 100%;
       height: auto;
       display: block;
-      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
     }
 
-    /* 樣機微浮動光暈呼吸動畫 */
+    /* 樣機呼吸浮動動畫：位移浮動 + 微縮放 + 霓虹藍光暈 */
     @keyframes ctaPulseGlow {
       0%, 100% {
-        transform: translateY(0);
-        filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.7));
       }
       50% {
-        transform: translateY(-4px);
-        filter: drop-shadow(0 14px 30px rgba(0, 160, 255, 0.35));
+        transform: translateY(-7px) scale(1.02); /* 浮動 + 微放大雙重呼吸 */
+        filter: drop-shadow(0 14px 28px rgba(0, 180, 255, 0.45)); /* 金探吉專屬電競青藍光暈 */
       }
     }
 
