@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../LOGO.ico" type="image/x-icon" />
+  <title>金探吉娛樂城 | UI/UX 視覺設計全案作品集</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: #030814;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* 長圖主展示容器：等比鎖定 440px 滿屏 */
+    .showcase-wrapper {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      background-color: #030814;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+      line-height: 0;
+      overflow: hidden;
+    }
+
+    /* 長圖底圖本體 */
+    .showcase-bg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 1. 頂部雙膠囊標籤 (其他娛樂城 / 回首頁) */
+    .top-pills-slot {
+      position: absolute;
+      top: 5.3%;         /* 依示意圖 293px / 5549px 精準對齊 */
+      right: 3.2%;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-link {
+      display: block;
+      text-decoration: none;
+      line-height: 0;
+      transition: transform 0.1s ease, opacity 0.15s ease;
+    }
+
+    .pill-link:active {
+      transform: scale(0.92);
+      opacity: 0.85;
+    }
+
+    .top-pills-slot .pill-link img {
+      height: 28px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
+    }
+
+    /* 2. 埃及法老鱷魚樣機：進入模擬器 CTA */
+    .simulator-entry-cta {
+      position: absolute;
+      top: 9.35%;        /* 依示意圖 518px / 5549px 精準居中於 H5 標籤與 LOGO 之間 */
+      left: 11.1%;       /* 依示意圖 91px / 820px 水平置中 */
+      width: 77.3%;      /* 依示意圖 634px / 820px 滿版比例 */
+      z-index: 25;
+      text-decoration: none;
+      line-height: 0;
+      animation: ctaPulseGlow 3s ease-in-out infinite;
+      transition: transform 0.12s ease;
+    }
+
+    .simulator-entry-cta:active {
+      transform: scale(0.96) !important;
+    }
+
+    .simulator-entry-cta img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+    }
+
+    /* 樣機微浮動光暈呼吸動畫 */
+    @keyframes ctaPulseGlow {
+      0%, 100% {
+        transform: translateY(0);
+        filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
+      }
+      50% {
+        transform: translateY(-4px);
+        filter: drop-shadow(0 14px 30px rgba(0, 160, 255, 0.35));
+      }
+    }
+
+    /* 3. 頁尾雙膠囊標籤 (回首頁 / 其他娛樂城) */
+    .bottom-pills-slot {
+      position: absolute;
+      top: 97.5%;        /* 依示意圖 5410px / 5549px 落入最底層黑色橫條中 */
+      left: 3.6%;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bottom-pills-slot .pill-link img {
+      height: 27px;
+      width: auto;
+      display: block;
+    }
+
+    /* 4. 金探吉黃色回頂火箭按鈕 */
+    .back-to-top-btn {
+      position: fixed;
+      bottom: 24px;
+      right: max(16px, calc((100vw - 440px) / 2 + 16px));
+      width: 52px;
+      height: auto;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      line-height: 0;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+
+    .back-to-top-btn.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top-btn:active {
+      transform: scale(0.88);
+    }
+
+    .back-to-top-btn img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+    }
+
+    /* 滾動觸底時的火箭防遮擋抬升 */
+    .back-to-top-btn.lifted {
+      bottom: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="showcase-wrapper" id="showcaseContainer">
+
+    <!-- 長圖底圖本體 (5549px) -->
+    <img src="金探吉頁背景.webp" alt="金探吉全案視覺設計長圖" class="showcase-bg" />
+
+    <!-- 1. 頁首右上角雙膠囊標籤 -->
+    <div class="top-pills-slot">
+      <a href="../../" class="pill-link" aria-label="其他娛樂城">
+        <img src="金探吉其他娛樂城.webp" alt="其他娛樂城" />
+      </a>
+      <a href="../../../" class="pill-link" aria-label="回作品集首頁">
+        <img src="金探吉回首頁.webp" alt="回首頁" />
+      </a>
+    </div>
+
+    <!-- 2. 埃及法老鱷魚樣機：點擊直達站內互動模擬器 -->
+    <a href="simulator/" class="simulator-entry-cta" aria-label="點擊進入站內模擬器體驗">
+      <img src="金探吉進入模擬cta.webp" alt="點擊互動進入金探吉模擬器" />
+    </a>
+
+    <!-- 3. 頁尾左下角雙膠囊標籤 -->
+    <div class="bottom-pills-slot">
+      <a href="../../../" class="pill-link" aria-label="回作品集首頁">
+        <img src="金探吉回首頁.webp" alt="回首頁" />
+      </a>
+      <a href="../../" class="pill-link" aria-label="其他娛樂城">
+        <img src="金探吉其他娛樂城.webp" alt="其他娛樂城" />
+      </a>
+    </div>
+
+  </div>
+
+  <!-- 4. 懸浮金探吉黃色回頂火箭 -->
+  <button class="back-to-top-btn" id="btnBackToTop" aria-label="回到頂部">
+    <img src="金探吉火箭.webp" alt="Back to top" />
+  </button>
+
+  <script>
+    const rocketBtn = document.getElementById('btnBackToTop');
+    const container = document.getElementById('showcaseContainer');
+
+    function triggerVibrate() {
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    // 監聽滾動事件：控制火箭顯隱與觸底抬升
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const windowH = window.innerHeight;
+      const docH = document.documentElement.scrollHeight;
+
+      // 1. 超過 300px 浮現
+      if (scrollY > 300) {
+        rocketBtn.classList.add('visible');
+      } else {
+        rocketBtn.classList.remove('visible');
+      }
+
+      // 2. 接近底部 90px 時抬升，避免遮擋頁尾標籤
+      if (scrollY + windowH >= docH - 90) {
+        rocketBtn.classList.add('lifted');
+      } else {
+        rocketBtn.classList.remove('lifted');
+      }
+    }, { passive: true });
+
+    // 點擊平滑回頂
+    rocketBtn.addEventListener('click', () => {
+      triggerVibrate();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 觸控微震動
+    document.querySelectorAll('.pill-link, .simulator-entry-cta').forEach(el => {
+      el.addEventListener('touchstart', triggerVibrate);
+    });
+  </script>
+
+</body>
+</html>
