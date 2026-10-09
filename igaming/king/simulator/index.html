@@ -49,14 +49,15 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
     }
 
-    /* 中央核心滾動舞台 */
+    /* 中央核心滾動舞台：底部只保留給最底層「回金探吉作品集」高度 */
     .content-viewport {
       flex: 1;
       width: 100%;
+      height: calc(100vh - 42px);
       position: relative;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 96px; /* 預留底部導航與退回條的空間 */
+      padding-bottom: 44px;
     }
 
     .content-viewport::-webkit-scrollbar {
@@ -81,10 +82,10 @@
       display: block;
     }
 
-    /* 大廳活動 Banner 熱區（點擊直達活動公告面板） */
+    /* 大廳頂部新年活動 Banner 熱區（點擊直達活動公告面板） */
     .home-banner-slot {
       position: absolute;
-      top: 6.2%;
+      top: 5.8%;
       left: 0;
       width: 100%;
       line-height: 0;
@@ -99,22 +100,22 @@
     }
 
     .home-banner-slot:active {
-      opacity: 0.92;
+      opacity: 0.9;
     }
 
-    /* 二級面板的中央圓形白叉叉關閉鈕 */
+    /* 二級面板的中央圓形白叉叉關閉鈕（精準對齊飾條正中央圓圈） */
     .panel-close-btn {
       position: absolute;
-      bottom: 24px;
+      bottom: 8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       background: transparent;
       border: none;
       cursor: pointer;
       line-height: 0;
-      z-index: 25;
+      z-index: 30;
       transition: transform 0.08s ease;
     }
 
@@ -129,18 +130,18 @@
       filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
     }
 
-    /* 聊天室專屬左上角返回按鈕 (< 大廳) */
+    /* 聊天室專屬返回鍵 (< 大廳) 精準對齊白藍膠囊列 */
     .chat-back-btn {
       position: absolute;
-      top: 18px;
-      left: 14px;
-      width: 78px;
+      top: 3.6%;
+      left: 4%;
+      width: 70px;
       height: auto;
       background: transparent;
       border: none;
       cursor: pointer;
       line-height: 0;
-      z-index: 25;
+      z-index: 30;
       transition: transform 0.08s ease;
     }
 
@@ -154,13 +155,13 @@
       display: block;
     }
 
-    /* 彈窗系統遮罩層 */
+    /* 彈窗系統遮罩層：z-index 低於底層退出條，讓退回條常駐可見 */
     .modal-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: calc(100vh - 42px);
       z-index: 80;
       display: none;
       line-height: 0;
@@ -180,14 +181,14 @@
       display: block;
     }
 
-    /* 彈窗卡片本體 */
+    /* 彈窗卡片本體：縮減為 72% 原版精準比例 */
     .modal-card {
       position: absolute;
-      top: 48%;
+      top: 47%;
       left: 50%;
       transform: translate(-50%, -50%) scale(0.9);
-      width: 82%;
-      max-width: 350px;
+      width: 72%;
+      max-width: 320px;
       line-height: 0;
       z-index: 85;
       opacity: 0;
@@ -206,26 +207,26 @@
       filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.7));
     }
 
-    /* 彈窗確認關閉熱區 */
+    /* 彈窗「確認」按鈕熱區 */
     .modal-confirm-btn {
       position: absolute;
       bottom: 8.5%;
       left: 36%;
       width: 28%;
-      height: 7.5%;
+      height: 8%;
       background: transparent;
       border: none;
       cursor: pointer;
       z-index: 90;
     }
 
-    /* 底部 5 大固定導航列 */
+    /* 底部 5 大固定導航列：只在大廳首頁時顯示，進二級頁面隱藏 */
     .bottom-nav-bar {
       position: absolute;
-      bottom: 38px;
+      bottom: 42px; /* 緊貼在全局退回列上方 */
       left: 0;
       width: 100%;
-      height: 56px;
+      height: 54px;
       z-index: 50;
       background: linear-gradient(180deg, rgba(8, 20, 48, 0.95) 0%, rgba(3, 8, 20, 0.98) 100%);
       border-top: 1px solid rgba(40, 80, 160, 0.4);
@@ -233,6 +234,12 @@
       justify-content: space-around;
       align-items: center;
       padding: 0 4px;
+      transition: opacity 0.15s ease;
+    }
+
+    /* 隱藏導航列 */
+    .bottom-nav-bar.hidden {
+      display: none !important;
     }
 
     .nav-item {
@@ -250,12 +257,12 @@
     }
 
     .nav-item img {
-      height: 44px;
+      height: 42px;
       width: auto;
       display: block;
     }
 
-    /* 中央突出的贈禮大禮物盒 */
+    /* 中央突出紫色大禮物盒 */
     .nav-item-gift {
       position: relative;
       margin-top: -16px;
@@ -263,21 +270,22 @@
     }
 
     .nav-item-gift img {
-      height: 58px;
+      height: 56px;
       width: auto;
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
     }
 
-    /* 最底層全局退回列 (回 金探吉 作品集) */
+    /* 最底層全局常駐退回列 (回 金探吉 作品集)：永遠在最上層，不被壓縮 */
     .global-exit-bar {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 38px;
-      z-index: 60;
+      height: 42px;
+      z-index: 100; /* 最高層級，彈窗、二級頁面皆可見 */
       line-height: 0;
       background-color: #070e28;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
     }
 
     .global-exit-link {
@@ -291,7 +299,7 @@
     .global-exit-link img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: fill; /* 填滿不壓縮變形 */
       display: block;
     }
 
@@ -304,19 +312,18 @@
 
   <div class="simulator-container">
 
-    <!-- 中央核心內容滾動區 -->
+    <!-- 中央滾動區 -->
     <main class="content-viewport" id="contentViewport">
 
       <!-- 1. 主畫面：大廳 (首頁) -->
       <div class="panel-view active" id="panel-home">
-        <!-- 頂部新年禮包活動 Banner (可點擊跳轉活動公告) -->
         <div class="home-banner-slot" id="btnHomeBanner" aria-label="查看活動公告">
           <img src="活動banner.webp" alt="新年禮包活動" />
         </div>
         <img src="首頁背景.webp" alt="金探吉娛樂城大廳" class="panel-img" />
       </div>
 
-      <!-- 2. 二級功能面板 -->
+      <!-- 2. 二級功能面板（全螢幕彈窗式，自帶跑馬燈與中央白叉叉） -->
       <!-- 排行榜 -->
       <div class="panel-view" id="panel-rank">
         <img src="排行榜背景.webp" alt="排行榜" class="panel-img" />
@@ -376,35 +383,30 @@
       </div>
     </div>
 
-    <!-- 底部 5 大導航列 -->
-    <footer class="bottom-nav-bar">
-      <!-- 1. 排行榜 -->
+    <!-- 底部 5 大導航列（只在首頁大廳顯示） -->
+    <footer class="bottom-nav-bar" id="bottomNavBar">
       <button class="nav-item" id="btnRank" aria-label="排行榜">
         <img src="排行榜icon.webp" alt="排行榜" />
       </button>
 
-      <!-- 2. 商城 -->
       <button class="nav-item" id="btnShop" aria-label="商城">
         <img src="商城icon.webp" alt="商城" />
       </button>
 
-      <!-- 3. 中央：贈禮大禮物盒 -->
       <button class="nav-item nav-item-gift" id="btnGift" aria-label="贈禮">
         <img src="贈禮icon.webp" alt="贈禮" />
       </button>
 
-      <!-- 4. 聊天 -->
       <button class="nav-item" id="btnChat" aria-label="聊天">
         <img src="聊天icon.webp" alt="聊天" />
       </button>
 
-      <!-- 5. 我的 -->
       <button class="nav-item" id="btnMy" aria-label="我的">
         <img src="我的icon.webp" alt="我的" />
       </button>
     </footer>
 
-    <!-- 最底層全局退回列 (回 金探吉 作品集) -->
+    <!-- 最底層全局常駐退回列 (回 金探吉 作品集) -->
     <div class="global-exit-bar">
       <a href="../" class="global-exit-link" aria-label="回金探吉作品集">
         <img src="頁尾回上頁.webp" alt="回金探吉作品集" />
@@ -420,18 +422,27 @@
 
     const viewport = document.getElementById('contentViewport');
     const allPanels = document.querySelectorAll('.panel-view');
+    const navBar = document.getElementById('bottomNavBar');
     const modal = document.getElementById('earlyBirdModal');
 
-    // 切換面板通用函式
+    // 切換面板：如果不是首頁 panel-home，則立即隱藏底部導航列！
     function switchPanel(panelId) {
       triggerVibrate();
       allPanels.forEach(p => p.classList.remove('active'));
+
       const target = document.getElementById(panelId);
       if (target) target.classList.add('active');
+
+      if (panelId === 'panel-home') {
+        navBar.classList.remove('hidden');
+      } else {
+        navBar.classList.add('hidden');
+      }
+
       viewport.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 1. 彈窗關閉事件（點擊確認或遮罩）
+    // 1. 彈窗確認與遮罩點擊關閉
     document.getElementById('btnModalConfirm').addEventListener('click', (e) => {
       e.stopPropagation();
       triggerVibrate();
@@ -443,27 +454,27 @@
       modal.classList.remove('active');
     });
 
-    // 2. 大廳活動 Banner 點擊跳轉活動公告面板
+    // 2. 大廳活動 Banner 跳轉活動公告
     document.getElementById('btnHomeBanner').addEventListener('click', () => {
       switchPanel('panel-event');
     });
 
-    // 3. 底部 5 大導航點擊跳轉
+    // 3. 底部 5 大導航切換（切換後導航列自動隱藏）
     document.getElementById('btnRank').addEventListener('click', () => switchPanel('panel-rank'));
     document.getElementById('btnShop').addEventListener('click', () => switchPanel('panel-shop'));
     document.getElementById('btnGift').addEventListener('click', () => switchPanel('panel-gift'));
     document.getElementById('btnChat').addEventListener('click', () => switchPanel('panel-chat'));
     document.getElementById('btnMy').addEventListener('click', () => switchPanel('panel-my'));
 
-    // 4. 二級面板白叉叉關閉按鈕（退回大廳）
+    // 4. 二級面板白叉叉關閉：返回大廳，並恢復導航列
     document.querySelectorAll('[data-close="true"]').forEach(btn => {
       btn.addEventListener('click', () => switchPanel('panel-home'));
     });
 
-    // 5. 聊天室專屬 < 大廳 返回按鈕
+    // 5. 聊天室專屬 < 大廳 返回鍵
     document.getElementById('btnChatBack').addEventListener('click', () => switchPanel('panel-home'));
 
-    // 觸控微震動回饋
+    // 微震動觸控
     document.querySelectorAll('button, a').forEach(el => {
       el.addEventListener('touchstart', triggerVibrate);
     });
