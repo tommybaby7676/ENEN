@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="icon" href="../../../LOGO.ico" type="image/x-icon" />
+  <title>SWM | 站內互動模擬體驗</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #03141a;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 手機視窗主容器：鎖定滿屏 100vh */
+    .simulator-container {
+      width: 100%;
+      max-width: 440px;
+      height: 100vh;
+      background-color: #092632;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    /* 中央核心滾動舞台 */
+    .content-viewport {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 92px; /* 預留底部導航與退回條的空間 */
+    }
+
+    .content-viewport::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* 面板視圖 */
+    .panel-view {
+      display: none;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .panel-view.active {
+      display: block;
+    }
+
+    .panel-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* 存提展開時的模糊毛玻璃圖層 */
+    .blur-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 35;
+      display: none;
+      line-height: 0;
+    }
+
+    .blur-overlay.active {
+      display: block;
+    }
+
+    .blur-overlay img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 存提半圓扇形彈出選單 */
+    .fan-menu-stage {
+      position: absolute;
+      bottom: 84px; /* 浮在中央存提按鈕正上方 */
+      left: 50%;
+      transform: translateX(-50%) scale(0.8);
+      width: 250px;
+      height: 125px;
+      z-index: 45;
+      display: none;
+      opacity: 0;
+      transition: all 0.22s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      pointer-events: none;
+    }
+
+    .fan-menu-stage.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+      pointer-events: auto;
+    }
+
+    /* 左扇形：存款 */
+    .fan-btn-left {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 125px;
+      height: 125px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      line-height: 0;
+      transition: transform 0.08s ease;
+    }
+
+    .fan-btn-left:active {
+      transform: scale(0.94);
+    }
+
+    .fan-btn-left img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 右扇形：取款 */
+    .fan-btn-right {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 125px;
+      height: 125px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      line-height: 0;
+      transition: transform 0.08s ease;
+    }
+
+    .fan-btn-right:active {
+      transform: scale(0.94);
+    }
+
+    .fan-btn-right img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 底部導航固定底座 (icon底.webp) */
+    .bottom-nav-bar {
+      position: absolute;
+      bottom: 38px;
+      left: 0;
+      width: 100%;
+      height: 52px;
+      z-index: 50;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .bottom-nav-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .nav-item {
+      position: relative;
+      z-index: 2;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      line-height: 0;
+      padding: 2px;
+      transition: transform 0.08s ease;
+    }
+
+    .nav-item:active {
+      transform: scale(0.9) translateY(2px) !important;
+    }
+
+    .nav-item img {
+      height: 38px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0, 240, 255, 0.3));
+    }
+
+    /* 中央獨立突出的 SWM 存提大圓鈕 */
+    .nav-item-center {
+      position: relative;
+      z-index: 3;
+      margin-top: -18px;
+      padding: 0;
+    }
+
+    .nav-item-center img {
+      height: 54px;
+      width: auto;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+    }
+
+    /* 最底層全局退回列 (頁尾回上頁.webp) */
+    .global-exit-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 38px;
+      z-index: 60;
+      line-height: 0;
+      background-color: #0b1f28;
+    }
+
+    .global-exit-link {
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      line-height: 0;
+    }
+
+    .global-exit-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .global-exit-link:active {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="simulator-container">
+
+    <!-- 中央核心內容滾動區 -->
+    <main class="content-viewport" id="contentViewport">
+
+      <!-- 1. 主畫面：大廳 (首頁) -->
+      <div class="panel-view active" id="panel-home">
+        <img src="首頁背景.webp" alt="SWM 娛樂城大廳" class="panel-img" />
+      </div>
+
+      <!-- 2. 二級功能面板 -->
+      <div class="panel-view" id="panel-promo">
+        <img src="優惠.webp" alt="優惠專區" class="panel-img" />
+      </div>
+      <div class="panel-view" id="panel-reward">
+        <img src="領獎.webp" alt="領獎中心" class="panel-img" />
+      </div>
+      <div class="panel-view" id="panel-my">
+        <img src="個人.webp" alt="個人中心" class="panel-img" />
+      </div>
+
+      <!-- 3. 存提分支面板 -->
+      <div class="panel-view" id="panel-deposit">
+        <img src="存款.webp" alt="設定便利超商" class="panel-img" />
+      </div>
+      <div class="panel-view" id="panel-withdraw">
+        <img src="取款.webp" alt="會員轉帳" class="panel-img" />
+      </div>
+
+    </main>
+
+    <!-- 存提展開時的背景模糊覆蓋層 -->
+    <div class="blur-overlay" id="blurOverlay">
+      <img src="存提背景.webp" alt="模糊背景" />
+    </div>
+
+    <!-- 半圓形扇形選單 (點擊存提展開) -->
+    <div class="fan-menu-stage" id="fanMenuStage">
+      <!-- 左半扇形：存款 -->
+      <button class="fan-btn-left" id="btnFanDeposit" aria-label="存款">
+        <img src="存款icon.webp" alt="存款" />
+      </button>
+      <!-- 右半扇形：取款 -->
+      <button class="fan-btn-right" id="btnFanWithdraw" aria-label="取款">
+        <img src="取款icon.webp" alt="取款" />
+      </button>
+    </div>
+
+    <!-- 底部 5 大導航列 -->
+    <footer class="bottom-nav-bar">
+      <img src="icon底.webp" alt="導航底座" class="bottom-nav-bg" />
+
+      <!-- 左 1：首頁 -->
+      <button class="nav-item" id="btnHome" aria-label="首頁">
+        <img src="首頁icon.webp" alt="首頁" />
+      </button>
+
+      <!-- 左 2：優惠 (替換客服) -->
+      <button class="nav-item" id="btnPromo" aria-label="優惠">
+        <img src="優惠icon.webp" alt="優惠" />
+      </button>
+
+      <!-- 正中央：存提徽章大圓鈕 -->
+      <button class="nav-item nav-item-center" id="btnDepositWithdraw" aria-label="存提">
+        <img src="存提icon.webp" alt="存提" />
+      </button>
+
+      <!-- 右 2：領獎 -->
+      <button class="nav-item" id="btnReward" aria-label="領獎">
+        <img src="領獎icon.webp" alt="領獎" />
+      </button>
+
+      <!-- 右 1：個人 -->
+      <button class="nav-item" id="btnMy" aria-label="個人">
+        <img src="個人icon.webp" alt="個人" />
+      </button>
+    </footer>
+
+    <!-- 最底層全局退回列 (回 SWM 作品集) -->
+    <div class="global-exit-bar">
+      <a href="../" class="global-exit-link" aria-label="回 SWM 作品集">
+        <img src="頁尾回上頁.webp" alt="回 SWM 作品集" />
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    function triggerVibrate() {
+      if (navigator.vibrate) navigator.vibrate(12);
+    }
+
+    const viewport = document.getElementById('contentViewport');
+    const allPanels = document.querySelectorAll('.panel-view');
+    const blurOverlay = document.getElementById('blurOverlay');
+    const fanMenuStage = document.getElementById('fanMenuStage');
+
+    let isFanOpen = false;
+
+    // 關閉存提扇形選單
+    function closeFanMenu() {
+      isFanOpen = false;
+      fanMenuStage.classList.remove('active');
+      blurOverlay.classList.remove('active');
+    }
+
+    // 切換面板
+    function switchPanel(panelId) {
+      triggerVibrate();
+      closeFanMenu();
+
+      allPanels.forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(panelId);
+      if (target) target.classList.add('active');
+
+      viewport.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 1. 底部導航事件
+    document.getElementById('btnHome').addEventListener('click', () => {
+      switchPanel('panel-home');
+    });
+
+    document.getElementById('btnPromo').addEventListener('click', () => {
+      switchPanel('panel-promo');
+    });
+
+    document.getElementById('btnReward').addEventListener('click', () => {
+      switchPanel('panel-reward');
+    });
+
+    document.getElementById('btnMy').addEventListener('click', () => {
+      switchPanel('panel-my');
+    });
+
+    // 2. 中央存提大按鈕：切換扇形展開 / 收合
+    document.getElementById('btnDepositWithdraw').addEventListener('click', () => {
+      triggerVibrate();
+      isFanOpen = !isFanOpen;
+
+      if (isFanOpen) {
+        fanMenuStage.classList.add('active');
+        blurOverlay.classList.add('active');
+      } else {
+        closeFanMenu();
+      }
+    });
+
+    // 點擊模糊背景關閉扇形選單
+    blurOverlay.addEventListener('click', () => {
+      triggerVibrate();
+      closeFanMenu();
+    });
+
+    // 3. 扇形選單內部點擊跳轉
+    document.getElementById('btnFanDeposit').addEventListener('click', () => {
+      switchPanel('panel-deposit');
+    });
+
+    document.getElementById('btnFanWithdraw').addEventListener('click', () => {
+      switchPanel('panel-withdraw');
+    });
+
+    // 觸控微震動
+    document.querySelectorAll('button, a').forEach(el => {
+      el.addEventListener('touchstart', triggerVibrate);
+    });
+  </script>
+
+</body>
+</html>
