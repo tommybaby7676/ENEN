@@ -16,7 +16,7 @@
     html, body {
       width: 100%;
       height: 100%;
-      height: 100dvh; /* 自動扣除手機瀏覽器工具列 */
+      height: 100dvh;
       overflow: hidden;
       background-color: #03140d;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
@@ -37,7 +37,6 @@
       align-items: center;
     }
 
-    /* 手機視窗主容器：動態滿屏 100dvh */
     .simulator-container {
       width: 100%;
       max-width: 440px;
@@ -51,7 +50,6 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     }
 
-    /* 頂部 Header：精確只截取上方 Banner 與跑馬燈 */
     .header-stage {
       width: 100%;
       height: calc(100vw * 0.72);
@@ -68,7 +66,6 @@
       display: block;
     }
 
-    /* 頂部 6 大遊戲 Tab 橫向列 */
     .game-tabs-row {
       width: 100%;
       height: 56px;
@@ -105,21 +102,19 @@
       display: block;
     }
 
-    /* 中央核心滾動展示區 */
+    /* 中央核心滾動展示區：高度自適應 */
     .content-viewport {
       flex: 1;
       width: 100%;
       position: relative;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 120px; /* 預留底部導航空間 */
     }
 
     .content-viewport::-webkit-scrollbar {
       display: none;
     }
 
-    /* 面板視圖 */
     .panel-view {
       display: none;
       width: 100%;
@@ -136,14 +131,26 @@
       display: block;
     }
 
-    /* 底部 5 大導航固定底座 */
+    /* 
+      ======================================================
+      核心改造：底部死死咬合容器 (Flex 垂直堆疊)
+      ======================================================
+    */
+    .fixed-bottom-stack {
+      width: 100%;
+      position: relative;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      background-color: #032115;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
     .bottom-nav-bar {
-      position: absolute;
-      bottom: calc(48px + env(safe-area-inset-bottom, 0px)); /* 自動懸浮在全局退回列上方 */
-      left: 0;
+      position: relative;
       width: 100%;
       height: 54px;
-      z-index: 50;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -196,18 +203,10 @@
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
     }
 
-    /* 
-      ======================================================
-      最底層全局退回條：等比不壓縮 + 避開 Safari 工具列
-      ======================================================
-    */
     .global-exit-bar {
       width: 100%;
-      z-index: 60;
       line-height: 0;
       background-color: #032115;
-      flex-shrink: 0; /* 鎖死高度，絕不被彈性縮放 */
-      padding-bottom: env(safe-area-inset-bottom, 0px); /* 墊高防誤觸 */
     }
 
     .global-exit-link {
@@ -219,7 +218,7 @@
 
     .global-exit-link img {
       width: 100%;
-      height: auto; /* 等比呈現，徹底告別扁條 */
+      height: auto;
       display: block;
     }
 
@@ -232,12 +231,10 @@
 
   <div class="simulator-container">
 
-    <!-- 頂部 Header：Banner + 跑馬燈 -->
     <header class="header-stage" id="mainHeader">
       <img src="模擬背景.webp" alt="MATE369 迎賓" class="header-bg-img" />
     </header>
 
-    <!-- 6 大遊戲 Tab 列 -->
     <nav class="game-tabs-row" id="gameTabsRow">
       <button class="tab-btn active" data-game="hot" aria-label="熱門">
         <img src="熱門icon.webp" alt="HOT" />
@@ -259,10 +256,7 @@
       </button>
     </nav>
 
-    <!-- 中央核心內容滾動區 -->
     <main class="content-viewport" id="contentViewport">
-
-      <!-- 1. 遊戲內容面板 -->
       <div class="panel-view active" id="panel-game-hot">
         <img src="熱門.webp" alt="熱門遊戲" class="panel-img" />
       </div>
@@ -281,8 +275,6 @@
       <div class="panel-view" id="panel-game-fish">
         <img src="捕魚.webp" alt="捕魚遊戲" class="panel-img" />
       </div>
-
-      <!-- 2. 二級功能面板 -->
       <div class="panel-view" id="panel-deposit">
         <img src="存款.webp" alt="存款中心" class="panel-img" />
       </div>
@@ -292,35 +284,36 @@
       <div class="panel-view" id="panel-my">
         <img src="我的.webp" alt="會員中心" class="panel-img" />
       </div>
-
     </main>
 
-    <!-- 底部 5 大導航列 -->
-    <footer class="bottom-nav-bar">
-      <img src="icon底.webp" alt="底座" class="bottom-nav-bg" />
+    <!-- 底部固定底座 (導航列 + 退回列死死綁定) -->
+    <div class="fixed-bottom-stack">
+      
+      <footer class="bottom-nav-bar">
+        <img src="icon底.webp" alt="底座" class="bottom-nav-bg" />
+        <button class="nav-item" id="btnOurMate" aria-label="社群">
+          <img src="社群icon.webp" alt="OUR MATE" />
+        </button>
+        <button class="nav-item" id="btnDeposit" aria-label="存款">
+          <img src="存款icon.webp" alt="Deposit" />
+        </button>
+        <button class="nav-item nav-item-center" id="btnHomeLobby" aria-label="大廳">
+          <img src="首頁icon.webp" alt="M 首頁" />
+        </button>
+        <button class="nav-item" id="btnPromo" aria-label="優惠">
+          <img src="優惠icon.webp" alt="Promo" />
+        </button>
+        <button class="nav-item" id="btnMy" aria-label="會員中心">
+          <img src="我的icon.webp" alt="My" />
+        </button>
+      </footer>
 
-      <button class="nav-item" id="btnOurMate" aria-label="社群">
-        <img src="社群icon.webp" alt="OUR MATE" />
-      </button>
-      <button class="nav-item" id="btnDeposit" aria-label="存款">
-        <img src="存款icon.webp" alt="Deposit" />
-      </button>
-      <button class="nav-item nav-item-center" id="btnHomeLobby" aria-label="大廳">
-        <img src="首頁icon.webp" alt="M 首頁" />
-      </button>
-      <button class="nav-item" id="btnPromo" aria-label="優惠">
-        <img src="優惠icon.webp" alt="Promo" />
-      </button>
-      <button class="nav-item" id="btnMy" aria-label="會員中心">
-        <img src="我的icon.webp" alt="My" />
-      </button>
-    </footer>
+      <div class="global-exit-bar">
+        <a href="../" class="global-exit-link" aria-label="回 MATE369 作品集">
+          <img src="回上頁.webp" alt="回 MATE369 作品集" />
+        </a>
+      </div>
 
-    <!-- 最底層全局退回條 -->
-    <div class="global-exit-bar">
-      <a href="../" class="global-exit-link" aria-label="回 MATE369 作品集">
-        <img src="回上頁.webp" alt="回 MATE369 作品集" />
-      </a>
     </div>
 
   </div>
@@ -339,7 +332,6 @@
     function showPanel(panelId, isLobby = false) {
       triggerVibrate();
       allPanels.forEach(p => p.classList.remove('active'));
-
       const target = document.getElementById(panelId);
       if (target) target.classList.add('active');
 
@@ -358,7 +350,6 @@
       btn.addEventListener('click', () => {
         tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
         const gameKey = btn.getAttribute('data-game');
         showPanel(`panel-game-${gameKey}`, true);
       });
