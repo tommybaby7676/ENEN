@@ -160,7 +160,7 @@
       pointer-events: auto;
     }
 
-    /* 抽屜面板：擴展寬度至 305px，支援順暢內部捲動 */
+    /* 抽屜面板：寬度 305px，內部流暢滾動 */
     .drawer-panel {
       position: fixed;
       top: 0;
@@ -217,7 +217,7 @@
 
     /* 
       ======================================================
-      手風琴 (Accordion) 專屬樣式
+      手風琴 (Accordion) 樣式
       ======================================================
     */
     .accordion-group {
@@ -232,7 +232,6 @@
       padding-bottom: 8px;
     }
 
-    /* 手風琴標題按鈕 */
     .accordion-header {
       width: 100%;
       background: none;
@@ -258,10 +257,9 @@
     }
 
     .accordion-item.open .accordion-icon {
-      transform: rotate(45deg); /* + 號旋轉成 x */
+      transform: rotate(45deg);
     }
 
-    /* 手風琴展開容器 */
     .accordion-content {
       max-height: 0;
       overflow: hidden;
@@ -269,7 +267,7 @@
     }
 
     .accordion-item.open .accordion-content {
-      max-height: 500px; /* 足夠展示的高度 */
+      max-height: 500px;
       transition: max-height 0.35s ease-in-out;
     }
 
@@ -280,7 +278,6 @@
       line-height: 1.65;
     }
 
-    /* 經歷與技能項目清單 */
     .skill-block {
       margin-bottom: 12px;
     }
@@ -289,14 +286,61 @@
       display: block;
       color: #4a2109;
       font-size: 0.88rem;
-      margin-bottom: 3px;
+      margin-bottom: 5px;
+    }
+
+    /* 懸掛縮進：第二行嚴格對齊第一行首字 */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-list li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 5px;
+      line-height: 1.55;
+      color: #664332;
+      font-size: 0.84rem;
+    }
+
+    .feature-list li::before {
+      content: "・";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #9c6341;
+      font-weight: bold;
+      line-height: 1.55;
     }
 
     /* 
       ======================================================
-      聯絡方式：圓形快捷按鈕 + 信箱條
+      圓形按鈕：布丁 Q 彈果凍晃動動態 (每 3 秒同步一次)
       ======================================================
     */
+    @keyframes puddingBounceLoop {
+      0% {
+        transform: scale(1, 1) rotate(0deg);
+      }
+      4% {
+        transform: scale(1.18, 0.85) rotate(-6deg); /* 下壓扁平、微左傾 */
+      }
+      8% {
+        transform: scale(0.88, 1.15) rotate(5deg);  /* 彈高拉長、微右偏 */
+      }
+      12% {
+        transform: scale(1.08, 0.94) rotate(-3deg); /* 回落反彈 */
+      }
+      16% {
+        transform: scale(0.96, 1.04) rotate(1deg);  /* 微幅回正 */
+      }
+      20%, 100% {
+        transform: scale(1, 1) rotate(0deg);        /* 恢復靜止 */
+      }
+    }
+
     .contact-action-row {
       display: flex;
       justify-content: center;
@@ -315,22 +359,25 @@
       align-items: center;
       text-decoration: none;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: box-shadow 0.15s ease;
       position: relative;
+      transform-origin: bottom center; /* 以底部為支點進行果凍 Q 彈 */
+      animation: puddingBounceLoop 3s ease-in-out infinite; /* 無 delay，同時啟動 */
+      will-change: transform;
     }
 
     .circle-contact-btn:active {
-      transform: scale(0.9);
+      transform: scale(0.9) !important;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
-    /* 飛機 Telegram 風格 */
+    /* Telegram 藍色 */
     .btn-tg {
       background: linear-gradient(135deg, #2aabee 0%, #229ed9 100%);
       color: #ffffff;
     }
 
-    /* LINE 綠色風格 */
+    /* LINE 綠色 */
     .btn-line {
       background: linear-gradient(135deg, #06c755 0%, #00b900 100%);
       color: #ffffff;
@@ -437,13 +484,17 @@
           <div class="accordion-body">
             <div class="skill-block">
               <strong>多元跨界專長</strong>
-              ・線上娛樂城 (iGaming) 全案 H5 介面與動態切版<br>
-              ・電商品牌爆款主視覺、活動檔期 Banner 企劃<br>
-              ・原創手繪插畫、角色 IP 與商業識別設計
+              <ul class="feature-list">
+                <li>線上娛樂城 (iGaming) 全案 H5 介面與動態切版</li>
+                <li>電商品牌爆款主視覺、活動檔期 Banner 企劃</li>
+                <li>原創手繪插畫、角色 IP 與商業識別設計</li>
+              </ul>
             </div>
             <div class="skill-block">
               <strong>軟體與技術</strong>
-              Photoshop、Illustrator、Procreate 手繪、Figma、HTML5 / CSS3 前端切版微互動。
+              <p style="margin: 0; line-height: 1.55;">
+                Photoshop、Illustrator、Procreate 手繪、Figma、HTML5 / CSS3 前端切版微互動。
+              </p>
             </div>
           </div>
         </div>
@@ -458,10 +509,10 @@
         <div class="accordion-content">
           <div class="accordion-body">
             
-            <!-- 上方：TG 飛機與 LINE 圓形按鈕 -->
+            <!-- 上方：TG 飛機與 LINE 圓形按鈕 (布丁 Q 彈晃動) -->
             <div class="contact-action-row">
               
-              <!-- 1. Telegram 紙飛機（將 ID 改為恩恩的 TG） -->
+              <!-- 1. Telegram -->
               <div style="display: flex; flex-direction: column; align-items: center;">
                 <a href="https://t.me/mm_60001" target="_blank" class="circle-contact-btn btn-tg" aria-label="Telegram 聯絡">
                   <svg class="circle-icon-svg" viewBox="0 0 24 24">
@@ -471,7 +522,7 @@
                 <span class="circle-btn-label">Telegram</span>
               </div>
 
-              <!-- 2. LINE（將 ID 改為恩恩的 LINE） -->
+              <!-- 2. LINE -->
               <div style="display: flex; flex-direction: column; align-items: center;">
                 <a href="https://line.me/ti/p/tUL76zfslj" target="_blank" class="circle-contact-btn btn-line" aria-label="LINE 聯絡">
                   <svg class="circle-icon-svg" viewBox="0 0 24 24">
@@ -483,7 +534,7 @@
 
             </div>
 
-            <!-- 下方：信箱卡片條（點擊調用 mailto） -->
+            <!-- 下方：信箱卡片條 -->
             <a href="mailto:emi0988@gmail.com" class="email-link-card" aria-label="發送 Email">
               <svg viewBox="0 0 24 24">
                 <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -524,9 +575,6 @@
       if (navigator.vibrate) navigator.vibrate(8);
       const target = document.getElementById(id);
       const isOpen = target.classList.contains('open');
-
-      // 若希望一次只開一個，可解開下面這兩行
-      // document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('open'));
 
       if (!isOpen) {
         target.classList.add('open');
