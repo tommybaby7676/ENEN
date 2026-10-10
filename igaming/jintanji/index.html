@@ -47,6 +47,54 @@
       display: block;
     }
 
+    /* 
+      ======================================================
+      SWM / MATE369 3 秒經典頓點跳動 + JIN 專屬金黃背光
+      ======================================================
+    */
+    @keyframes jinPillPulseGlow {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4)) brightness(1);
+      }
+      8% {
+        transform: scale(0.95) translateY(2px);
+        filter: drop-shadow(0 3px 8px rgba(255, 200, 0, 0.4)) brightness(1.1);
+      }
+      16% {
+        transform: scale(1.03) translateY(-1px);
+        filter: drop-shadow(0 5px 14px rgba(255, 200, 0, 0.65)) brightness(1.05); /* 躍起時金黃背光迸發 */
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4)) brightness(1);
+      }
+    }
+
+    /* 
+      ======================================================
+      SWM / MATE369 3 秒經典頓點跳動 + JIN 專屬青藍電競背光
+      ======================================================
+    */
+    @keyframes jinCtaPulseGlow {
+      0% {
+        transform: scale(1) translateY(0);
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.7));
+      }
+      8% {
+        transform: scale(0.96) translateY(3px);
+        filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.8));
+      }
+      16% {
+        transform: scale(1.025) translateY(-5px);
+        filter: drop-shadow(0 16px 32px rgba(0, 180, 255, 0.55)); /* 躍起時青藍色霓虹背光充盈 */
+      }
+      22%, 100% {
+        transform: scale(1) translateY(0);
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.7));
+      }
+    }
+
     /* 1. 頂部雙膠囊標籤 (其他娛樂城 / 回首頁) */
     .top-pills-slot {
       position: absolute;
@@ -58,39 +106,20 @@
       gap: 6px;
     }
 
-    /* 核心：完全同步 MATE369 / SWM 膠囊按鈕心跳呼吸設定 */
+    /* 膠囊按鈕：對齊 SWM/MATE 的 3 秒跳動節奏 + 保留金黃背光 */
     .pill-link {
       display: block;
       text-decoration: none;
       line-height: 0;
-      animation: ctaBreathPulse 1.8s ease-in-out infinite; /* SWM/MATE 標準 1.8s 心跳呼吸 */
-      transition: transform 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
+      animation: jinPillPulseGlow 3s ease-in-out infinite;
+      transition: transform 0.08s ease, filter 0.08s ease;
       will-change: transform, filter;
       transform-origin: center center;
     }
 
-    /* 錯開同排第二顆膠囊的呼吸節奏，避免畫面過於死板 */
-    .pill-link:nth-child(2) {
-      animation-delay: 0.25s;
-    }
-
-    /* MATE369 / SWM 標準呼吸動畫：等比放大 + 金黃光暈 */
-    @keyframes ctaBreathPulse {
-      0%, 100% {
-        transform: scale(1);
-        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.4));
-      }
-      50% {
-        transform: scale(1.05); /* 微放大 1.05 倍 */
-        filter: drop-shadow(0 4px 12px rgba(255, 200, 0, 0.55)); /* 泛出微金黃品牌光暈 */
-      }
-    }
-
-    /* 點擊瞬間微縮觸覺反饋 */
     .pill-link:active {
-      transform: scale(0.92) !important;
-      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6)) !important;
-      opacity: 0.85;
+      transform: scale(0.92) translateY(2px) !important;
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6)) brightness(0.85) !important;
     }
 
     .top-pills-slot .pill-link img {
@@ -106,34 +135,22 @@
       left: 11.1%;       /* 依示意圖 91px / 820px 水平置中 */
       width: 77.3%;      /* 依示意圖 634px / 820px 滿版比例 */
       z-index: 25;
-      display: block;    /* 核心修復：強制 block 讓 transform 動畫完全生效 */
+      display: block;
       text-decoration: none;
       line-height: 0;
-      animation: ctaPulseGlow 2.4s ease-in-out infinite; /* SWM/MATE 標準樣機律動節奏 */
-      transition: transform 0.12s ease;
+      animation: jinCtaPulseGlow 3s ease-in-out infinite; /* SWM/MATE 3 秒頓點節奏 */
+      transition: transform 0.1s ease;
       will-change: transform, filter;
     }
 
     .simulator-entry-cta:active {
-      transform: scale(0.95) !important;
+      transform: scale(0.95) translateY(2px) !important;
     }
 
     .simulator-entry-cta img {
       width: 100%;
       height: auto;
       display: block;
-    }
-
-    /* 樣機呼吸浮動動畫：位移浮動 + 微縮放 + 霓虹藍光暈 */
-    @keyframes ctaPulseGlow {
-      0%, 100% {
-        transform: translateY(0) scale(1);
-        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.7));
-      }
-      50% {
-        transform: translateY(-7px) scale(1.02); /* 浮動 + 微放大雙重呼吸 */
-        filter: drop-shadow(0 14px 28px rgba(0, 180, 255, 0.45)); /* 金探吉專屬電競青藍光暈 */
-      }
     }
 
     /* 3. 頁尾雙膠囊標籤 (回首頁 / 其他娛樂城) */
