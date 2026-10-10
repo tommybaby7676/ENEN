@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <link rel="icon" href="../../../LOGO.ico" type="image/x-icon" />
   <title>SWM | 站內互動模擬體驗</title>
   <style>
@@ -15,7 +15,8 @@
 
     html, body {
       width: 100%;
-      height: 100vh;
+      height: 100%;
+      height: 100dvh; /* 自動扣除手機瀏覽器工具列 */
       overflow: hidden;
       background-color: #03141a;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
@@ -36,11 +37,12 @@
       align-items: center;
     }
 
-    /* 手機視窗主容器：鎖定滿屏 100vh */
+    /* 手機視窗主容器：動態滿屏 100dvh */
     .simulator-container {
       width: 100%;
       max-width: 440px;
-      height: 100vh;
+      height: 100%;
+      height: 100dvh;
       background-color: #092632;
       position: relative;
       overflow: hidden;
@@ -56,7 +58,7 @@
       position: relative;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 92px; /* 預留底部導航與退回條的空間 */
+      padding-bottom: 120px; /* 留足滑動緩衝，讓內容不被底部導航遮蔽 */
     }
 
     .content-viewport::-webkit-scrollbar {
@@ -106,7 +108,7 @@
     /* 存提半圓扇形彈出選單 */
     .fan-menu-stage {
       position: absolute;
-      bottom: 84px; /* 浮在中央存提按鈕正上方 */
+      bottom: 105px; /* 浮在中央存提按鈕正上方 */
       left: 50%;
       transform: translateX(-50%) scale(0.8);
       width: 250px;
@@ -125,34 +127,9 @@
       pointer-events: auto;
     }
 
-    /* 左扇形：存款 */
-    .fan-btn-left {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 125px;
-      height: 125px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      line-height: 0;
-      transition: transform 0.08s ease;
-    }
-
-    .fan-btn-left:active {
-      transform: scale(0.94);
-    }
-
-    .fan-btn-left img {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    /* 右扇形：取款 */
+    .fan-btn-left,
     .fan-btn-right {
       position: absolute;
-      right: 0;
       top: 0;
       width: 125px;
       height: 125px;
@@ -163,20 +140,25 @@
       transition: transform 0.08s ease;
     }
 
+    .fan-btn-left { left: 0; }
+    .fan-btn-right { right: 0; }
+
+    .fan-btn-left:active,
     .fan-btn-right:active {
       transform: scale(0.94);
     }
 
+    .fan-btn-left img,
     .fan-btn-right img {
       width: 100%;
       height: 100%;
       display: block;
     }
 
-    /* 底部導航固定底座 (icon底.webp) */
+    /* 底部 5 大導航列：懸浮於全局退回列上方 */
     .bottom-nav-bar {
       position: absolute;
-      bottom: 38px;
+      bottom: calc(48px + env(safe-area-inset-bottom, 0px)); /* 自動貼合在退回條頂部 */
       left: 0;
       width: 100%;
       height: 52px;
@@ -221,7 +203,6 @@
       filter: drop-shadow(0 2px 4px rgba(0, 240, 255, 0.3));
     }
 
-    /* 中央獨立突出的 SWM 存提大圓鈕 */
     .nav-item-center {
       position: relative;
       z-index: 3;
@@ -235,30 +216,30 @@
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
     }
 
-    /* 最底層全局退回列 (頁尾回上頁.webp) */
+    /* 
+      ======================================================
+      最底層全局退回列：等比不壓縮 + 手機安全區墊高
+      ======================================================
+    */
     .global-exit-bar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
       width: 100%;
-      height: 38px;
       z-index: 60;
       line-height: 0;
       background-color: #0b1f28;
+      flex-shrink: 0; /* 強制不被其他元素擠壓 */
+      padding-bottom: env(safe-area-inset-bottom, 0px); /* 墊高避開手機工具列 */
     }
 
     .global-exit-link {
       display: block;
       width: 100%;
-      height: 100%;
       text-decoration: none;
       line-height: 0;
     }
 
     .global-exit-link img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto; /* 核心：等比展示，絕對不再壓扁！ */
       display: block;
     }
 
@@ -307,11 +288,9 @@
 
     <!-- 半圓形扇形選單 (點擊存提展開) -->
     <div class="fan-menu-stage" id="fanMenuStage">
-      <!-- 左半扇形：存款 -->
       <button class="fan-btn-left" id="btnFanDeposit" aria-label="存款">
         <img src="存款icon.webp" alt="存款" />
       </button>
-      <!-- 右半扇形：取款 -->
       <button class="fan-btn-right" id="btnFanWithdraw" aria-label="取款">
         <img src="取款icon.webp" alt="取款" />
       </button>
@@ -321,27 +300,18 @@
     <footer class="bottom-nav-bar">
       <img src="icon底.webp" alt="導航底座" class="bottom-nav-bg" />
 
-      <!-- 左 1：首頁 -->
       <button class="nav-item" id="btnHome" aria-label="首頁">
         <img src="首頁icon.webp" alt="首頁" />
       </button>
-
-      <!-- 左 2：優惠 (替換客服) -->
       <button class="nav-item" id="btnPromo" aria-label="優惠">
         <img src="優惠icon.webp" alt="優惠" />
       </button>
-
-      <!-- 正中央：存提徽章大圓鈕 -->
       <button class="nav-item nav-item-center" id="btnDepositWithdraw" aria-label="存提">
         <img src="存提icon.webp" alt="存提" />
       </button>
-
-      <!-- 右 2：領獎 -->
       <button class="nav-item" id="btnReward" aria-label="領獎">
         <img src="領獎icon.webp" alt="領獎" />
       </button>
-
-      <!-- 右 1：個人 -->
       <button class="nav-item" id="btnMy" aria-label="個人">
         <img src="個人icon.webp" alt="個人" />
       </button>
@@ -368,14 +338,12 @@
 
     let isFanOpen = false;
 
-    // 關閉存提扇形選單
     function closeFanMenu() {
       isFanOpen = false;
       fanMenuStage.classList.remove('active');
       blurOverlay.classList.remove('active');
     }
 
-    // 切換面板
     function switchPanel(panelId) {
       triggerVibrate();
       closeFanMenu();
@@ -387,28 +355,14 @@
       viewport.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // 1. 底部導航事件
-    document.getElementById('btnHome').addEventListener('click', () => {
-      switchPanel('panel-home');
-    });
+    document.getElementById('btnHome').addEventListener('click', () => switchPanel('panel-home'));
+    document.getElementById('btnPromo').addEventListener('click', () => switchPanel('panel-promo'));
+    document.getElementById('btnReward').addEventListener('click', () => switchPanel('panel-reward'));
+    document.getElementById('btnMy').addEventListener('click', () => switchPanel('panel-my'));
 
-    document.getElementById('btnPromo').addEventListener('click', () => {
-      switchPanel('panel-promo');
-    });
-
-    document.getElementById('btnReward').addEventListener('click', () => {
-      switchPanel('panel-reward');
-    });
-
-    document.getElementById('btnMy').addEventListener('click', () => {
-      switchPanel('panel-my');
-    });
-
-    // 2. 中央存提大按鈕：切換扇形展開 / 收合
     document.getElementById('btnDepositWithdraw').addEventListener('click', () => {
       triggerVibrate();
       isFanOpen = !isFanOpen;
-
       if (isFanOpen) {
         fanMenuStage.classList.add('active');
         blurOverlay.classList.add('active');
@@ -417,22 +371,14 @@
       }
     });
 
-    // 點擊模糊背景關閉扇形選單
     blurOverlay.addEventListener('click', () => {
       triggerVibrate();
       closeFanMenu();
     });
 
-    // 3. 扇形選單內部點擊跳轉
-    document.getElementById('btnFanDeposit').addEventListener('click', () => {
-      switchPanel('panel-deposit');
-    });
+    document.getElementById('btnFanDeposit').addEventListener('click', () => switchPanel('panel-deposit'));
+    document.getElementById('btnFanWithdraw').addEventListener('click', () => switchPanel('panel-withdraw'));
 
-    document.getElementById('btnFanWithdraw').addEventListener('click', () => {
-      switchPanel('panel-withdraw');
-    });
-
-    // 觸控微震動
     document.querySelectorAll('button, a').forEach(el => {
       el.addEventListener('touchstart', triggerVibrate);
     });
