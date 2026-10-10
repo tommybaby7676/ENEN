@@ -16,7 +16,7 @@
     html, body {
       width: 100%;
       height: 100%;
-      height: 100dvh; /* 自動扣除手機瀏覽器工具列 */
+      height: 100dvh;
       overflow: hidden;
       background-color: #03141a;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
@@ -37,7 +37,6 @@
       align-items: center;
     }
 
-    /* 手機視窗主容器：動態滿屏 100dvh */
     .simulator-container {
       width: 100%;
       max-width: 440px;
@@ -51,21 +50,19 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
     }
 
-    /* 中央核心滾動舞台 */
+    /* 中央核心滾動舞台：高度自適應，不再需要猜測 padding-bottom */
     .content-viewport {
       flex: 1;
       width: 100%;
       position: relative;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 120px; /* 留足滑動緩衝，讓內容不被底部導航遮蔽 */
     }
 
     .content-viewport::-webkit-scrollbar {
       display: none;
     }
 
-    /* 面板視圖 */
     .panel-view {
       display: none;
       width: 100%;
@@ -82,7 +79,6 @@
       display: block;
     }
 
-    /* 存提展開時的模糊毛玻璃圖層 */
     .blur-overlay {
       position: absolute;
       top: 0;
@@ -105,10 +101,10 @@
       display: block;
     }
 
-    /* 存提半圓扇形彈出選單 */
+    /* 存提半圓扇形選單：以底座為定位基準 */
     .fan-menu-stage {
       position: absolute;
-      bottom: 105px; /* 浮在中央存提按鈕正上方 */
+      bottom: calc(100% + 4px); /* 永遠懸浮在底座頂部上方 */
       left: 50%;
       transform: translateX(-50%) scale(0.8);
       width: 250px;
@@ -155,14 +151,26 @@
       display: block;
     }
 
-    /* 底部 5 大導航列：懸浮於全局退回列上方 */
+    /* 
+      ======================================================
+      核心改造：底部死死咬合容器 (Flex 垂直堆疊)
+      ======================================================
+    */
+    .fixed-bottom-stack {
+      width: 100%;
+      position: relative;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      background-color: #0b1f28;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
     .bottom-nav-bar {
-      position: absolute;
-      bottom: calc(48px + env(safe-area-inset-bottom, 0px)); /* 自動貼合在退回條頂部 */
-      left: 0;
+      position: relative;
       width: 100%;
       height: 52px;
-      z-index: 50;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -216,18 +224,10 @@
       filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
     }
 
-    /* 
-      ======================================================
-      最底層全局退回列：等比不壓縮 + 手機安全區墊高
-      ======================================================
-    */
     .global-exit-bar {
       width: 100%;
-      z-index: 60;
       line-height: 0;
       background-color: #0b1f28;
-      flex-shrink: 0; /* 強制不被其他元素擠壓 */
-      padding-bottom: env(safe-area-inset-bottom, 0px); /* 墊高避開手機工具列 */
     }
 
     .global-exit-link {
@@ -239,7 +239,7 @@
 
     .global-exit-link img {
       width: 100%;
-      height: auto; /* 核心：等比展示，絕對不再壓扁！ */
+      height: auto;
       display: block;
     }
 
@@ -252,15 +252,10 @@
 
   <div class="simulator-container">
 
-    <!-- 中央核心內容滾動區 -->
     <main class="content-viewport" id="contentViewport">
-
-      <!-- 1. 主畫面：大廳 (首頁) -->
       <div class="panel-view active" id="panel-home">
         <img src="首頁背景.webp" alt="SWM 娛樂城大廳" class="panel-img" />
       </div>
-
-      <!-- 2. 二級功能面板 -->
       <div class="panel-view" id="panel-promo">
         <img src="優惠.webp" alt="優惠專區" class="panel-img" />
       </div>
@@ -270,58 +265,58 @@
       <div class="panel-view" id="panel-my">
         <img src="個人.webp" alt="個人中心" class="panel-img" />
       </div>
-
-      <!-- 3. 存提分支面板 -->
       <div class="panel-view" id="panel-deposit">
         <img src="存款.webp" alt="設定便利超商" class="panel-img" />
       </div>
       <div class="panel-view" id="panel-withdraw">
         <img src="取款.webp" alt="會員轉帳" class="panel-img" />
       </div>
-
     </main>
 
-    <!-- 存提展開時的背景模糊覆蓋層 -->
     <div class="blur-overlay" id="blurOverlay">
       <img src="存提背景.webp" alt="模糊背景" />
     </div>
 
-    <!-- 半圓形扇形選單 (點擊存提展開) -->
-    <div class="fan-menu-stage" id="fanMenuStage">
-      <button class="fan-btn-left" id="btnFanDeposit" aria-label="存款">
-        <img src="存款icon.webp" alt="存款" />
-      </button>
-      <button class="fan-btn-right" id="btnFanWithdraw" aria-label="取款">
-        <img src="取款icon.webp" alt="取款" />
-      </button>
-    </div>
+    <!-- 底部固定底座 (導航列 + 退回列死死綁定) -->
+    <div class="fixed-bottom-stack">
+      
+      <!-- 存提半圓扇形選單 -->
+      <div class="fan-menu-stage" id="fanMenuStage">
+        <button class="fan-btn-left" id="btnFanDeposit" aria-label="存款">
+          <img src="存款icon.webp" alt="存款" />
+        </button>
+        <button class="fan-btn-right" id="btnFanWithdraw" aria-label="取款">
+          <img src="取款icon.webp" alt="取款" />
+        </button>
+      </div>
 
-    <!-- 底部 5 大導航列 -->
-    <footer class="bottom-nav-bar">
-      <img src="icon底.webp" alt="導航底座" class="bottom-nav-bg" />
+      <!-- 導航列 -->
+      <footer class="bottom-nav-bar">
+        <img src="icon底.webp" alt="導航底座" class="bottom-nav-bg" />
+        <button class="nav-item" id="btnHome" aria-label="首頁">
+          <img src="首頁icon.webp" alt="首頁" />
+        </button>
+        <button class="nav-item" id="btnPromo" aria-label="優惠">
+          <img src="優惠icon.webp" alt="優惠" />
+        </button>
+        <button class="nav-item nav-item-center" id="btnDepositWithdraw" aria-label="存提">
+          <img src="存提icon.webp" alt="存提" />
+        </button>
+        <button class="nav-item" id="btnReward" aria-label="領獎">
+          <img src="領獎icon.webp" alt="領獎" />
+        </button>
+        <button class="nav-item" id="btnMy" aria-label="個人">
+          <img src="個人icon.webp" alt="個人" />
+        </button>
+      </footer>
 
-      <button class="nav-item" id="btnHome" aria-label="首頁">
-        <img src="首頁icon.webp" alt="首頁" />
-      </button>
-      <button class="nav-item" id="btnPromo" aria-label="優惠">
-        <img src="優惠icon.webp" alt="優惠" />
-      </button>
-      <button class="nav-item nav-item-center" id="btnDepositWithdraw" aria-label="存提">
-        <img src="存提icon.webp" alt="存提" />
-      </button>
-      <button class="nav-item" id="btnReward" aria-label="領獎">
-        <img src="領獎icon.webp" alt="領獎" />
-      </button>
-      <button class="nav-item" id="btnMy" aria-label="個人">
-        <img src="個人icon.webp" alt="個人" />
-      </button>
-    </footer>
+      <!-- 退回作品集列 -->
+      <div class="global-exit-bar">
+        <a href="../" class="global-exit-link" aria-label="回 SWM 作品集">
+          <img src="頁尾回上頁.webp" alt="回 SWM 作品集" />
+        </a>
+      </div>
 
-    <!-- 最底層全局退回列 (回 SWM 作品集) -->
-    <div class="global-exit-bar">
-      <a href="../" class="global-exit-link" aria-label="回 SWM 作品集">
-        <img src="頁尾回上頁.webp" alt="回 SWM 作品集" />
-      </a>
     </div>
 
   </div>
@@ -347,11 +342,9 @@
     function switchPanel(panelId) {
       triggerVibrate();
       closeFanMenu();
-
       allPanels.forEach(p => p.classList.remove('active'));
       const target = document.getElementById(panelId);
       if (target) target.classList.add('active');
-
       viewport.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
