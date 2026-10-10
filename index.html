@@ -212,7 +212,6 @@
       color: #7d5b4a;
       line-height: 1.6;
       letter-spacing: 0.02em;
-      margin-bottom: 20px;
     }
 
     /* 
@@ -267,7 +266,7 @@
     }
 
     .accordion-item.open .accordion-content {
-      max-height: 500px;
+      max-height: 600px;
       transition: max-height 0.35s ease-in-out;
     }
 
@@ -276,17 +275,6 @@
       font-size: 0.84rem;
       color: #664332;
       line-height: 1.65;
-    }
-
-    .skill-block {
-      margin-bottom: 12px;
-    }
-
-    .skill-block strong {
-      display: block;
-      color: #4a2109;
-      font-size: 0.88rem;
-      margin-bottom: 5px;
     }
 
     /* 懸掛縮進：第二行嚴格對齊第一行首字 */
@@ -299,7 +287,7 @@
     .feature-list li {
       position: relative;
       padding-left: 14px;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       line-height: 1.55;
       color: #664332;
       font-size: 0.84rem;
@@ -315,6 +303,10 @@
       line-height: 1.55;
     }
 
+    .feature-list li strong {
+      color: #4a2109;
+    }
+
     /* 
       ======================================================
       圓形按鈕：布丁 Q 彈果凍晃動動態 (每 3 秒同步一次)
@@ -325,19 +317,19 @@
         transform: scale(1, 1) rotate(0deg);
       }
       4% {
-        transform: scale(1.18, 0.85) rotate(-6deg); /* 下壓扁平、微左傾 */
+        transform: scale(1.18, 0.85) rotate(-6deg);
       }
       8% {
-        transform: scale(0.88, 1.15) rotate(5deg);  /* 彈高拉長、微右偏 */
+        transform: scale(0.88, 1.15) rotate(5deg);
       }
       12% {
-        transform: scale(1.08, 0.94) rotate(-3deg); /* 回落反彈 */
+        transform: scale(1.08, 0.94) rotate(-3deg);
       }
       16% {
-        transform: scale(0.96, 1.04) rotate(1deg);  /* 微幅回正 */
+        transform: scale(0.96, 1.04) rotate(1deg);
       }
       20%, 100% {
-        transform: scale(1, 1) rotate(0deg);        /* 恢復靜止 */
+        transform: scale(1, 1) rotate(0deg);
       }
     }
 
@@ -361,8 +353,8 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
       transition: box-shadow 0.15s ease;
       position: relative;
-      transform-origin: bottom center; /* 以底部為支點進行果凍 Q 彈 */
-      animation: puddingBounceLoop 3s ease-in-out infinite; /* 無 delay，同時啟動 */
+      transform-origin: bottom center;
+      animation: puddingBounceLoop 3s ease-in-out infinite;
       will-change: transform;
     }
 
@@ -465,51 +457,69 @@
     <button class="drawer-close" id="closeMenuBtn">&times;</button>
     
     <h3 class="drawer-title">ABOUT ENEN</h3>
-    <p class="drawer-desc">
-      手繪感性的靈魂，商業理性的骨架。<br>
-      專注於電商品牌視覺、原創商業插畫與線上娛樂城切版 UI/UX 體驗設計。<br><br>
-      「畫得精緻是本能，賣得動才是本事。」
-    </p>
+    <div class="drawer-desc" style="margin-bottom: 16px;">
+      <p style="margin-bottom: 10px; font-weight: 700; color: #5a2e12;">
+        嗨，我是恩恩！一個在商業現實和畫畫美感之間抓平衡點的設計師。
+      </p>
+      <p style="margin-bottom: 8px;">
+        很多人會問我最擅長哪種風格？其實我覺得<strong>風格是跟著目的走的</strong>，好用、能解決問題最重要：
+      </p>
+      <ul class="feature-list" style="margin-bottom: 10px;">
+        <li><strong>活動檔期</strong>：就要熱鬧、吸睛，點擊率跟轉化率最重要。</li>
+        <li><strong>新品牌 / 新專案</strong>：走質感、穩重，讓人一眼就記住。</li>
+        <li><strong>原創插畫</strong>：把自己的情緒跟細節毫無保留地畫進去。</li>
+      </ul>
+      <p style="font-size: 0.82rem; color: #8c624c; line-height: 1.5;">
+        這裡放的都是我近期幫各大品牌跟專案做過的視覺作品，每一個畫面都是在兼顧好看跟實際效益下生出來的。
+      </p>
+    </div>
 
     <!-- 手風琴組件區 -->
     <div class="accordion-group">
 
-      <!-- 手風琴 1：個人經歷 & 技能 -->
-      <div class="accordion-item" id="accSkills">
-        <button class="accordion-header" onclick="toggleAccordion('accSkills')">
-          <span>個人經歷 & 技能</span>
+      <!-- 手風琴 1：能幫你做什麼？ (預設展開) -->
+      <div class="accordion-item open" id="accServices">
+        <button class="accordion-header" onclick="toggleAccordion('accServices')">
+          <span>能幫你做什麼？</span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-content">
           <div class="accordion-body">
-            <div class="skill-block">
-              <strong>多元跨界專長</strong>
-              <ul class="feature-list">
-                <li>線上娛樂城 (iGaming) 全案 H5 介面與動態切版</li>
-                <li>電商品牌爆款主視覺、活動檔期 Banner 企劃</li>
-                <li>原創手繪插畫、角色 IP 與商業識別設計</li>
-              </ul>
-            </div>
-            <div class="skill-block">
-              <strong>軟體與技術</strong>
-              <p style="margin: 0; line-height: 1.55;">
-                Photoshop、Illustrator、Procreate 手繪、Figma、HTML5 / CSS3 前端切版微互動。
-              </p>
-            </div>
+            <ul class="feature-list">
+              <li>
+                <strong>娛樂城 H5 介面與動態設計</strong><br>
+                懂 iGaming 玩家要什麼，做出順手又好點的行動端體驗。
+              </li>
+              <li>
+                <strong>電商檔期視覺</strong><br>
+                主視覺（KV）、廣告 Banner、促銷套版，要熱鬧要質感都能搞定。
+              </li>
+              <li>
+                <strong>品牌 CIS 與周邊</strong><br>
+                幫品牌做出獨特的識別度跟周邊延伸。
+              </li>
+              <li>
+                <strong>商業手繪與吉祥物 IP</strong><br>
+                幫品牌打造專屬角色，拉近和用戶的距離。
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      <!-- 手風琴 2：聯絡方式 -->
-      <div class="accordion-item" id="accContact">
+      <!-- 手風琴 2：想找我聊聊？ (聯絡方式) -->
+      <div class="accordion-item open" id="accContact">
         <button class="accordion-header" onclick="toggleAccordion('accContact')">
-          <span>聯絡方式 (Contact)</span>
+          <span>想找我聊聊？</span>
           <span class="accordion-icon">+</span>
         </button>
         <div class="accordion-content">
           <div class="accordion-body">
+            <p style="margin: 0 0 10px; font-size: 0.84rem; color: #664332; line-height: 1.5;">
+              不管是好玩的專案、品牌視覺顧問，或是長期團隊合作，隨時歡迎敲我！
+            </p>
             
-            <!-- 上方：TG 飛機與 LINE 圓形按鈕 (布丁 Q 彈晃動) -->
+            <!-- 上方：TG 飛機與 LINE 圓形按鈕 (布丁 Q 彈同步晃動) -->
             <div class="contact-action-row">
               
               <!-- 1. Telegram -->
