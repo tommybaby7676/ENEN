@@ -207,7 +207,7 @@
 
     /* 
       ======================================================
-      核心改造：底部死死咬合容器 (Flex 垂直堆疊)
+      底部死死咬合容器 (Flex 垂直堆疊)
       ======================================================
     */
     .fixed-bottom-stack {
@@ -224,13 +224,24 @@
     .bottom-nav-bar {
       position: relative;
       width: 100%;
+      height: 54px;
       z-index: 50;
-      background: transparent !important;
-      border: none !important;
       display: flex;
       justify-content: space-around;
-      align-items: flex-end;
-      padding: 0 4px 6px; /* 微幅底邊距，創造精準咬合感 */
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    /* 新增：icon底座貼底背景圖 */
+    .bottom-nav-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      z-index: 1;
+      pointer-events: none;
     }
 
     .bottom-nav-bar.hidden {
@@ -239,6 +250,7 @@
 
     .nav-item {
       position: relative;
+      z-index: 2;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -258,8 +270,10 @@
       filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
     }
 
+    /* 中央突出紫色大禮物盒 */
     .nav-item-gift {
       position: relative;
+      z-index: 3;
       margin-top: -14px;
       padding: 0;
     }
@@ -371,6 +385,9 @@
     <div class="fixed-bottom-stack">
 
       <footer class="bottom-nav-bar" id="bottomNavBar">
+        <!-- 植入恩恩的 icon底座 -->
+        <img src="icon底.webp" alt="導航底座" class="bottom-nav-bg" />
+
         <button class="nav-item" id="btnRank" aria-label="排行榜">
           <img src="排行榜icon.webp" alt="排行榜" />
         </button>
